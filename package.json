@@ -8,10 +8,29 @@
     "node": ">=6.13.0"
   },
   "scripts": {
+    "build": "webpack -d",
+    "start": "node server/index.js",
+    "react-dev": "webpack -d --watch",
+    "server-dev": "nodemon --inspect server/index.js",
+    "seed-db": "node ./server/database/dataGenerator.js"
   },
   "dependencies": {
+    "express": "^4.16.3",
+    "jquery": "^3.3.1",
+    "mongoose": "^5.2.4",
+    "react": "^16.4.1",
+    "react-dom": "^16.4.1"
   },
   "devDependencies": {
-    "eslint-config-hackreactor": "git://github.com/reactorcore/eslint-config-hackreactor"
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.5",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react": "^6.24.1",
+    "css-loader": "^1.0.0",
+    "eslint-config-hackreactor": "git://github.com/reactorcore/eslint-config-hackreactor",
+    "style-loader": "^0.21.0",
+    "webpack": "^4.16.1",
+    "webpack-cli": "^3.0.8"
   }
 }

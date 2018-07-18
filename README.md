@@ -1,13 +1,12 @@
 # Project Name
 
-> Project description
+> A dynamic component for booking homes on a vacation rental site.
 
 ## Related Projects
 
-  - https://github.com/teamName/repo
-  - https://github.com/teamName/repo
-  - https://github.com/teamName/repo
-  - https://github.com/teamName/repo
+  - https://github.com/HalalGuys/photos
+  - https://github.com/HalalGuys/reviews
+  - https://github.com/HalalGuys/listing-details
 
 ## Table of Contents
 
@@ -36,4 +35,22 @@ From within the root directory:
 npm install -g webpack
 npm install
 ```
+
+### Startup Instructions
+
+If not already done, start mongo:
+
+```sh
+mongod
+```
+
+In a separate terminal: 
+
+
+```sh
+npm run seed-db
+npm run start
+``` 
+
+Service is now running from port 3000
 
