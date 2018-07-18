@@ -1,6 +1,5 @@
 const express = require('express');
 const app = express();
-const gen = require('./database/dataGenerator');
 const db = require('./database/index').Calendar;
 
 app.use(express.static('./public'));
@@ -18,10 +17,4 @@ app.get('/cal', (req, resp) => {
 //set port environment variable to prepare for deployment
 const port = process.env.PORT || 3000;
 
-app.listen(port, () => {
-  //clear database on server start
-  db.remove({}, (err) => console.log('data removed'));
-  //generate data
-  gen();  
-  console.log(`Database seeded. Server running on port ${port}`);
-});
+app.listen(port, () => console.log(`Database seeded. Server running on port ${port}`));

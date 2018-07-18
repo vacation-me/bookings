@@ -11,7 +11,8 @@
     "build": "webpack -d",
     "start": "node server/index.js",
     "react-dev": "webpack -d --watch",
-    "server-dev": "nodemon --inspect server/index.js"
+    "server-dev": "nodemon --inspect server/index.js",
+    "seed-db": "node ./server/database/dataGenerator.js"
   },
   "dependencies": {
     "express": "^4.16.3",

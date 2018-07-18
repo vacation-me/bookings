@@ -76,4 +76,13 @@ const calendarGenerator = function(num = 100) {
   }
 }
 
-module.exports = calendarGenerator;
+//remove all calendar records if they exist
+db.Calendar.remove({}, (err) => {
+  if (err) throw err;
+});
+
+//generate calendar records and save to db
+calendarGenerator();
+
+//tell node to terminate 
+process.exit(-1);

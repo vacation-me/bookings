@@ -38,10 +38,19 @@ npm install
 
 ### Startup Instructions
 
-From root directory, in separate terminal panes:
+If not already done, start mongo:
 
 ```sh
-mongo
+mongod
+```
+
+In a separate terminal: 
+
+
+```sh
+npm run seed-db
 npm run start
 ``` 
+
+Service is now running from port 3000
 
