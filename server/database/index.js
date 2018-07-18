@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/bookings');
+mongoose.connect('mongodb://localhost:27017/bookings', { useNewUrlParser: true });
 const Schema = mongoose.Schema;
 
 const calendarSchema = new Schema({
@@ -11,5 +11,5 @@ const Calendar = mongoose.model('Calendar', calendarSchema);
 
 module.exports = {
   calendarSchema,
-  Calendar
+  Calendar,
 }

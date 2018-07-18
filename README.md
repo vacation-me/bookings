@@ -1,13 +1,12 @@
 # Project Name
 
-> Project description
+> A dynamic component for booking homes on a vacation rental site.
 
 ## Related Projects
 
-  - https://github.com/teamName/repo
-  - https://github.com/teamName/repo
-  - https://github.com/teamName/repo
-  - https://github.com/teamName/repo
+  - https://github.com/HalalGuys/photos
+  - https://github.com/HalalGuys/reviews
+  - https://github.com/HalalGuys/listing-details
 
 ## Table of Contents
 
@@ -36,4 +35,13 @@ From within the root directory:
 npm install -g webpack
 npm install
 ```
+
+### Startup Instructions
+
+From root directory, in separate terminal panes:
+
+```sh
+mongo
+npm run start
+``` 
 
