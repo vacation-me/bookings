@@ -3,6 +3,7 @@ mongoose.connect('mongodb://localhost/bookings');
 const Schema = mongoose.Schema;
 
 const calendarSchema = new Schema({
+  id: Number,
   year: [[Number]]
 });
 

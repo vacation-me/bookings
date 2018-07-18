@@ -63,6 +63,7 @@ const yearGenerator = function() {
 const calendarGenerator = function() {
   for (let j = 0; j <= 100; j++) {
     var year = new db.Calendar({
+      id: j,
       year: yearGenerator()
     });
 
