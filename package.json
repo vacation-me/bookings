@@ -15,6 +15,7 @@
     "seed-db": "node ./server/database/dataGenerator.js"
   },
   "dependencies": {
+    "body-parser": "^1.18.3",
     "express": "^4.16.3",
     "jquery": "^3.3.1",
     "mongoose": "^5.2.4",

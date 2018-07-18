@@ -5,10 +5,17 @@ import $ from 'jquery';
 class App extends React.Component {
   constructor() {
     super();
+    this.state = {
+      calendar: []
+    };
+
   }
 
   componentDidMount() {
-
+    $.get('/cal', (resp) => {
+      let result = JSON.parse(resp);
+      console.log(results);
+    });
   }
 
   render() {
