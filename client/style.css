@@ -1,0 +1,8 @@
+#calendar {
+  padding: 0.5rem;
+  border: 1px solid gray;
+}
+
+.top-row {
+  float: right;
+}
