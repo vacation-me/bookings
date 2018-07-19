@@ -3,7 +3,7 @@ import React from 'react';
 
 const Calendar = (props) => {
   //create date object based on user selected month
-  let selected = new Date(props.year, props.month, 1);
+  let months = ['Januray', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
   
   //declare base matrix
   let baseMatrix = [
@@ -12,21 +12,27 @@ const Calendar = (props) => {
     [0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0],
   ];
 
   //get date of first of month from current
-  let first = selected.getDay();
-  for (let i = 0; i < first; i++) {
+  let first = new Date(props.year, props.month, 1);
+  let last = new Date(props.year, props.month + 1, 0);
+  for (let i = 0; i < first.getDay(); i++) {
     baseMatrix[0][i] = '';
   }
 
-  for (let i = baseMatrix[4].length - 1; i >= first; i--) {
-    baseMatrix[4][i] = '';
-  }
+
+
   
   let dateCounter = 1;
   return (
     <div id="cal-container">
+      <div id="calendar-title">
+        <button className='cal-title' id="prev" onClick={(e) => props.click(-1)}>Prev</button>
+        <h3 className='cal-title'>{`${months[first.getMonth()]} ${props.year}`}</h3>
+        <button className='cal-title' id="next" onClick={(e) => props.click(1)}>Next</button>
+      </div>
       <table id="calendar">
         <tbody>
           <tr>
@@ -39,20 +45,19 @@ const Calendar = (props) => {
             <th>Sat</th>
           </tr>
           {baseMatrix.map((week, idx) => (
-            <tr className={/* idx === 0 ? 'top-row' :  */''}>
-              {week.map((day, i) => {
-                if (idx === 0 && i === 0) {
+            <tr>
+              {week.map((day) => {
+                if (dateCounter > last.getDate()) {
+                  return null;
                 }
                 return ( 
-                  <td>{day === '' ? day : dateCounter++}</td>
+                  <td className={day === '' ? '' : 'day'}>{day === '' ? day : dateCounter++}</td>
                 );
               })}
             </tr> 
           ))}
         </tbody>
       </table>
-      <button id="prev" onClick={(e) => props.click(-1)}>Prev</button>
-      <button id="next" onClick={(e) => props.click(1)}>Next</button>
     </div>
   );
 };

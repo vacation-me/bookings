@@ -17,16 +17,18 @@ class App extends React.Component {
   componentDidMount() {
     $.get('/cal', (resp) => {
       let result = JSON.parse(resp);
-      console.log(result);
     });
   }
 
   handleCal(i) {
-    let month = this.state.month + 1;
+    let month = this.state.month + i;
     let year = this.state.year;
-    if (this.state.month === 11) {
+    if (month === 12) {
       month = 0;
       year++; 
+    } else if (month === -1) {
+      month = 11;
+      year--;
     }
 
     this.setState({

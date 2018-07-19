@@ -1,8 +1,33 @@
-#calendar {
-  padding: 0.5rem;
-  border: 1px solid gray;
+#cal-container {
+  text-align: center;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
 }
 
-.top-row {
+#calendar {
+  padding: 0.5rem;
+  min-height: 174px;
+  width: 234px;
+}
+
+#calendar-title {
+  min-width: 234px;
+}
+.cal-title {
+  display: inline-flex;
+  margin: 5px;
+}
+
+#next {
   float: right;
+}
+
+#prev {
+  float: left;
+}
+
+.day {
+  border: 1px solid lightgray;
 }
