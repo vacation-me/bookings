@@ -14,14 +14,26 @@ class App extends React.Component {
       month: today.getMonth(),
       date: today.getDate(),
       checkIn: 0,
+      price: 0,
+      cleaning: 0,
+      maxGuests: 0,
+      minStay: 0,
+      serviceFee: 0,
       booked: []
     };
   }
 
   componentDidMount() {
-    $.get('/cal', (resp) => {
-      let result = JSON.parse(resp);
-      console.log(result);
+    $.get('/cal', (res) => {
+      let result = JSON.parse(res);
+      this.setState({
+        price: result.price,
+        cleaning: result.cleaning,
+        maxGuests: result.maxGuests,
+        minStay: result.minStay,
+        serviceFee: result.serviceFee,
+        booked: result.year
+      });
     });
   }
 
@@ -46,7 +58,14 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <Book />
+        <Book 
+          price={this.state.price} 
+          cleaning={this.state.cleaning} 
+          maxGuests={this.state.maxGuests} 
+          minStay={this.state.minStay} 
+          serviceFee={this.state.serviceFee} 
+          booked={this.state.booked}         
+        />
         {this.state.checkIn === 0 ? null : 
           <Calendar 
             year={this.state.year} 

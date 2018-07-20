@@ -4,8 +4,26 @@
 }
 
 #bookings {
+  font-family: 'Lato';
   width: 376px;
   height: 367px;
+  border: 1px solid lightgrey;
+  padding: 0 24px;
+  float: right;
+}
+
+.icon {
+  height: 30px;
+}
+
+#select-dates {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 40px;
+  padding: 0 20px;
+  border: 1px solid lightgray;
+  border-radius: 5px;
 }
 
 #cal-container {
