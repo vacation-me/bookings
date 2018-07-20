@@ -59,7 +59,7 @@ const Calendar = (props) => {
                   // assign 'day' class to any valid table cell  /  assign selected-date to todays date or selected / render empty cell for invalid dates
                   <td 
                     className={`${day === '' ? '' : 'day'} ${dateCounter === props.date ? 'selected-date' : ''}`}
-                    key={`week${idx}`}>
+                    key={`day${dateCounter}`}>
                     {day === '' ? day : dateCounter++}</td>
                 );
               })}
