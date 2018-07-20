@@ -19,7 +19,7 @@ module.exports = {
         loader: 'babel-loader',
         exclude: /node_modules/,
         query: {
-          presets: ['env', 'react']
+          presets: ['env', 'react', 'airbnb']
         }
       },
       {

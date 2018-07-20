@@ -2,11 +2,11 @@ import React from 'react';
 
 
 const Calendar = (props) => {
-  //store month names for retrieval based on an index
+  // store month names for retrieval based on an index
   const months = ['Januray', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-  
-  //create template for month
-  let baseMatrix = [
+
+  // create template for month
+  const baseMatrix = [
     [0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0],
@@ -14,18 +14,16 @@ const Calendar = (props) => {
     [0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0],
   ];
-
-  //get data for first day of current month
-  let first = new Date(props.year, props.month, 1);
+  // get data for first day of current month
+  const first = new Date(props.year, props.month, 1);
+  
   //get data for last day of current month
-  let last = new Date(props.year, props.month + 1, 0);
+  const last = new Date(props.year, props.month + 1, 0);
 
   //assign first values of matrix to empty value (for proper alignment)
   for (let i = 0; i < first.getDay(); i++) {
     baseMatrix[0][i] = '';
   }
-
-
 
   //declare counter to fill table with dates
   let dateCounter = 1;
