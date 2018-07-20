@@ -21,7 +21,13 @@ module.exports = {
         query: {
           presets: ['env', 'react']
         }
-      }
+      },
+      {
+        test: /\.(woff|woff2|eot|ttf|otf)$/,
+        use: [
+          'file-loader'
+        ]
+      },
     ]
   }
 };

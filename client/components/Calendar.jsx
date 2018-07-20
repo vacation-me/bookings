@@ -5,8 +5,9 @@ const Calendar = (props) => {
   //store month names for retrieval based on an index
   const months = ['Januray', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
   
-  //declare base matrix
+  //create template for month
   let baseMatrix = [
+    [0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0],
@@ -14,19 +15,28 @@ const Calendar = (props) => {
     [0, 0, 0, 0, 0, 0, 0],
   ];
 
-  //get date of first of month from current
-  let first = selected.getDay();
-  for (let i = 0; i < first; i++) {
+  //get data for first day of current month
+  let first = new Date(props.year, props.month, 1);
+  //get data for last day of current month
+  let last = new Date(props.year, props.month + 1, 0);
+
+  //assign first values of matrix to empty value (for proper alignment)
+  for (let i = 0; i < first.getDay(); i++) {
     baseMatrix[0][i] = '';
   }
 
-  for (let i = baseMatrix[4].length - 1; i >= first; i--) {
-    baseMatrix[4][i] = '';
-  }
-  
+
+
+  //declare counter to fill table with dates
   let dateCounter = 1;
+  
   return (
     <div id="cal-container">
+      <div id="calendar-title">
+        <button className='cal-title' id="prev" onClick={(e) => props.click(-1)}>Prev</button>
+        <h3 className='cal-title'>{`${months[first.getMonth()]} ${props.year}`}</h3>
+        <button className='cal-title' id="next" onClick={(e) => props.click(1)}>Next</button>
+      </div>
       <table id="calendar">
         <tbody>
           <tr>
@@ -56,8 +66,6 @@ const Calendar = (props) => {
           ))}
         </tbody>
       </table>
-      <button id="prev" onClick={(e) => props.click(-1)}>Prev</button>
-      <button id="next" onClick={(e) => props.click(1)}>Next</button>
     </div>
   );
 };

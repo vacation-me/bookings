@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Calendar from './components/Calendar.jsx';
-import './style.css';
+import './styles/style.css';
 import $ from 'jquery';
 
 class App extends React.Component {
@@ -9,8 +9,9 @@ class App extends React.Component {
     super();
     const today = new Date();
     this.state = {
-      year: 2019,
-      month: 1,
+      year: today.getFullYear(),
+      month: today.getMonth(),
+      date: today.getDate(),
       booked: []
     };
   }
@@ -22,12 +23,16 @@ class App extends React.Component {
     });
   }
 
+  //receives 1 or -1 as an argument to inicate previous or next month
   handleCal(i) {
-    let month = this.state.month + 1;
+    let month = this.state.month + i;
     let year = this.state.year;
-    if (this.state.month === 11) {
+    if (month === 12) {
       month = 0;
       year++; 
+    } else if (month === -1) {
+      month = 11;
+      year--;
     }
 
     this.setState({
@@ -42,6 +47,7 @@ class App extends React.Component {
         <Calendar 
           year={this.state.year} 
           month={this.state.month}
+          date={this.state.date}
           click={this.handleCal.bind(this)} 
         />
       </div>
