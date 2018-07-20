@@ -3,7 +3,7 @@ import React from 'react';
 
 const Calendar = (props) => {
   //store month names for retrieval based on an index
-  let months = ['Januray', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  const months = ['Januray', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
   
   //create template for month
   let baseMatrix = [
@@ -49,16 +49,16 @@ const Calendar = (props) => {
             <th>Sat</th>
           </tr>
           {baseMatrix.map((week, idx) => (
-            /* map each week (subArray) to a table row */
+            /// map each week (subArray) to a table row 
             <tr>
               {week.map((day) => {
-                /* map each day (subArray value) to a table cell */
+                // map each day (subArray value) to a table cell
                 if (dateCounter > last.getDate()) {
                   //return null if current date to be rendered is greater than the last day of the current month
                   return null;
                 }
                 return ( 
-                  /*assign 'day' class to any valid table cell  /  assign selected-date to todays date or selected / render empty cell for invalid dates  */
+                  // assign 'day' class to any valid table cell  /  assign selected-date to todays date or selected / render empty cell for invalid dates
                   <td className={`${day === '' ? '' : 'day'} ${dateCounter === props.date ? 'selected-date' : ''}`}>{day === '' ? day : dateCounter++}</td>
                 );
               })}
