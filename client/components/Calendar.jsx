@@ -27,6 +27,7 @@ const Calendar = (props) => {
 
   //declare counter to fill table with dates
   let dateCounter = 1;
+  console.log(baseMatrix);
   
   return (
     <div id="cal-container">
@@ -49,20 +50,12 @@ const Calendar = (props) => {
           {baseMatrix.map((week, idx) => (
             /// map each week (subArray) to a table row 
             <tr key={`week${idx}`}>
-              {week.map((day) => {
-                // map each day (subArray value) to a table cell
-                if (dateCounter > last.getDate()) {
-                  //return null if current date to be rendered is greater than the last day of the current month
-                  return null;
-                }
-                return ( 
-                  // assign 'day' class to any valid table cell  /  assign selected-date to todays date or selected / render empty cell for invalid dates
-                  <td 
-                    className={`${day === '' ? '' : 'day'} ${dateCounter === props.date ? 'selected-date' : ''}`}
-                    key={`week${idx}`}>
-                    {day === '' ? day : dateCounter++}</td>
-                );
-              })}
+              {week.map((day) => ( dateCounter > last.getDate() ? null : 
+                // assign 'day' class to any valid table cell  /  assign selected-date to todays date or selected / render empty cell for invalid dates
+                <td className={`${day === '' ? '' : 'day'} ${dateCounter === props.date ? 'selected-date' : ''}`}>
+                  {day === '' ? day : dateCounter++}
+                </td>
+              ))}
             </tr> 
           ))}
         </tbody>

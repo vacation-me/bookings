@@ -1,7 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Calendar from './components/Calendar.jsx';
-import Book from './components/Book.jsx';
+import rightArrow from './styles/icons/right_arrow.svg';
+import downArrow from './styles/icons/down_arrow.svg';
+import flag from './styles/icons/flag.svg';
+import question from './styles/icons/question.svg';
 import './styles/style.css';
 import $ from 'jquery';
 
@@ -37,6 +40,13 @@ class App extends React.Component {
     });
   }
 
+  handleCheckIn() {
+    let currentStage = this.state.checkIn === 0 ? 1 : this.state.checkIn === 1 ? 2 : 0;
+    this.setState({
+      checkIn: currentStage
+    });
+  }
+
   //receives 1 or -1 as an argument to inicate previous or next month
   handleCal(i) {
     let month = this.state.month + i;
@@ -57,23 +67,45 @@ class App extends React.Component {
 
   render() {
     return (
-      <div>
-        <Book 
-          price={this.state.price} 
-          cleaning={this.state.cleaning} 
-          maxGuests={this.state.maxGuests} 
-          minStay={this.state.minStay} 
-          serviceFee={this.state.serviceFee} 
-          booked={this.state.booked}         
-        />
-        {this.state.checkIn === 0 ? null : 
-          <Calendar 
-            year={this.state.year} 
-            month={this.state.month}
-            date={this.state.date}
-            click={this.handleCal.bind(this)} 
-          />
-        }
+      <div id="container">
+        <div id="bookings">
+          <h3>{`$${this.state.price} per night`}</h3>
+          <hr />
+          <div className="select">
+            <h3 onClick={this.handleCheckIn.bind(this)}>Check-in</h3>
+            <img className="icon" src={rightArrow} />
+            <h3 onClick={this.handleCheckIn.bind(this)}>Check-out</h3>
+          </div>
+          {this.state.checkIn === 0 ? null : 
+            <Calendar 
+              checkIn={this.state.checkIn}
+              click={this.handleCal.bind(this)}
+              date={this.state.date}
+              month={this.state.month}
+              year={this.state.year}
+            />
+          }
+          <div className="select">
+            <h3>Guests</h3>
+            <img className="icon" src={downArrow} />
+          </div>
+          {this.state.checkIn === 2 ? 
+            <div id="booking-info">
+              <p className="info-left">{`$${this.state.price} x ${this.state.nights || 1} nights`}</p>
+              <hr />
+              <p className="info-left">Service Fee<img className="small-icon" src={question}/></p>
+            </div>
+            : null
+          }
+          <div className="select" id="book-btn">
+            <h2>Request to Book</h2>
+          </div>
+          <p>You wont be charged</p>
+        </div> 
+        <div className="select" id="report">
+          <img src={flag} className="icon"/>
+          <p>Report this Listing</p>
+        </div>
       </div>
     );
   }
