@@ -1,88 +1,99 @@
 const db = require('./index');
 
-/*-------- generates 100 records of dummy calendar availability data--------*/
-
-/* Example:
-
-Each document represents a year of availability data, each sub array of the year property represents a month
-
-year: [
-  [jan],  -->  [1, 2, 3, 7, 9, 10, 16, 12]
-  [feb],        each month generates a random number of booked dates...
-  [mar],        ...based on the number of days in that month
-  [apr],  
-  [may],
-  [june],
-  [july],
-  [august],
-  [sept],
-  [oct],
-  [nov],
-  [dec]
-]
-*/
-
-//generate a random number between 1 and a given number
-const randomNumberGenerator = function(num) {
-  return Math.ceil(Math.random() * num);
-}
-
-//generates a single month of availability based on that month's length
-const generateDates = function(monthLength) {
-  //generate a random number between 1 and the length of the month
-  let length = randomNumberGenerator(monthLength);
-  //declare storage object
-  let store = {};
-  //declare output array
-  let output = [];
-  //while output array length is less than determined number of dates to book for the month
-  while (output.length < length) {
-    //generate a random number (date)
-    let newNum = randomNumberGenerator(monthLength);
-    //check if number has been used (by checking storage object)
-    if (!store[newNum]) {
-      //push num to output array
-      output.push(newNum);
-      //store num in storage object
-      store[newNum] = true;
-    }
+//clear db
+db.remove({}, (err) => {
+  if (err) {
+    throw err;
   }
-  return output;
-}
-
-//stores the length of each month jan-dec
-const monthLengths = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-
-//generate a year of calendar data (array of 12 subArrays)
-const yearGenerator = function() {
-  let output = [];
-  for (let i = 0; i < monthLengths.length; i++) {
-    output.push(generateDates(monthLengths[i]));
-  }
-  return output;
-}
-
-
-//generates and saves to db, 100 documents
-const calendarGenerator = function(num = 100) {
-  for (let j = 0; j <= num; j++) {
-    //create record from model defined in index.js 
-    var year = new db.Calendar({
-      id: j,
-      year: yearGenerator()
-    });
-    //save document to db
-    year.save();
-  }
-}
-
-//remove all calendar records if they exist
-db.Calendar.remove({}, (err) => {
-  if (err) throw err;
 });
 
-//generate calendar records and save to db
-calendarGenerator();
+//generate a random number between 0 and a given number
+const random = function(num) {
+  return Math.ceil(Math.random() * num);
+};
 
-//tell node to terminate 
-process.exit(-1);
+//generate a price ($100 - 500)
+const price = function() { 
+  return 500 - random(400);
+};
+
+//generate a cleaning fee [50, 75, 100, 125, 150]
+const cleaning = function() {
+  let options = [50, 75, 100, 125, 150];
+  return options[random(4)];
+};
+
+//generate a service fee (0% - 20% of price)
+const serviceFee = function(price) {
+  let percent = random(20) / 100;
+  return Math.ceil(price * percent);
+};
+
+//generate a year of availability info based on the current date
+const bookingsGen = function() {
+  //declare output array
+  let bookings = [];
+  //store current date info
+  let startDate = new Date();
+  //declare counter to track the current month through each iteration
+  let monthCounter = startDate.getMonth();
+  //generate 12 months of availability from the provided start date
+  for (let i = 0; i < 12; i++) {
+    let year = startDate.getFullYear();
+    let last = new Date(year, monthCounter + 1, 0).getDate();
+    //declare output array
+    let month = [];
+    //generate random number of dates to fill (20-70% of month length)
+    let dates = Math.ceil(last * random(70) / 100);
+    if (dates < 10) {
+      dates += 10;
+    }
+    //declare storage object to ensure no duplicate dates
+    let store = {};
+    //begin loop using random number create previously
+    for (let i = 0; i < dates; i++) {
+      let day = random(last);
+      //check if number is stored in number store
+      if (!store[day]) {
+        //push to output
+        month.push(day);
+        //add to num store
+        store[day] = true;
+      }
+    }
+    //push month to output
+    bookings.push(month);
+    //increment month, checking first to start a new year
+    if (monthCounter === 11) {
+      monthCounter = 0;
+      year++;
+    } else {
+      monthCounter++;
+    }
+    //set a new month
+    startDate = new Date(year, monthCounter, 1);
+  }
+  return bookings;
+};
+
+const generator = function() { 
+  for (let i = 0; i < 100; i++) {
+    let nightlyPrice = price();
+    new db({
+      id: i,
+      price: nightlyPrice,
+      cleaning: cleaning(),
+      serviceFee: serviceFee(nightlyPrice),
+      minStay: random(6),
+      maxGuests: random(10),
+      year: bookingsGen(),
+    }).save(process.exit);
+  }
+};
+
+generator();
+
+
+
+
+

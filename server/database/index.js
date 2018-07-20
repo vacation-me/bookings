@@ -1,15 +1,17 @@
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost:27017/bookings', { useNewUrlParser: true });
+mongoose.connect('mongodb://localhost:27017/listings', { useNewUrlParser: true });
 const Schema = mongoose.Schema;
 
-const calendarSchema = new Schema({
+const listingSchema = new Schema({
   id: Number,
-  year: [[Number]]
+  price: Number,
+  cleaning: Number,
+  serviceFee: Number,
+  minStay: Number,
+  maxGuests: Number,
+  year: [[Number]],
 });
 
-const Calendar = mongoose.model('Calendar', calendarSchema);
+const Listing = mongoose.model('Listing', listingSchema);
 
-module.exports = {
-  calendarSchema,
-  Calendar,
-}
+module.exports = Listing;
