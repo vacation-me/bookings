@@ -1,4 +1,6 @@
 import React from 'react';
+import left from '../styles/icons/cal_left.svg';
+import right from '../styles/icons/cal_right.svg';
 
 
 const Calendar = (props) => {
@@ -32,9 +34,9 @@ const Calendar = (props) => {
   return (
     <div id="cal-container">
       <div id="calendar-title">
-        <button className='cal-title' id="prev" onClick={(e) => props.click(-1)}>Prev</button>
+        <img  src={left} className='cal-title icon' id="prev" onClick={(e) => props.click(-1)}/>
         <h3 className='cal-title'>{`${months[first.getMonth()]} ${props.year}`}</h3>
-        <button className='cal-title' id="next" onClick={(e) => props.click(1)}>Next</button>
+        <img src={right} className='cal-title icon' id="next" onClick={(e) => props.click(1)}/>
       </div>
       <table id="calendar">
         <tbody>
