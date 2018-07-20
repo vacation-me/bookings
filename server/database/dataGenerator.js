@@ -25,7 +25,7 @@ year: [
 //generate a random number between 1 and a given number
 const randomNumberGenerator = function(num) {
   return Math.ceil(Math.random() * num);
-}
+};
 
 //generates a single month of availability based on that month's length
 const generateDates = function(monthLength) {
@@ -48,7 +48,7 @@ const generateDates = function(monthLength) {
     }
   }
   return output;
-}
+};
 
 //stores the length of each month jan-dec
 const monthLengths = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
@@ -60,7 +60,7 @@ const yearGenerator = function() {
     output.push(generateDates(monthLengths[i]));
   }
   return output;
-}
+};
 
 
 //generates and saves to db, 100 documents
@@ -74,11 +74,13 @@ const calendarGenerator = function(num = 100) {
     //save document to db
     year.save();
   }
-}
+};
 
 //remove all calendar records if they exist
 db.Calendar.remove({}, (err) => {
-  if (err) throw err;
+  if (err) {
+    throw err;
+  }
 });
 
 //generate calendar records and save to db

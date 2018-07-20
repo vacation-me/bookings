@@ -1,0 +1,47 @@
+@font-face {
+  font-family: 'Lato';
+  src: url('./fonts/Lato-Light.ttf') format('truetype');
+}
+
+
+#cal-container {
+  font-family: 'Lato';
+  text-align: center;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+#calendar {
+  padding: 0.5rem;
+  min-height: 174px;
+  width: 234px;
+}
+
+#calendar-title {
+  min-width: 234px;
+}
+.cal-title {
+  display: inline-flex;
+  margin: 5px;
+}
+
+.selected-date {
+  background-color: rgb(0, 119, 255);
+}
+.day:hover {
+  background-color: rgb(68, 152, 248);
+  cursor: pointer;
+}
+#next {
+  float: right;
+}
+
+#prev {
+  float: left;
+}
+
+.day {
+  border: 1px solid lightgray;
+}
