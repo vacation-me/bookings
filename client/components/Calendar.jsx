@@ -34,7 +34,7 @@ const Calendar = (props) => {
   return (
     <div id="cal-container">
       <div id="calendar-title">
-        <img  src={left} className='cal-title icon' id="prev" onClick={(e) => props.click(-1)}/>
+        <img src={left} className='cal-title icon' id="prev" onClick={(e) => props.click(-1)}/>
         <h3 className='cal-title'>{`${months[first.getMonth()]} ${props.year}`}</h3>
         <img src={right} className='cal-title icon' id="next" onClick={(e) => props.click(1)}/>
       </div>
