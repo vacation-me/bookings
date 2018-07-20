@@ -39,7 +39,7 @@ const generateBookings = function() {
       dateCount += 10;
     }
     let store = {};
-    for (let i = 0; i < dates; i++) {
+    for (let i = 0; i < dateCount; i++) {
       let day = random(last);
       if (!store[day]) {
         month.push(day);
