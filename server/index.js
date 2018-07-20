@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const parser = require('body-parser');
-const db = require('./database/index').Calendar;
+const db = require('./database/index');
 
 app.use(express.static('./public'));
 
@@ -28,4 +28,4 @@ app.get('/cal', (req, resp) => {
 //set port environment variable to prepare for deployment
 const port = process.env.PORT || 3000;
 
-app.listen(port, () => console.log(`Database seeded. Server running on port ${port}`));
+app.listen(port, () => console.log(`Server running on port ${port}`));

@@ -3,6 +3,10 @@
   src: url('./fonts/Lato-Light.ttf') format('truetype');
 }
 
+#bookings {
+  width: 376px;
+  height: 367px;
+}
 
 #cal-container {
   font-family: 'Lato';

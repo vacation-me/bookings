@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Calendar from './components/Calendar.jsx';
+import Book from './components/Book.jsx';
 import './styles/style.css';
 import $ from 'jquery';
 
@@ -12,6 +13,7 @@ class App extends React.Component {
       year: today.getFullYear(),
       month: today.getMonth(),
       date: today.getDate(),
+      checkIn: 0,
       booked: []
     };
   }
@@ -44,12 +46,15 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <Calendar 
-          year={this.state.year} 
-          month={this.state.month}
-          date={this.state.date}
-          click={this.handleCal.bind(this)} 
-        />
+        <Book />
+        {this.state.checkIn === 0 ? null : 
+          <Calendar 
+            year={this.state.year} 
+            month={this.state.month}
+            date={this.state.date}
+            click={this.handleCal.bind(this)} 
+          />
+        }
       </div>
     );
   }
