@@ -7,6 +7,7 @@ import $ from 'jquery';
 class App extends React.Component {
   constructor() {
     super();
+    const today = new Date();
     this.state = {
       year: 2019,
       month: 1,
