@@ -40,14 +40,11 @@ class App extends React.Component {
     });
   }
 
-  handleCheckIn() {
-    let currentStage = this.state.checkIn === 0 ? 1 : this.state.checkIn === 1 ? 2 : 0;
-    this.setState({
-      checkIn: currentStage
-    });
+  handleCheckIn(which) {
+    this.setState({checkIn: which});
   }
 
-  //receives 1 or -1 as an argument to inicate previous or next month
+  // receives 1 or -1 as an argument to inicate previous or next month
   handleCal(i) {
     let month = this.state.month + i;
     let year = this.state.year;
@@ -72,9 +69,9 @@ class App extends React.Component {
           <h3>{`$${this.state.price} per night`}</h3>
           <hr />
           <div className="select">
-            <h3 onClick={this.handleCheckIn.bind(this)}>Check-in</h3>
+            <h3 onClick={() => this.handleCheckIn('in')}>Check-in</h3>
             <img className="icon" src={rightArrow} />
-            <h3 onClick={this.handleCheckIn.bind(this)}>Check-out</h3>
+            <h3 onClick={() => this.handleCheckIn('out')}>Check-out</h3>
           </div>
           {this.state.checkIn === 0 ? null : 
             <Calendar 

@@ -29,10 +29,9 @@ const Calendar = (props) => {
 
   //declare counter to fill table with dates
   let dateCounter = 1;
-  console.log(baseMatrix);
   
   return (
-    <div id="cal-container">
+    <div id={'cal-container'} className={`${props.checkIn === 'out' ? 'check-out' : ''}`}>
       <div id="calendar-title">
         <img src={left} className='cal-title icon' id="prev" onClick={(e) => props.click(-1)}/>
         <h3 className='cal-title'>{`${months[first.getMonth()]} ${props.year}`}</h3>
