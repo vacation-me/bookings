@@ -20,11 +20,10 @@
 }
 
 #bookings {
-  width: 376px;
+  width: 326px;
   min-height: 380px;
   padding: 0 24px;
   border: 1px solid lightgrey;
-  border-radius: 5px;
 }
 
 p {
@@ -38,7 +37,7 @@ p {
   opacity: 1.0;
   border: 1px solid rgb(219, 219, 219);
   border-radius: 5px;
-  width: 355px;
+  width: 333px;
   position: absolute;
   top: 155px;
   padding: 4px;
@@ -127,7 +126,6 @@ p {
 
 .booked, .booked:hover {
   color: rgba(167, 167, 167, 0.795);
-  background-color: white;
 }
 
 .day {

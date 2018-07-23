@@ -69,6 +69,8 @@ class App extends React.Component {
     this.setState({
       stage: 'in',
       requestedDates: [],
+      year: this.today.getFullYear(),
+      month: this.today.getMonth(),
     });
   }
 

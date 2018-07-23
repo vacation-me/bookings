@@ -24,7 +24,7 @@ const Calendar = (props) => {
   let dateCounter = 1;
   
   const renderDateCell = function (currentCell) {
-    let currentCellDate = new Date(props.year, props.month, dateCounter);
+    const currentCellDate = new Date(props.year, props.month, dateCounter);
     // assign 'day' class to any valid table cell  /  assign selected-date to todays date or selected / render empty cell for invalid dates
     if (dateCounter > last.getDate()) {
       return null;
@@ -38,7 +38,8 @@ const Calendar = (props) => {
       classNames += 'selected-date ';
     } else if (props.range.length === 2 && currentCellDate > props.range[0] && currentCellDate < props.range[1]) {
       classNames += 'range ';
-    } else if (dateCounter === bookedDates[bookedDates.length - 1]) {
+    } 
+    if (dateCounter === bookedDates[bookedDates.length - 1]) {
       classNames += 'booked ';
       clickHandler = null; 
       bookedDates.pop();
