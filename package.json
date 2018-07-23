@@ -10,10 +10,10 @@
   "jest": {
     "verbose": true,
     "moduleNameMapper": {
-      "\\.(css|scss)$": "<rootDir>/__test__/config/style.js"
+      "\\.(css|scss|svg)$": "<rootDir>/__test__/config/emptyModule.js"
     },
     "resolver": null,
-    "setupTestFrameworkScriptFile": "<rootDir>/__test__/setup.js",
+    "setupTestFrameworkScriptFile": "<rootDir>/__test__/config/setup.js",
     "testMatch": [
       "**/client/components/**/*.test.js",
       "**/__test__/*.js"
@@ -33,6 +33,7 @@
     "file-loader": "^1.1.11",
     "jquery": "^3.3.1",
     "mongoose": "^5.2.4",
+    "path": "^0.12.7",
     "react": "^16.4.1",
     "react-dom": "^16.4.1"
   },

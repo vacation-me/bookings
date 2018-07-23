@@ -24,16 +24,20 @@ const Calendar = (props) => {
   let dateCounter = 1;
   
   const renderDateCell = function (currentCell) {
-    const currentCellDate = new Date(props.year, props.month, dateCounter);
-    // assign 'day' class to any valid table cell  /  assign selected-date to todays date or selected / render empty cell for invalid dates
     if (dateCounter > last.getDate()) {
       return null;
     }
+    const currentCellDate = new Date(props.year, props.month, dateCounter);
     let classNames = '';
+    let key = 'dateCell';
+    let nullCount = 0
     let clickHandler = (e) => props.handleSelect(e, 'click');
     if (currentCell === 0) {
       classNames += 'day ';
-    } 
+      key += dateCounter;
+    } else if (currentCell === '') {
+      key = `null${nullCount++}`;
+    }
     if ((props.range[0] !== undefined && props.range[0].toDateString() === currentCellDate.toDateString()) || (props.range[1] !== undefined && props.range[1].toDateString() === currentCellDate.toDateString())) {
       classNames += 'selected-date ';
     } else if (props.range.length === 2 && currentCellDate > props.range[0] && currentCellDate < props.range[1]) {
@@ -48,7 +52,8 @@ const Calendar = (props) => {
       <td 
         className={classNames}
         onClick={clickHandler}
-        onMouseOver={(e) => props.handleMouseOver(e.target.innerHTML, 'mouseOver')}>
+        onMouseOver={(e) => props.handleMouseOver(e.target.innerHTML, 'mouseOver')}
+        key={key}>
         {currentCell === '' ? '' : dateCounter++}
       </td>
     );
