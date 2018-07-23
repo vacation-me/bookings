@@ -98,9 +98,15 @@ class App extends React.Component {
           <h3><span id="price">{`$${this.state.price}`}</span> per night</h3>
           <hr />
           <div className="sub-component">
-            <h3 className={this.state.stage === 'in' ? 'current-stage' : ''} onClick={() => this.handleCheckInClick('in')}>Check-in</h3>
+            <h3 className={this.state.stage === 'in' ? 'current-stage' : ''} onClick={() => this.handleCheckInClick('in')}>{
+              this.state.requestedDates[0] === undefined ? 'Check-in' :
+                `${this.state.requestedDates[0].getMonth()}/${this.state.requestedDates[0].getDate()}/${this.state.requestedDates[0].getFullYear()}`
+            }</h3>
             <img className="icon" src={rightArrow} />
-            <h3 className={this.state.stage === 'out' ? 'current-stage' : ''} onClick={() => this.handleCheckInClick('out')}>Check-out</h3>
+            <h3 className={this.state.stage === 'out' ? 'current-stage' : ''} onClick={() => this.handleCheckInClick('out')}>{
+              this.state.requestedDates[1] === undefined ? 'Check-out' :
+                `${this.state.requestedDates[1].getMonth()}/${this.state.requestedDates[1].getDate()}/${this.state.requestedDates[1].getFullYear()}`
+            }</h3>
           </div>
           {this.state.stage === 0 || this.state.stage === 'ready' ? null : 
             <Calendar 
@@ -131,7 +137,7 @@ class App extends React.Component {
           <div className="sub-component" id="book-btn">
             <h2>Request to Book</h2>
           </div>
-          <p>You wont be charged</p>
+          <p>You won't be charged</p>
         </div> 
         <div className="sub-component" id="report">
           <img src={flag} className="icon"/>
