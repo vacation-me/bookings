@@ -11,11 +11,10 @@ import $ from 'jquery';
 class App extends React.Component {
   constructor() {
     super();
-    const today = new Date();
+    this.today = new Date();
     this.state = {
-      date: today,
-      year: today.getFullYear(),
-      month: today.getMonth(),
+      year: this.today.getFullYear(),
+      month: this.today.getMonth(),
       requestedDates: [],
       stage: 0,
       price: 0,
@@ -41,13 +40,12 @@ class App extends React.Component {
     });
   }
 
-  // handles moving the calendar to the next stage (check-in > check-out > render pricing)
-  handleCheckIn(nextStage) {
-    this.setState({stage: nextStage === this.state.stage ? 0 : nextStage});
+  handleCheckInClick(newStage) {
+    this.setState({stage: this.state.stage === newStage ? 0 : newStage});
   }
 
   // handles moving the calendar to the next or previous month
-  handleCal(i) {
+  handleCalendar(i) {
     let newMonth = this.state.month + i;
     let newYear = this.state.year;
     if (newMonth === 12) {
@@ -63,8 +61,34 @@ class App extends React.Component {
     });
   }
 
-  handleDateSelect(e, type) {
-    //handle date selection here
+  handleMouseOver(target) {
+    // console.log(target)
+  }
+
+  handleClearDates() {
+    this.setState({
+      stage: 'in',
+      requestedDates: [],
+    });
+  }
+
+  //handle date selection
+  handleDateSelect(e) {
+    let requestedDates = this.state.requestedDates;
+    let target = +e.target.innerHTML;
+    let stage = this.state.stage;
+    if (stage === 'in') {
+      stage = 'out';
+    } else if (stage === 'out') {
+      stage = 'ready';
+    }
+    if (requestedDates.length < 2) {
+      requestedDates.push(new Date(this.state.year, this.state.month, target));
+    }
+    this.setState({
+      requestedDates,
+      stage,
+    });
   }
 
   render() {
@@ -74,30 +98,31 @@ class App extends React.Component {
           <h3><span id="price">{`$${this.state.price}`}</span> per night</h3>
           <hr />
           <div className="sub-component">
-            <h3 className={this.state.stage === 'in' ? 'current-stage' : ''} onClick={() => this.handleCheckIn('in')}>Check-in</h3>
+            <h3 className={this.state.stage === 'in' ? 'current-stage' : ''} onClick={() => this.handleCheckInClick('in')}>Check-in</h3>
             <img className="icon" src={rightArrow} />
-            <h3 className={this.state.stage === 'out' ? 'current-stage' : ''} onClick={() => this.handleCheckIn('out')}>Check-out</h3>
+            <h3 className={this.state.stage === 'out' ? 'current-stage' : ''} onClick={() => this.handleCheckInClick('out')}>Check-out</h3>
           </div>
-          {this.state.stage === 0 ? null : 
+          {this.state.stage === 0 || this.state.stage === 'ready' ? null : 
             <Calendar 
               stage={this.state.stage}
-              click={this.handleCal.bind(this)}
-              selected={this.state.selected}
-              currentDate={this.state.date}
+              currentDate={this.today}
               month={this.state.month}
               year={this.state.year}
               range={this.state.requestedDates}
               bookedDates={this.state.bookedDates}
+              handleCalendar={this.handleCalendar.bind(this)}
               handleSelect={this.handleDateSelect.bind(this)}
+              handleMouseOver={this.handleMouseOver.bind(this)}
+              clearDates={this.handleClearDates.bind(this)}
             />
           }
           <div className="sub-component">
             <h3>Guests</h3>
             <img className="icon" src={downArrow} />
           </div>
-          {true ? 
+          {this.state.stage === 'ready' ? 
             <div id="booking-info">
-              <p className="info-left">{`$${this.state.price} x ${this.state.nights || 1} nights`}</p>
+              <p className="info-left">{`$${this.state.price} x ${this.state.requestedDates[1].getDate() - this.state.requestedDates[0].getDate()} nights`}</p>
               <hr />
               <p className="info-left">Service Fee<img className="small-icon" src={question}/></p>
             </div>

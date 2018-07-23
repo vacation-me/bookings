@@ -24,6 +24,7 @@ const Calendar = (props) => {
   let dateCounter = 1;
   
   const renderDateCell = function (currentCell) {
+    let currentCellDate = new Date(props.year, props.month, dateCounter);
     // assign 'day' class to any valid table cell  /  assign selected-date to todays date or selected / render empty cell for invalid dates
     if (dateCounter > last.getDate()) {
       return null;
@@ -33,8 +34,11 @@ const Calendar = (props) => {
     if (currentCell === 0) {
       classNames += 'day ';
     } 
-    
-    if (dateCounter === bookedDates[bookedDates.length - 1]) {
+    if ((props.range[0] !== undefined && props.range[0].toDateString() === currentCellDate.toDateString()) || (props.range[1] !== undefined && props.range[1].toDateString() === currentCellDate.toDateString())) {
+      classNames += 'selected-date ';
+    } else if (props.range.length === 2 && currentCellDate > props.range[0] && currentCellDate < props.range[1]) {
+      classNames += 'range ';
+    } else if (dateCounter === bookedDates[bookedDates.length - 1]) {
       classNames += 'booked ';
       clickHandler = null; 
       bookedDates.pop();
@@ -43,7 +47,7 @@ const Calendar = (props) => {
       <td 
         className={classNames}
         onClick={clickHandler}
-        onMouseOver={(e) => props.handleSelect(e, 'mouseOver')}>
+        onMouseOver={(e) => props.handleMouseOver(e.target.innerHTML, 'mouseOver')}>
         {currentCell === '' ? '' : dateCounter++}
       </td>
     );
@@ -58,9 +62,9 @@ const Calendar = (props) => {
   return (
     <div id='cal-container'>
       <div id="calendar-title">
-        <img src={left} className='cal-title icon' onClick={() => props.click(-1)}/>
+        <img src={left} className='cal-title icon' onClick={() => props.handleCalendar(-1)}/>
         <h3 className='cal-title'>{`${months[first.getMonth()]} ${props.year}`}</h3>
-        <img src={right} className='cal-title icon' onClick={() => props.click(1)}/>
+        <img src={right} className='cal-title icon' onClick={() => props.handleCalendar(1)}/>
       </div>
       <table id="calendar">
         <tbody>
@@ -80,6 +84,7 @@ const Calendar = (props) => {
           ))}
         </tbody>
       </table>
+      <p onClick={props.clearDates} style={{color: 'rgb(0, 166, 153)'}}>Clear Dates</p>
     </div>
   );
 };

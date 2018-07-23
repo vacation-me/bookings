@@ -24,6 +24,7 @@
   min-height: 380px;
   padding: 0 24px;
   border: 1px solid lightgrey;
+  border-radius: 5px;
 }
 
 p {
@@ -36,6 +37,7 @@ p {
   background-color: #ffffff;
   opacity: 1.0;
   border: 1px solid rgb(219, 219, 219);
+  border-radius: 5px;
   width: 355px;
   position: absolute;
   top: 155px;
@@ -92,9 +94,7 @@ p {
   color: #ffffff;
   height: 50px;
 }
-.current-stage {
-  background-color: 
-}
+
 #calendar {
   min-height: 298px;
   width: 318px;
@@ -105,6 +105,7 @@ p {
   display: flex;
   justify-content: space-around;
 }
+
 .cal-title {
   display: inline-flex;
   margin: 5px;
