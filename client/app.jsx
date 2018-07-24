@@ -56,12 +56,12 @@ class App extends React.Component {
     this.setState({checkOutStage: newStage});
   }
 
-  toggleGuestSelect() {
+  toggleGuestSelectView() {
     const newStatus = !this.state.isSelectingGuests;
     this.setState({isSelectingGuests: newStatus});
   }
 
-  toggleGuestCount(type, num) {
+  updateGuestCount(type, num) {
     let guestCount = this.state.guestCount;
     guestCount[type] += num;
     if (guestCount[type] < 0) {
@@ -146,7 +146,7 @@ class App extends React.Component {
       icon = upArrow;
     }
     return (
-      <div className="sub-component" onClick={this.toggleGuestSelect.bind(this)}>
+      <div className="sub-component" onClick={this.toggleGuestSelectView.bind(this)}>
         <h3>{output}</h3> 
         <img className="icon" src={icon} />
       </div>
@@ -176,9 +176,9 @@ class App extends React.Component {
           {this.state.isSelectingGuests ? 
             <Guests 
               maxGuests={this.state.maxGuests} 
-              toggleGuestCount={this.toggleGuestCount.bind(this)}
+              updateGuestCount={this.updateGuestCount.bind(this)}
               guestCount={this.state.guestCount}
-              toggleView={this.toggleGuestSelect.bind(this)}
+              toggleView={this.toggleGuestSelectView.bind(this)}
             /> : null}
           {this.state.checkOutStage === 3 ? 
             <Pricing price={this.state.price} requestedDates={this.state.requestedDates} />

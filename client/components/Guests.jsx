@@ -7,17 +7,16 @@ import minus from '../styles/icons/minus.svg';
 const Guests = (props) => {
   const renderButton = (type, btnIndex) => {
     //render an icon depending on whether the max guest limit is reached
-    //remove click handler and add disabled class if max limit is reached
-    let icon = '';
+    //remove click handler and add disabled class if max guest limit is reached
+
+    let icon = plus;
     let incrementor = btnIndex % 2 === 0 ? -1 : 1;
-    let clickHandler = () => props.toggleGuestCount(type, incrementor);
+    let clickHandler = () => props.updateGuestCount(type, incrementor);
     let classNames = 'large-icon';
     
     //check if btn index is even and assign icon variable
     if (btnIndex % 2 === 0) {
       icon = minus;
-    } else {
-      icon = plus;
     }
 
     //check if max guest is reacehed and if current index is for adult/children and if operating on plus icon
@@ -25,11 +24,10 @@ const Guests = (props) => {
       || (props.guestCount[type] === 0 && btnIndex % 2 === 0)
       || (btnIndex === 0 && props.guestCount.adults === 1)) {
       classNames += ' disabled';
-      clickHandler = () => {};
+      clickHandler = null;
     }
 
     return (<img src={icon} className={classNames} onClick={clickHandler}/>);
-
   };
 
   return (
