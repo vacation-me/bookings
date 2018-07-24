@@ -30,7 +30,8 @@ const Calendar = (props) => {
     const currentCellDate = new Date(props.year, props.month, dateCounter);
     let classNames = '';
     let key = 'dateCell';
-    let nullCount = 0
+    let nullCount = 0;
+    let array = [1,2,3,4,5];
     let clickHandler = (e) => props.handleSelect(e, 'click');
     if (currentCell === 0) {
       classNames += 'day ';

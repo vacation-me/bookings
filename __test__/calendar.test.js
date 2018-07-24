@@ -8,7 +8,7 @@ describe('should start the next year when clicking next on December', () => {
       year={2018} 
       month={11} 
       currentDate={new Date()}
-      bookedDates={[[1],[2],[3],[4],[5],[6],[7],[8],[9],[10],[11],[12]]}
+      bookedDates={[[1], [2], [3], [4], [5], [6], [7], [8], [9], [10], [11], [12]]}
       range={[]}
     />);
     const title = wrapper.find('h3');

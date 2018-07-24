@@ -7,7 +7,7 @@
   "engines": {
     "node": ">=6.13.0"
   },
-  "pre-commit": ["lint"],
+  "pre-commit": ["lint", "test"],
   "jest": {
     "verbose": true,
     "moduleNameMapper": {
@@ -27,7 +27,7 @@
     "server-dev": "nodemon --inspect server/index.js",
     "seed-db": "node ./server/database/dataGenerator.js",
     "test": "jest",
-    "lint": "eslint ./ --cache --ignore-pattern .gitignore"
+    "lint": "eslint ./ --cache"
   },
   "dependencies": {
     "body-parser": "^1.18.3",
