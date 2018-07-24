@@ -1,11 +1,11 @@
 import React from 'react';
+import left from '../styles/icons/cal_left.svg';
+import right from '../styles/icons/cal_right.svg';
 
 
 const Calendar = (props) => {
-  // store month names for retrieval based on an index
-  const months = ['Januray', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
-  // create template for month
   const baseMatrix = [
     [0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0],
@@ -14,26 +14,57 @@ const Calendar = (props) => {
     [0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0],
   ];
-  // get data for first day of current month
-  const first = new Date(props.year, props.month, 1);
-  
-  //get data for last day of current month
-  const last = new Date(props.year, props.month + 1, 0);
 
-  //assign first values of matrix to empty value (for proper alignment)
-  for (let i = 0; i < first.getDay(); i++) {
-    baseMatrix[0][i] = '';
-  }
+  const monthFirstDay = new Date(props.year, props.month, 1);
+  const monthLastDay = new Date(props.year, props.month + 1, 0);
+  const currentMonth = new Date().getMonth();
 
+  const bookingsMonthIndex = props.month < currentMonth ? currentMonth + props.month : props.month - currentMonth;
+  let bookedDates = props.bookedDates[bookingsMonthIndex].slice().sort((a, b) => b - a);
   //declare counter to fill table with dates
   let dateCounter = 1;
   
+  const renderDateCell = function (currentCell) {
+    if (dateCounter > monthLastDay.getDate()) {
+      return null;
+    }
+    const currentCellDate = new Date(props.year, props.month, dateCounter);
+    let classNames = '';
+    let clickHandler = (e) => props.selectDate(+e.target.innerHTML);
+    if (currentCell === 0) {
+      classNames += 'day ';
+    } 
+    if ((props.requestedDates[0] !== undefined && props.requestedDates[0].toDateString() === currentCellDate.toDateString()) || (props.requestedDates[1] !== undefined && props.requestedDates[1].toDateString() === currentCellDate.toDateString())) {
+      classNames += 'selected-date ';
+    } else if (props.requestedDates.length === 2 && currentCellDate > props.requestedDates[0] && currentCellDate < props.requestedDates[1]) {
+      classNames += 'range ';
+    } 
+    if (dateCounter === bookedDates[bookedDates.length - 1]) {
+      classNames += 'booked ';
+      clickHandler = null; 
+      bookedDates.pop();
+    }
+    return (
+      <td 
+        className={classNames}
+        onClick={clickHandler}>
+        {currentCell === '' ? '' : dateCounter++}
+      </td>
+    );
+  };
+
+  //assign first values of matrix to empty value (for proper alignment)
+  for (let i = 0; i < monthFirstDay.getDay(); i++) {
+    baseMatrix[0][i] = '';
+  }
+
+  
   return (
-    <div id="cal-container">
+    <div id='cal-container'>
       <div id="calendar-title">
-        <button className='cal-title' id="prev" onClick={(e) => props.click(-1)}>Prev</button>
-        <h3 className='cal-title'>{`${months[first.getMonth()]} ${props.year}`}</h3>
-        <button className='cal-title' id="next" onClick={(e) => props.click(1)}>Next</button>
+        <img src={left} className='cal-title icon' onClick={() => props.changeMonth(-1)}/>
+        <h3 className='cal-title'>{`${months[monthFirstDay.getMonth()]} ${props.year}`}</h3>
+        <img src={right} className='cal-title icon' onClick={() => props.changeMonth(1)}/>
       </div>
       <table id="calendar">
         <tbody>
@@ -47,26 +78,13 @@ const Calendar = (props) => {
             <th>Sat</th>
           </tr>
           {baseMatrix.map((week, idx) => (
-            /// map each week (subArray) to a table row 
             <tr key={`week${idx}`}>
-              {week.map((day) => {
-                // map each day (subArray value) to a table cell
-                if (dateCounter > last.getDate()) {
-                  //return null if current date to be rendered is greater than the last day of the current month
-                  return null;
-                }
-                return ( 
-                  // assign 'day' class to any valid table cell  /  assign selected-date to todays date or selected / render empty cell for invalid dates
-                  <td 
-                    className={`${day === '' ? '' : 'day'} ${dateCounter === props.date ? 'selected-date' : ''}`}
-                    key={`day${dateCounter}`}>
-                    {day === '' ? day : dateCounter++}</td>
-                );
-              })}
+              {week.map(renderDateCell)}
             </tr> 
           ))}
         </tbody>
       </table>
+      <p onClick={props.clearDates} style={{color: 'rgb(0, 166, 153)'}}>Clear Dates</p>
     </div>
   );
 };
