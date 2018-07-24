@@ -15,34 +15,28 @@ const Calendar = (props) => {
     [0, 0, 0, 0, 0, 0, 0],
   ];
 
-  const first = new Date(props.year, props.month, 1);
-  const last = new Date(props.year, props.month + 1, 0);
-  const currentMonth = props.currentDate.getMonth();
-  const bookingsIndex = props.month < currentMonth ? currentMonth + props.month : props.month - currentMonth;
-  let bookedDates = props.bookedDates[bookingsIndex].slice().sort((a, b) => b - a);
+  const monthFirstDay = new Date(props.year, props.month, 1);
+  const monthLastDay = new Date(props.year, props.month + 1, 0);
+  const currentMonth = new Date().getMonth();
+
+  const bookingsMonthIndex = props.month < currentMonth ? currentMonth + props.month : props.month - currentMonth;
+  let bookedDates = props.bookedDates[bookingsMonthIndex].slice().sort((a, b) => b - a);
   //declare counter to fill table with dates
   let dateCounter = 1;
   
   const renderDateCell = function (currentCell) {
-    if (dateCounter > last.getDate()) {
+    if (dateCounter > monthLastDay.getDate()) {
       return null;
     }
     const currentCellDate = new Date(props.year, props.month, dateCounter);
     let classNames = '';
-    let key = 'dateCell';
-    let nullCount = 0;
-    let array = [1,2,
-    3,4,5];
-    let clickHandler = (e) => props.handleSelect(e, 'click');
+    let clickHandler = (e) => props.selectDate(+e.target.innerHTML);
     if (currentCell === 0) {
       classNames += 'day ';
-      key += dateCounter;
-    } else if (currentCell === '') {
-      key = `null${nullCount++}`;
-    }
-    if ((props.range[0] !== undefined && props.range[0].toDateString() === currentCellDate.toDateString()) || (props.range[1] !== undefined && props.range[1].toDateString() === currentCellDate.toDateString())) {
+    } 
+    if ((props.requestedDates[0] !== undefined && props.requestedDates[0].toDateString() === currentCellDate.toDateString()) || (props.requestedDates[1] !== undefined && props.requestedDates[1].toDateString() === currentCellDate.toDateString())) {
       classNames += 'selected-date ';
-    } else if (props.range.length === 2 && currentCellDate > props.range[0] && currentCellDate < props.range[1]) {
+    } else if (props.requestedDates.length === 2 && currentCellDate > props.requestedDates[0] && currentCellDate < props.requestedDates[1]) {
       classNames += 'range ';
     } 
     if (dateCounter === bookedDates[bookedDates.length - 1]) {
@@ -53,16 +47,14 @@ const Calendar = (props) => {
     return (
       <td 
         className={classNames}
-        onClick={clickHandler}
-        onMouseOver={(e) => props.handleMouseOver(e.target.innerHTML, 'mouseOver')}
-        key={key}>
+        onClick={clickHandler}>
         {currentCell === '' ? '' : dateCounter++}
       </td>
     );
   };
 
   //assign first values of matrix to empty value (for proper alignment)
-  for (let i = 0; i < first.getDay(); i++) {
+  for (let i = 0; i < monthFirstDay.getDay(); i++) {
     baseMatrix[0][i] = '';
   }
 
@@ -70,9 +62,9 @@ const Calendar = (props) => {
   return (
     <div id='cal-container'>
       <div id="calendar-title">
-        <img src={left} className='cal-title icon' onClick={() => props.handleCalendar(-1)}/>
-        <h3 className='cal-title'>{`${months[first.getMonth()]} ${props.year}`}</h3>
-        <img src={right} className='cal-title icon' onClick={() => props.handleCalendar(1)}/>
+        <img src={left} className='cal-title icon' onClick={() => props.changeMonth(-1)}/>
+        <h3 className='cal-title'>{`${months[monthFirstDay.getMonth()]} ${props.year}`}</h3>
+        <img src={right} className='cal-title icon' onClick={() => props.changeMonth(1)}/>
       </div>
       <table id="calendar">
         <tbody>

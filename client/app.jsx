@@ -11,23 +11,23 @@ import $ from 'jquery';
 class App extends React.Component {
   constructor() {
     super();
-    this.today = new Date();
     this.state = {
-      year: this.today.getFullYear(),
-      month: this.today.getMonth(),
+      year: new Date().getFullYear(),
+      month: new Date().getMonth(),
+      bookedDates: [],
       requestedDates: [],
-      stage: 0,
+      checkOutStage: 0,
       price: 0,
       cleaning: 0,
       maxGuests: 0,
       minStay: 0,
       serviceFee: 0,
-      bookedDates: []
     };
+    this.getCalendarTitle = this.getCalendarTitle.bind(this);
   }
 
   componentDidMount() {
-    $.get('/cal', (res) => {
+    $.get('/listing_info', (res) => {
       let result = JSON.parse(res);
       this.setState({
         price: result.price,
@@ -40,12 +40,13 @@ class App extends React.Component {
     });
   }
 
-  handleCheckInClick(newStage) {
-    this.setState({stage: this.state.stage === newStage ? 0 : newStage});
+
+  setNextStage(newStage) {
+    this.setState({checkOutStage: newStage});
   }
 
   // handles moving the calendar to the next or previous month
-  handleCalendar(i) {
+  changeMonth(i) {
     let newMonth = this.state.month + i;
     let newYear = this.state.year;
     if (newMonth === 12) {
@@ -61,35 +62,45 @@ class App extends React.Component {
     });
   }
 
-  handleMouseOver(target) {
-    // console.log(target)
-  }
-
-  handleClearDates() {
+  clearDates() {
     this.setState({
-      stage: 'in',
+      checkOutStage: 1,
       requestedDates: [],
-      year: this.today.getFullYear(),
-      month: this.today.getMonth(),
+      year: new Date().getFullYear(),
+      month: new Date().getMonth(),
     });
   }
 
+  getCalendarTitle(checkOutStage) {
+    const titles = ['Check-in', 'Check-out'];
+    let classNames = '';
+    let text = '';
+    if (this.state.requestedDates.length < checkOutStage + 1) {
+      text = titles[checkOutStage];
+    } else if (this.state.requestedDates.length >= checkOutStage + 1) {
+      text = `${this.state.requestedDates[checkOutStage].getMonth()}/${this.state.requestedDates[checkOutStage].getDate()}/${this.state.requestedDates[checkOutStage].getFullYear()}`;
+    }
+    if (this.state.checkOutStage === checkOutStage + 1) {
+      classNames = 'current-stage';
+    }
+    return (<h3 className={classNames} onClick={() => this.setNextStage(checkOutStage + 1)}>{text}</h3>);
+  }
+
   //handle date selection
-  handleDateSelect(e) {
+  setSelectedDate(selectedDate) {
     let requestedDates = this.state.requestedDates;
-    let target = +e.target.innerHTML;
-    let stage = this.state.stage;
-    if (stage === 'in') {
-      stage = 'out';
-    } else if (stage === 'out') {
-      stage = 'ready';
+    let checkOutStage = this.state.checkOutStage;
+    if (checkOutStage === 1) {
+      checkOutStage = 2;
+    } else if (checkOutStage === 2) {
+      checkOutStage = 3;
     }
     if (requestedDates.length < 2) {
-      requestedDates.push(new Date(this.state.year, this.state.month, target));
+      requestedDates.push(new Date(this.state.year, this.state.month, selectedDate));
     }
     this.setState({
       requestedDates,
-      stage,
+      checkOutStage,
     });
   }
 
@@ -100,35 +111,27 @@ class App extends React.Component {
           <h3><span id="price">{`$${this.state.price}`}</span> per night</h3>
           <hr />
           <div className="sub-component">
-            <h3 className={this.state.stage === 'in' ? 'current-stage' : ''} onClick={() => this.handleCheckInClick('in')}>{
-              this.state.requestedDates[0] === undefined ? 'Check-in' :
-                `${this.state.requestedDates[0].getMonth()}/${this.state.requestedDates[0].getDate()}/${this.state.requestedDates[0].getFullYear()}`
-            }</h3>
+            {this.getCalendarTitle(0)}
             <img className="icon" src={rightArrow} />
-            <h3 className={this.state.stage === 'out' ? 'current-stage' : ''} onClick={() => this.handleCheckInClick('out')}>{
-              this.state.requestedDates[1] === undefined ? 'Check-out' :
-                `${this.state.requestedDates[1].getMonth()}/${this.state.requestedDates[1].getDate()}/${this.state.requestedDates[1].getFullYear()}`
-            }</h3>
+            {this.getCalendarTitle(1)}
           </div>
-          {this.state.stage === 0 || this.state.stage === 'ready' ? null : 
+          {this.state.checkOutStage === 0 || this.state.checkOutStage === 3 ? null : 
             <Calendar 
-              stage={this.state.stage}
-              currentDate={this.today}
+              checkOutStage={this.state.checkOutStage}
               month={this.state.month}
               year={this.state.year}
-              range={this.state.requestedDates}
+              requestedDates={this.state.requestedDates}
               bookedDates={this.state.bookedDates}
-              handleCalendar={this.handleCalendar.bind(this)}
-              handleSelect={this.handleDateSelect.bind(this)}
-              handleMouseOver={this.handleMouseOver.bind(this)}
-              clearDates={this.handleClearDates.bind(this)}
+              changeMonth={this.changeMonth.bind(this)}
+              selectDate={this.setSelectedDate.bind(this)}
+              clearDates={this.clearDates.bind(this)}
             />
           }
           <div className="sub-component">
             <h3>Guests</h3>
             <img className="icon" src={downArrow} />
           </div>
-          {this.state.stage === 'ready' ? 
+          {this.state.checkOutStage === 'ready' ? 
             <div id="booking-info">
               <p className="info-left">{`$${this.state.price} x ${this.state.requestedDates[1].getDate() - this.state.requestedDates[0].getDate()} nights`}</p>
               <hr />
