@@ -72,6 +72,27 @@ p {
   height: 25px;
 }
 
+#guest-toggle {
+  width: 326px;
+  height: 300px;
+  top: 214px;
+  position: absolute;
+  background-color: #ffffff;
+  opacity: 1.0;
+  border: 1px solid rgb(219, 219, 219);
+  border-radius: 5px;
+}
+
+#adult-guest-toggle, #child-guest-toggle, #infant-guest-toggle {
+  display: flex;
+  justify-content: space-between;
+  text-align: left;
+  align-items: center;
+  height: 40px;
+  padding: 0 20px;
+  margin: 30px 0;
+}
+
 .small-icon {
   height: 15px;
   margin-left: 5px;

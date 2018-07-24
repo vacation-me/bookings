@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import Calendar from './components/Calendar.jsx';
 import CalendarTitle from './components/CalendarTitle.jsx';
 import Pricing from './components/Pricing.jsx';
+import Guests from './components/Guests.jsx';
 import downArrow from './styles/icons/down_arrow.svg';
 import flag from './styles/icons/flag.svg';
 import './styles/style.css';
@@ -16,12 +17,18 @@ class App extends React.Component {
       month: new Date().getMonth(),
       bookedDates: [],
       requestedDates: [],
+      guestCount: {
+        adults: 0, 
+        children: 0,
+        infants: 0
+      },
       checkOutStage: 0,
       price: 0,
       cleaning: 0,
       maxGuests: 0,
       minStay: 0,
       serviceFee: 0,
+      isSelectingGuests: false,
     };
     this.getCalendarTitle = this.getCalendarTitle.bind(this);
   }
@@ -46,6 +53,16 @@ class App extends React.Component {
       newStage = 0;
     }
     this.setState({checkOutStage: newStage});
+  }
+
+  toggleGuestSelect() {
+    const newStatus = !this.state.isSelectingGuests;
+    this.setState({isSelectingGuests: newStatus});
+  }
+
+  toggleGuestCount(type) {
+    const types = ['guests', 'infants'];
+    
   }
 
   // handles moving the calendar to the next or previous month
@@ -126,10 +143,17 @@ class App extends React.Component {
               clearDates={this.clearDates.bind(this)}
             />
           }
-          <div className="sub-component">
+          <div className="sub-component" onClick={this.toggleGuestSelect.bind(this)}>
             <h3>Guests</h3>
             <img className="icon" src={downArrow} />
           </div>
+          {this.state.isSelectingGuests ? 
+            <Guests 
+              maxGuests={this.state.maxGuests} 
+              toggleGuestCount={this.toggleGuestCount.bind(this)}
+              guestCount={this.state.guestCount}
+
+            /> : null}
           {this.state.checkOutStage === 3 ? 
             <Pricing price={this.state.price} requestedDates={this.state.requestedDates} />
             : null
