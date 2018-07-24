@@ -1,6 +1,7 @@
 const path = require('path');
+
 module.exports = {
-  entry: './client/app.js',
+  entry: './client/app.jsx',
   output: {
     filename: 'bundle.js',
     path: path.resolve(__dirname, 'public')
@@ -23,7 +24,7 @@ module.exports = {
         }
       },
       {
-        test: /\.(woff|woff2|eot|ttf|otf)$/,
+        test: /\.(woff|woff2|eot|ttf|otf|png|svg|jpg|gif)$/,
         use: [
           'file-loader'
         ]
