@@ -2,9 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Calendar from './components/Calendar.jsx';
 import CalendarTitle from './components/CalendarTitle.jsx';
+import Pricing from './components/Pricing.jsx';
 import downArrow from './styles/icons/down_arrow.svg';
 import flag from './styles/icons/flag.svg';
-import question from './styles/icons/question.svg';
 import './styles/style.css';
 import $ from 'jquery';
 
@@ -130,12 +130,8 @@ class App extends React.Component {
             <h3>Guests</h3>
             <img className="icon" src={downArrow} />
           </div>
-          {this.state.checkOutStage === 'ready' ? 
-            <div id="booking-info">
-              <p className="info-left">{`$${this.state.price} x ${this.state.requestedDates[1].getDate() - this.state.requestedDates[0].getDate()} nights`}</p>
-              <hr />
-              <p className="info-left">Service Fee<img className="small-icon" src={question}/></p>
-            </div>
+          {this.state.checkOutStage === 3 ? 
+            <Pricing price={this.state.price} requestedDates={this.state.requestedDates} />
             : null
           }
           <div className="sub-component" id="book-btn">
