@@ -27,7 +27,7 @@
     "server-dev": "nodemon --inspect server/index.js",
     "seed-db": "node ./server/database/dataGenerator.js",
     "test": "jest",
-    "lint": "eslint ./ --cache"
+    "lint": "eslint client/**.jsx client/components/**.jsx"
   },
   "dependencies": {
     "body-parser": "^1.18.3",

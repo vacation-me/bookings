@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Calendar from './components/Calendar.jsx';
-import rightArrow from './styles/icons/right_arrow.svg';
+import CalendarTitle from './components/CalendarTitle.jsx';
 import downArrow from './styles/icons/down_arrow.svg';
 import flag from './styles/icons/flag.svg';
 import question from './styles/icons/question.svg';
@@ -42,6 +42,9 @@ class App extends React.Component {
 
 
   setNextStage(newStage) {
+    if (this.state.checkOutStage === newStage) {
+      newStage = 0;
+    }
     this.setState({checkOutStage: newStage});
   }
 
@@ -110,11 +113,7 @@ class App extends React.Component {
         <div id="bookings">
           <h3><span id="price">{`$${this.state.price}`}</span> per night</h3>
           <hr />
-          <div className="sub-component">
-            {this.getCalendarTitle(0)}
-            <img className="icon" src={rightArrow} />
-            {this.getCalendarTitle(1)}
-          </div>
+          <CalendarTitle renderTitle={this.getCalendarTitle.bind(this)} />
           {this.state.checkOutStage === 0 || this.state.checkOutStage === 3 ? null : 
             <Calendar 
               checkOutStage={this.state.checkOutStage}
