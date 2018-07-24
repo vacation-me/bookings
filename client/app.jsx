@@ -60,9 +60,15 @@ class App extends React.Component {
     this.setState({isSelectingGuests: newStatus});
   }
 
-  toggleGuestCount(type) {
-    const types = ['guests', 'infants'];
-    
+  toggleGuestCount(type, num) {
+    let guestCount = this.state.guestCount;
+    guestCount[type] += num;
+    if (guestCount[type] < 0) {
+      guestCount[type] = 0;
+    } 
+    this.setState({
+      guestCount,
+    });
   }
 
   // handles moving the calendar to the next or previous month
@@ -152,7 +158,7 @@ class App extends React.Component {
               maxGuests={this.state.maxGuests} 
               toggleGuestCount={this.toggleGuestCount.bind(this)}
               guestCount={this.state.guestCount}
-
+              toggleView={this.toggleGuestSelect.bind(this)}
             /> : null}
           {this.state.checkOutStage === 3 ? 
             <Pricing price={this.state.price} requestedDates={this.state.requestedDates} />
