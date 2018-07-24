@@ -27,7 +27,7 @@
 }
 
 p {
-  font-weight: 600;
+  font-family: 'Lato-Regular';
   text-align: center;
   margin: 5px;
 }
@@ -63,9 +63,9 @@ p {
 }
 
 
-.info-left {
-  text-align: left;
-  margin: 10px 0
+.pricing-info-entry {
+  display: flex;
+  justify-content: space-between;
 }
 
 .icon {

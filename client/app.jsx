@@ -18,7 +18,7 @@ class App extends React.Component {
       requestedDates: [],
       checkOutStage: 0,
       price: 0,
-      cleaning: 0,
+      cleaningFee: 0,
       maxGuests: 0,
       minStay: 0,
       serviceFee: 0,
@@ -31,7 +31,7 @@ class App extends React.Component {
       let result = JSON.parse(res);
       this.setState({
         price: result.price,
-        cleaning: result.cleaning,
+        cleaningFee: result.cleaning,
         maxGuests: result.maxGuests,
         minStay: result.minStay,
         serviceFee: result.serviceFee,
@@ -131,8 +131,12 @@ class App extends React.Component {
             <img className="icon" src={downArrow} />
           </div>
           {this.state.checkOutStage === 3 ? 
-            <Pricing price={this.state.price} requestedDates={this.state.requestedDates} />
-            : null
+            <Pricing 
+              price={this.state.price} 
+              requestedDates={this.state.requestedDates} 
+              cleaningFee={this.state.cleaningFee}
+              serviceFee={this.state.serviceFee}
+            /> : null
           }
           <div className="sub-component" id="book-btn">
             <h2>Request to Book</h2>
