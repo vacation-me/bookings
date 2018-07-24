@@ -5,6 +5,7 @@ import CalendarTitle from './components/CalendarTitle.jsx';
 import Pricing from './components/Pricing.jsx';
 import Guests from './components/Guests.jsx';
 import downArrow from './styles/icons/down_arrow.svg';
+import upArrow from './styles/icons/up_arrow.svg';
 import flag from './styles/icons/flag.svg';
 import './styles/style.css';
 import $ from 'jquery';
@@ -18,7 +19,7 @@ class App extends React.Component {
       bookedDates: [],
       requestedDates: [],
       guestCount: {
-        adults: 0, 
+        adults: 1, 
         children: 0,
         infants: 0
       },
@@ -130,6 +131,28 @@ class App extends React.Component {
     });
   }
 
+  renderGuestTitle() {
+    const guestCount = this.state.guestCount;
+    const totalGuestCount = guestCount.adults + guestCount.children;
+    let output = `${totalGuestCount} guest`;
+    let icon = downArrow;
+    if (totalGuestCount > 1) {
+      output += 's';
+    }
+    if (guestCount.infants > 0) {
+      output += `, ${guestCount.infants} infants`;
+    }
+    if (this.state.isSelectingGuests) {
+      icon = upArrow;
+    }
+    return (
+      <div className="sub-component" onClick={this.toggleGuestSelect.bind(this)}>
+        <h3>{output}</h3> 
+        <img className="icon" src={icon} />
+      </div>
+    );
+  }
+
   render() {
     return (
       <div id="container">
@@ -149,10 +172,7 @@ class App extends React.Component {
               clearDates={this.clearDates.bind(this)}
             />
           }
-          <div className="sub-component" onClick={this.toggleGuestSelect.bind(this)}>
-            <h3>Guests</h3>
-            <img className="icon" src={downArrow} />
-          </div>
+          {this.renderGuestTitle.call(this)}
           {this.state.isSelectingGuests ? 
             <Guests 
               maxGuests={this.state.maxGuests} 

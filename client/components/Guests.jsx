@@ -22,11 +22,10 @@ const Guests = (props) => {
 
     //check if max guest is reacehed and if current index is for adult/children and if operating on plus icon
     if ((props.guestCount.adults + props.guestCount.children >= props.maxGuests && (btnIndex === 1 || btnIndex === 3)) 
-      || props.guestCount[type] === 0 && btnIndex % 2 === 0) {
+      || (props.guestCount[type] === 0 && btnIndex % 2 === 0)
+      || (btnIndex === 0 && props.guestCount.adults === 1)) {
       classNames += ' disabled';
       clickHandler = () => {};
-    } else if (props.guestCount[type] === 0) {
-
     }
 
     return (<img src={icon} className={classNames} onClick={clickHandler}/>);
@@ -51,7 +50,7 @@ const Guests = (props) => {
         <h3>Infants</h3>
         {renderButton('infants', 4)}
         <h3>{props.guestCount.infants}</h3>
-        {renderButton('infants',5)}
+        {renderButton('infants', 5)}
       </div>
       <p>{`${props.maxGuests} guests maximum. Infants don't count towards the number of guests.`}</p>
       <h4 
