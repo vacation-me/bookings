@@ -65,9 +65,9 @@ const Calendar = (props) => {
   return (
     <div id='cal-container'>
       <div id="calendar-title">
-        <img src={left} className='cal-title icon' onClick={() => props.changeMonth(-1)}/>
+        <img src={left} className='cal-title icon' id="prev-month" onClick={() => props.changeMonth(-1)}/>
         <h3 className='cal-title'>{`${months[monthFirstDay.getMonth()]} ${props.year}`}</h3>
-        <img src={right} className='cal-title icon' onClick={() => props.changeMonth(1)}/>
+        <img src={right} className='cal-title icon' id="next-month" onClick={() => props.changeMonth(1)}/>
       </div>
       <table id="calendar">
         <tbody>
