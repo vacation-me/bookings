@@ -160,7 +160,7 @@ class App extends React.Component {
           <h3><span id="price">{`$${this.state.price}`}</span> per night</h3>
           <hr />
           <CalendarTitle renderTitle={this.getCalendarTitle.bind(this)} />
-          {this.state.checkOutStage === 0 || this.state.checkOutStage === 3 ? null : 
+          {this.state.checkOutStage === 0 || this.state.checkOutStage === 3 || 
             <Calendar 
               checkOutStage={this.state.checkOutStage}
               month={this.state.month}
@@ -180,13 +180,13 @@ class App extends React.Component {
               guestCount={this.state.guestCount}
               toggleView={this.toggleGuestSelectView.bind(this)}
             />}
-          {this.state.checkOutStage === 3 ? 
+          {this.state.checkOutStage === 3 && 
             <Pricing 
               price={this.state.price} 
               requestedDates={this.state.requestedDates} 
               cleaningFee={this.state.cleaningFee}
               serviceFee={this.state.serviceFee}
-            /> : null
+            />
           }
           <div className="sub-component" id="book-btn">
             <h2>Request to Book</h2>
