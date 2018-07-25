@@ -13,15 +13,17 @@
   ],
   "jest": {
     "verbose": true,
+    "collectCoverage": true,
+    "collectCoverageFrom": [
+      "<rootDir>/client/**/*.{js,jsx}"
+    ],
+    "coverageDirectory": "<rootDir>/__test__/coverage/",
     "moduleNameMapper": {
       "\\.(css|scss|svg)$": "<rootDir>/__test__/config/emptyModule.js"
     },
     "resolver": null,
     "setupTestFrameworkScriptFile": "<rootDir>/__test__/config/setup.js",
-    "testMatch": [
-      "**/client/components/**/*.test.js",
-      "**/__test__/*.js"
-    ]
+    "testMatch": ["**/__test__/*.js"]
   },
   "scripts": {
     "build": "webpack -d",
@@ -61,6 +63,7 @@
     "eslint-plugin-jsx-a11y": "^6.1.1",
     "eslint-plugin-react": "^7.10.0",
     "jest": "^23.4.1",
+    "jest-cli": "^23.4.1",
     "jest-enzyme": "^6.0.2",
     "pre-commit": "^1.2.2",
     "puppeteer": "^1.6.1",
