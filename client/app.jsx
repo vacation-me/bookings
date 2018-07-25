@@ -8,7 +8,6 @@ import downArrow from './styles/icons/down_arrow.svg';
 import upArrow from './styles/icons/up_arrow.svg';
 import flag from './styles/icons/flag.svg';
 import './styles/style.css';
-import $ from 'jquery';
 
 class App extends React.Component {
   constructor() {
@@ -35,17 +34,19 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    $.get('/listing_info', (res) => {
-      let result = JSON.parse(res);
-      this.setState({
-        price: result.price,
-        cleaningFee: result.cleaning,
-        maxGuests: result.maxGuests,
-        minStay: result.minStay,
-        serviceFee: result.serviceFee,
-        bookedDates: result.year
-      });
-    });
+    fetch('/listing_info')
+      .then(res => res.json())
+      .then(body => {
+        this.setState({
+          price: body.price,
+          cleaningFee: body.cleaning,
+          maxGuests: body.maxGuests,
+          minStay: body.minStay,
+          serviceFee: body.serviceFee,
+          bookedDates: body.year
+        });
+      })
+      .catch(err => { throw err; });
   }
 
 
