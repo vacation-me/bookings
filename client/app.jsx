@@ -108,7 +108,7 @@ class App extends React.Component {
     if (this.state.checkOutStage === checkOutStage + 1) {
       classNames = 'current-stage';
     }
-    return (<h3 className={classNames} onClick={() => this.setNextStage(checkOutStage + 1)}>{text}</h3>);
+    return (<h3 className={classNames} id={`${titles[checkOutStage].toLowerCase()}`}onClick={() => this.setNextStage(checkOutStage + 1)}>{text}</h3>);
   }
 
   //handle date selection
