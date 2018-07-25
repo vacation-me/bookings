@@ -29,6 +29,9 @@ const Calendar = (props) => {
       return null;
     }
     const currentCellDate = new Date(props.year, props.month, dateCounter);
+
+    // abstract className conditions to helper function
+
     let classNames = '';
     let clickHandler = (e) => props.selectDate(+e.target.innerHTML);
     if (currentCell === 0) {

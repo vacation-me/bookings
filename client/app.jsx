@@ -3,7 +3,9 @@ import ReactDOM from 'react-dom';
 import Calendar from './components/Calendar.jsx';
 import CalendarTitle from './components/CalendarTitle.jsx';
 import Pricing from './components/Pricing.jsx';
+import Guests from './components/Guests.jsx';
 import downArrow from './styles/icons/down_arrow.svg';
+import upArrow from './styles/icons/up_arrow.svg';
 import flag from './styles/icons/flag.svg';
 import './styles/style.css';
 import $ from 'jquery';
@@ -16,12 +18,18 @@ class App extends React.Component {
       month: new Date().getMonth(),
       bookedDates: [],
       requestedDates: [],
+      guestCount: {
+        adults: 1, 
+        children: 0,
+        infants: 0
+      },
       checkOutStage: 0,
       price: 0,
       cleaning: 0,
       maxGuests: 0,
       minStay: 0,
       serviceFee: 0,
+      isSelectingGuests: false,
     };
     this.getCalendarTitle = this.getCalendarTitle.bind(this);
   }
@@ -46,6 +54,19 @@ class App extends React.Component {
       newStage = 0;
     }
     this.setState({checkOutStage: newStage});
+  }
+
+  toggleGuestSelectView() {
+    const newStatus = !this.state.isSelectingGuests;
+    this.setState({isSelectingGuests: newStatus});
+  }
+
+  updateGuestCount(type, num) {
+    let guestCount = this.state.guestCount;
+    guestCount[type] += num;
+    this.setState({
+      guestCount,
+    });
   }
 
   // handles moving the calendar to the next or previous month
@@ -107,6 +128,31 @@ class App extends React.Component {
     });
   }
 
+  renderGuestTitle() {
+    const guestCount = this.state.guestCount;
+    const totalGuestCount = guestCount.adults + guestCount.children;
+    let output = `${totalGuestCount} guest`;
+    let icon = downArrow;
+    if (totalGuestCount > 1) {
+      output += 's';
+    }
+    if (guestCount.infants > 0) {
+      output += `, ${guestCount.infants} infant`;
+      if (guestCount.infants > 1) {
+        output += 's';
+      }
+    }
+    if (this.state.isSelectingGuests) {
+      icon = upArrow;
+    }
+    return (
+      <div className="sub-component" onClick={this.toggleGuestSelectView.bind(this)}>
+        <h3>{output}</h3> 
+        <img className="icon" src={icon} />
+      </div>
+    );
+  }
+
   render() {
     return (
       <div id="container">
@@ -126,10 +172,14 @@ class App extends React.Component {
               clearDates={this.clearDates.bind(this)}
             />
           }
-          <div className="sub-component">
-            <h3>Guests</h3>
-            <img className="icon" src={downArrow} />
-          </div>
+          {this.renderGuestTitle.call(this)}
+          {this.state.isSelectingGuests && 
+            <Guests 
+              maxGuests={this.state.maxGuests} 
+              updateGuestCount={this.updateGuestCount.bind(this)}
+              guestCount={this.state.guestCount}
+              toggleView={this.toggleGuestSelectView.bind(this)}
+            />}
           {this.state.checkOutStage === 3 ? 
             <Pricing price={this.state.price} requestedDates={this.state.requestedDates} />
             : null
