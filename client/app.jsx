@@ -64,9 +64,6 @@ class App extends React.Component {
   updateGuestCount(type, num) {
     let guestCount = this.state.guestCount;
     guestCount[type] += num;
-    if (guestCount[type] < 0) {
-      guestCount[type] = 0;
-    } 
     this.setState({
       guestCount,
     });
@@ -140,7 +137,10 @@ class App extends React.Component {
       output += 's';
     }
     if (guestCount.infants > 0) {
-      output += `, ${guestCount.infants} infants`;
+      output += `, ${guestCount.infants} infant`;
+      if (guestCount.infants > 1) {
+        output += 's';
+      }
     }
     if (this.state.isSelectingGuests) {
       icon = upArrow;
@@ -173,13 +173,13 @@ class App extends React.Component {
             />
           }
           {this.renderGuestTitle.call(this)}
-          {this.state.isSelectingGuests ? 
+          {this.state.isSelectingGuests && 
             <Guests 
               maxGuests={this.state.maxGuests} 
               updateGuestCount={this.updateGuestCount.bind(this)}
               guestCount={this.state.guestCount}
               toggleView={this.toggleGuestSelectView.bind(this)}
-            /> : null}
+            />}
           {this.state.checkOutStage === 3 ? 
             <Pricing price={this.state.price} requestedDates={this.state.requestedDates} />
             : null
