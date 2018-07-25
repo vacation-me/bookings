@@ -33,6 +33,7 @@ const Calendar = (props) => {
     // abstract className conditions to helper function
 
     let classNames = '';
+    let id = '';
     let clickHandler = (e) => props.selectDate(+e.target.innerHTML);
     if (currentCell === 0) {
       classNames += 'day ';
@@ -46,11 +47,14 @@ const Calendar = (props) => {
       classNames += 'booked ';
       clickHandler = null; 
       bookedDates.pop();
+    } else if (!classNames.includes('selected-date')) {
+      classNames += 'avail ';
     }
     return (
       <td 
         className={classNames}
-        onClick={clickHandler}>
+        onClick={clickHandler}
+        id={id}>
         {currentCell === '' ? '' : dateCounter++}
       </td>
     );
