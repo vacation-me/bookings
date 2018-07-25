@@ -32,7 +32,6 @@ const Pricing = (props) => {
         <p>Total</p>
         <p>{`$${initialPrice + serviceFee + tax + props.cleaningFee}`}</p>
       </div>
-      
     </div>
   );
 };
