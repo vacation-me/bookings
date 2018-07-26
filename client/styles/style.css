@@ -1,3 +1,5 @@
+/* ---Fonts--- */
+
 @font-face {
   font-family: 'Lato-Light';
   src: url('./fonts/Lato-Light.ttf') format('truetype');
@@ -9,6 +11,8 @@
   src: url('./fonts/Lato-Regular.ttf') format('truetype');
   font-weight: 600;
 }
+
+/* ---Top Level Component---*/
 
 * {
   font-family: 'Lato-Light';
@@ -26,11 +30,49 @@
   border: 1px solid lightgrey;
 }
 
+.sub-component {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  cursor: pointer;
+  justify-content: space-between;
+  height: 40px;
+  padding: 0 20px;
+  margin: 30px 0;
+  border: 1px solid lightgray;
+  border-radius: 5px;
+}
+
+
 p {
-  font-weight: 600;
   text-align: center;
   margin: 5px;
 }
+
+.icon {
+  height: 25px;
+  cursor: pointer;
+}
+
+.large-icon {
+  height: 40px;
+  cursor: pointer;
+}
+
+#report {
+  border: none;
+  justify-content: center;
+}
+
+#book-btn {
+  justify-content: center;
+  background-color: #FF5A5F;
+  color: #ffffff;
+  height: 50px;
+}
+
+
+/* ---Calendar Component--- */
 
 #cal-container {
   background-color: #ffffff;
@@ -47,83 +89,6 @@ p {
   display: flex;
   align-items: center;
   flex-direction: column;
-}
-
-.sub-component {
-  display: flex;
-  align-items: center;
-  text-align: center;
-  cursor: pointer;
-  justify-content: space-between;
-  height: 40px;
-  padding: 0 20px;
-  margin: 30px 0;
-  border: 1px solid lightgray;
-  border-radius: 5px;
-}
-
-
-.info-left {
-  text-align: left;
-  margin: 10px 0
-}
-
-.icon {
-  height: 25px;
-  cursor: pointer;
-}
-
-.large-icon {
-  height: 40px;
-  cursor: pointer;
-}
-
-#guest-toggle {
-  width: 326px;
-  height: auto;
-  top: 214px;
-  text-align: left;
-  position: absolute;
-  background-color: #ffffff;
-  opacity: 1.0;
-  border: 1px solid rgb(219, 219, 219);
-  border-radius: 5px;
-}
-
-#adult-guest-toggle, #child-guest-toggle, #infant-guest-toggle {
-  display: flex;
-  justify-content: space-between;
-  text-align: left;
-  align-items: center;
-  height: 40px;
-  padding: 0 20px;
-  margin: 30px 0;
-}
-
-.disabled {
-  opacity: 0.1;
-}
-
-.small-icon {
-  height: 15px;
-  margin-left: 5px;
-}
-
-
-#price {
-  font-family: 'Lato-Regular';
-}
-
-#report {
-  border: none;
-  justify-content: center;
-}
-
-#book-btn {
-  justify-content: center;
-  background-color: #FF5A5F;
-  color: #ffffff;
-  height: 50px;
 }
 
 #calendar {
@@ -157,7 +122,10 @@ p {
 }
 
 .booked, .booked:hover {
-  color: rgba(167, 167, 167, 0.795);
+  color: rgba(167, 167, 167, 0.295);
+  background-color: white;
+  border: 1px solid lightgray;
+  
 }
 
 .day {
@@ -166,3 +134,60 @@ p {
   min-width: 38px;
   font-family: 'Lato-Regular';
 }
+
+
+/* -----Guest toggle component---- */
+
+#guest-toggle {
+  width: 326px;
+  height: auto;
+  top: 214px;
+  text-align: left;
+  position: absolute;
+  background-color: #ffffff;
+  opacity: 1.0;
+  border: 1px solid rgb(219, 219, 219);
+  border-radius: 5px;
+}
+
+#adult-guest-toggle, #child-guest-toggle, #infant-guest-toggle {
+  display: flex;
+  justify-content: space-between;
+  text-align: left;
+  align-items: center;
+  height: 40px;
+  padding: 0 20px;
+  margin: 30px 0;
+}
+
+.disabled {
+  opacity: 0.1;
+}
+
+.small-icon {
+  height: 15px;
+  margin-left: 5px;
+}
+
+/* ---Pricing Component--- */
+.pricing-info-entry {
+  display: flex;
+  justify-content: space-between;
+}
+
+#price {
+  font-family: 'Lato-Regular';
+}
+
+#report {
+  border: none;
+  justify-content: center;
+}
+
+#book-btn {
+  justify-content: center;
+  background-color: #FF5A5F;
+  color: #ffffff;
+  height: 50px;
+}
+

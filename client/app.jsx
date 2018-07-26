@@ -8,7 +8,6 @@ import downArrow from './styles/icons/down_arrow.svg';
 import upArrow from './styles/icons/up_arrow.svg';
 import flag from './styles/icons/flag.svg';
 import './styles/style.css';
-import $ from 'jquery';
 
 class App extends React.Component {
   constructor() {
@@ -25,7 +24,7 @@ class App extends React.Component {
       },
       checkOutStage: 0,
       price: 0,
-      cleaning: 0,
+      cleaningFee: 0,
       maxGuests: 0,
       minStay: 0,
       serviceFee: 0,
@@ -35,17 +34,19 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    $.get('/listing_info', (res) => {
-      let result = JSON.parse(res);
-      this.setState({
-        price: result.price,
-        cleaning: result.cleaning,
-        maxGuests: result.maxGuests,
-        minStay: result.minStay,
-        serviceFee: result.serviceFee,
-        bookedDates: result.year
-      });
-    });
+    fetch('/listing_info')
+      .then(res => res.json())
+      .then(body => {
+        this.setState({
+          price: body.price,
+          cleaningFee: body.cleaning,
+          maxGuests: body.maxGuests,
+          minStay: body.minStay,
+          serviceFee: body.serviceFee,
+          bookedDates: body.year
+        });
+      })
+      .catch(err => { throw err; });
   }
 
 
@@ -53,7 +54,10 @@ class App extends React.Component {
     if (this.state.checkOutStage === newStage) {
       newStage = 0;
     }
-    this.setState({checkOutStage: newStage});
+    this.setState({
+      checkOutStage: newStage,
+      isSelectingGuests: false,
+    });
   }
 
   toggleGuestSelectView() {
@@ -107,18 +111,13 @@ class App extends React.Component {
     if (this.state.checkOutStage === checkOutStage + 1) {
       classNames = 'current-stage';
     }
-    return (<h3 className={classNames} onClick={() => this.setNextStage(checkOutStage + 1)}>{text}</h3>);
+    return (<h3 className={classNames} id={`${titles[checkOutStage].toLowerCase()}`}onClick={() => this.setNextStage(checkOutStage + 1)}>{text}</h3>);
   }
 
   //handle date selection
   setSelectedDate(selectedDate) {
     let requestedDates = this.state.requestedDates;
-    let checkOutStage = this.state.checkOutStage;
-    if (checkOutStage === 1) {
-      checkOutStage = 2;
-    } else if (checkOutStage === 2) {
-      checkOutStage = 3;
-    }
+    let checkOutStage = this.state.checkOutStage + 1;
     if (requestedDates.length < 2) {
       requestedDates.push(new Date(this.state.year, this.state.month, selectedDate));
     }
@@ -160,13 +159,14 @@ class App extends React.Component {
           <h3><span id="price">{`$${this.state.price}`}</span> per night</h3>
           <hr />
           <CalendarTitle renderTitle={this.getCalendarTitle.bind(this)} />
-          {this.state.checkOutStage === 0 || this.state.checkOutStage === 3 ? null : 
+          {this.state.checkOutStage === 0 || this.state.checkOutStage === 3 || 
             <Calendar 
               checkOutStage={this.state.checkOutStage}
               month={this.state.month}
               year={this.state.year}
               requestedDates={this.state.requestedDates}
               bookedDates={this.state.bookedDates}
+              minStay={this.state.minStay}
               changeMonth={this.changeMonth.bind(this)}
               selectDate={this.setSelectedDate.bind(this)}
               clearDates={this.clearDates.bind(this)}
@@ -180,9 +180,13 @@ class App extends React.Component {
               guestCount={this.state.guestCount}
               toggleView={this.toggleGuestSelectView.bind(this)}
             />}
-          {this.state.checkOutStage === 3 ? 
-            <Pricing price={this.state.price} requestedDates={this.state.requestedDates} />
-            : null
+          {this.state.checkOutStage === 3 && 
+            <Pricing 
+              price={this.state.price} 
+              requestedDates={this.state.requestedDates} 
+              cleaningFee={this.state.cleaningFee}
+              serviceFee={this.state.serviceFee}
+            />
           }
           <div className="sub-component" id="book-btn">
             <h2>Request to Book</h2>
