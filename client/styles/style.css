@@ -167,6 +167,7 @@ p {
 .small-icon {
   height: 15px;
   margin-left: 5px;
+  cursor: pointer;
 }
 
 /* ---Pricing Component--- */

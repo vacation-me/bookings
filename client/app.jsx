@@ -29,6 +29,7 @@ class App extends React.Component {
       minStay: 0,
       serviceFee: 0,
       isSelectingGuests: false,
+      showPopUpInfo: 0,
     };
     this.getCalendarTitle = this.getCalendarTitle.bind(this);
   }
@@ -57,12 +58,16 @@ class App extends React.Component {
     this.setState({
       checkOutStage: newStage,
       isSelectingGuests: false,
+      showPopUpInfo: 0,
     });
   }
 
   toggleGuestSelectView() {
     const newStatus = !this.state.isSelectingGuests;
-    this.setState({isSelectingGuests: newStatus});
+    this.setState({
+      isSelectingGuests: newStatus,
+      showPopUpInfo: 0, 
+    });
   }
 
   updateGuestCount(type, num) {
@@ -152,6 +157,19 @@ class App extends React.Component {
     );
   }
 
+  toggleInfoPopUp(popUpId) {
+    let currentDisplay = this.state.showPopUpInfo;
+    if (currentDisplay === popUpId) {
+      this.setState({
+        showPopUpInfo: 0,
+      });
+    } else {
+      this.setState({
+        showPopUpInfo: popUpId,
+      });
+    }
+  }
+
   render() {
     return (
       <div id="container">
@@ -186,6 +204,8 @@ class App extends React.Component {
               requestedDates={this.state.requestedDates} 
               cleaningFee={this.state.cleaningFee}
               serviceFee={this.state.serviceFee}
+              showPopUpInfo={this.state.showPopUpInfo}
+              toggleInfo={this.toggleInfoPopUp.bind(this)}
             />
           }
           <div className="sub-component" id="book-btn">
@@ -193,10 +213,6 @@ class App extends React.Component {
           </div>
           <p>You won't be charged</p>
         </div> 
-        <div className="sub-component" id="report">
-          <img src={flag} className="icon"/>
-          <p>Report this Listing</p>
-        </div>
       </div>
     );
   }

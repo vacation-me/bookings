@@ -15,7 +15,67 @@ const Pricing = (props) => {
     return num.join('');
   };
 
-  
+  const renderPopUp = function(popUpId) {
+    const text = [
+      'One-time fee charged by host to cover the cost of cleaning their space.',
+      'This helps us run our platform and offer services like 24/7 support on your trip.',
+      'Accommodations Tax (San Francisco)'
+    ];
+
+    const styles = [
+      {
+        width: '244px',
+        height: '100px',
+        top: '178px',
+        backgroundColor: '#ffffff',
+        boxShadow: '0px 0px 2px lightgray',
+        opacity: '1.0',
+        border: '1px solid lightgray',
+        position: 'absolute',
+        left: '331px',
+        textAlign: 'left',
+        padding: '5px',
+      },
+      {
+        width: '244px',
+        height: '100px',
+        top: '224px',
+        backgroundColor: '#ffffff',
+        boxShadow: '0px 0px 2px lightgray',
+        opacity: '1.0',
+        border: '1px solid lightgray',
+        position: 'absolute',
+        left: '331px',
+        textAlign: 'left',
+        padding: '5px',
+      },
+      {
+        width: '278px',
+        height: '64px',
+        top: '306px',
+        backgroundColor: '#ffffff',
+        boxShadow: '0px 0px 2px lightgray',
+        opacity: '1.0',
+        border: '1px solid lightgray',
+        position: 'absolute',
+        left: '349px',
+        textAlign: 'left',
+        padding: '5px',
+      },
+      
+    ];
+
+    return (
+      <div style={styles[popUpId - 1]}>
+        <p 
+          id="close-btn" 
+          style={{float: 'right', cursor: 'pointer'}}
+          onClick={() => props.toggleInfo(0)}
+        >x</p>
+        <p style={{marginTop: '25px'}}>{text[popUpId - 1]}</p>
+      </div>
+    );
+  };
 
   return (
     <div id="booking-info">
@@ -25,17 +85,27 @@ const Pricing = (props) => {
       </div>
       <hr />
       <div className="pricing-info-entry">
-        <p>Cleaning Fee<img className="small-icon" src={question}/></p>
+        <p>Cleaning Fee<img 
+          className="small-icon" 
+          src={question}
+          onClick={() => props.toggleInfo(1)}/></p>
         <p>{`$${props.cleaningFee}`}</p>
       </div>
       <hr />
       <div className="pricing-info-entry">
-        <p>Service Fee<img className="small-icon" src={question}/></p>
+        <p>Service Fee<img 
+          className="small-icon" 
+          src={question}
+          onClick={() => props.toggleInfo(2)}/></p>
         <p>{`$${serviceFee}`}</p>
       </div>
       <hr />
       <div className="pricing-info-entry">
-        <p>Occupancy Taxes and Fees<img className="small-icon" src={question}/></p>
+        <p>Occupancy Taxes and Fees<img 
+          className="small-icon" 
+          src={question}
+          onClick={() => props.toggleInfo(3)}
+        /></p>
         <p>{`$${tax}`}</p>
       </div>
       <hr />
@@ -43,6 +113,7 @@ const Pricing = (props) => {
         <p>Total</p>
         <p>{`$${numToString(initialPrice + serviceFee + tax + props.cleaningFee)}`}</p>
       </div>
+      {props.showPopUpInfo === 0 || renderPopUp(props.showPopUpInfo)}
     </div>
   );
 };
