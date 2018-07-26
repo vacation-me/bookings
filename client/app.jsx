@@ -15,7 +15,7 @@ class App extends React.Component {
     this.state = {
       year: new Date().getFullYear(),
       month: new Date().getMonth(),
-      bookedDates: [],
+      availableDates: [],
       requestedDates: [],
       guestCount: {
         adults: 1, 
@@ -43,7 +43,7 @@ class App extends React.Component {
           maxGuests: body.maxGuests,
           minStay: body.minStay,
           serviceFee: body.serviceFee,
-          bookedDates: body.year
+          availableDates: body.year
         });
       })
       .catch(err => { throw err; });
@@ -165,7 +165,7 @@ class App extends React.Component {
               month={this.state.month}
               year={this.state.year}
               requestedDates={this.state.requestedDates}
-              bookedDates={this.state.bookedDates}
+              availableDates={this.state.availableDates}
               minStay={this.state.minStay}
               changeMonth={this.changeMonth.bind(this)}
               selectDate={this.setSelectedDate.bind(this)}
