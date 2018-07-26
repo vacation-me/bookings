@@ -20,7 +20,7 @@ const Calendar = (props) => {
   const currentMonth = new Date().getMonth();
 
   const bookingsMonthIndex = props.month < currentMonth ? currentMonth + props.month : props.month - currentMonth;
-  let bookedDates = props.bookedDates[bookingsMonthIndex].slice().sort((a, b) => b - a);
+  const availableDates = props.availableDates[bookingsMonthIndex].slice().sort((a, b) => b - a);
   
   //declare counter to fill table with dates
   let currentDateNum = 1;
@@ -39,7 +39,7 @@ const Calendar = (props) => {
       isSelectingCheckout = true;
     }
     const cellDate = new Date(props.year, props.month, currentDateNum);
-
+    const validDateClickHandler = (e) => props.selectDate(+e.target.innerHTML);
 
     let attributes = [
       //className
@@ -58,14 +58,19 @@ const Calendar = (props) => {
     } else if (props.requestedDates.length === 2 && cellDate > props.requestedDates[0] && cellDate < props.requestedDates[1]) {
       attributes[0] += ' range';
     //check if date is booked
-    } else if (isSelectingCheckout && cellDate.getTime() < minStayDate.getTime()) {
-      attributes[0] = ' booked';
-    } else if (currentDateNum === bookedDates[bookedDates.length - 1] && !isSelectingCheckout) {
-      attributes[0] += ' booked';
-      bookedDates.pop();
-    } else {
+    } else if (isSelectingCheckout) {
+      if (cellDate.getTime() < minStayDate.getTime()) {
+        attributes[0] += ' booked';
+      } else {
+        attributes[0] += ' avail';
+        attributes[1] = validDateClickHandler;
+      }
+    } else if (currentDateNum === availableDates[availableDates.length - 1] && !isSelectingCheckout) {
       attributes[0] += ' avail';
-      attributes[1] = (e) => props.selectDate(+e.target.innerHTML);
+      attributes[1] = validDateClickHandler;
+      availableDates.pop();
+    } else {
+      attributes[0] += ' booked';
     }
     
     currentDateNum++;

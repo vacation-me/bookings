@@ -34,10 +34,7 @@ const generateBookings = function() {
   for (let i = 0; i < 12; i++) {
     let last = new Date(year, currentMonth + 1, 0).getDate();
     let month = [];
-    let dateCount = Math.ceil(last * random(70) / 100);
-    if (dateCount < 10) {
-      dateCount += 10;
-    }
+    let dateCount = 15 - random(10);
     let store = {};
     for (let i = 0; i < dateCount; i++) {
       let day = random(last);
@@ -66,10 +63,10 @@ const generator = function() {
       price: nightlyPrice,
       cleaning: cleaning(),
       serviceFee: serviceFee(nightlyPrice),
-      minStay: random(6),
+      minStay: 3 + random(6),
       maxGuests: random(10),
       year: generateBookings(),
-    }).save(process.exit);
+    }).save();
   }
 };
 

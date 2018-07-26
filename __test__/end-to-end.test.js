@@ -35,10 +35,9 @@ describe("Check in/Check out selection", async () => {
   });
 
   test("Check-out renders to selected date after user input", async () => {
-    const availableCells = await page.$$("td.avail");
-    await availableCells[0].click();
-    await availableCells[1].click();
-    await page.click('#check-out')
+    await page.click("td.avail");
+    await page.click("td.avail");
+    await page.click('#check-out');
     const checkOutDate = await page.$$eval('.selected-date', e => e[1].textContent); 
     const checkOutText = await page.$eval('#check-out', e => e.textContent);
 
