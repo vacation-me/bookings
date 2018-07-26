@@ -23,7 +23,9 @@
     },
     "resolver": null,
     "setupTestFrameworkScriptFile": "<rootDir>/__test__/config/setup.js",
-    "testMatch": ["**/__test__/*.js"]
+    "testMatch": [
+      "**/__test__/*.js"
+    ]
   },
   "scripts": {
     "build": "webpack -d",
@@ -39,6 +41,8 @@
     "express": "^4.16.3",
     "file-loader": "^1.1.11",
     "jquery": "^3.3.1",
+    "mongodb": "^3.1.1",
+    "mongodb-core": "^3.1.0",
     "mongoose": "^5.2.4",
     "path": "^0.12.7",
     "react": "^16.4.1",

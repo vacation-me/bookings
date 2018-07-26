@@ -1,7 +1,6 @@
 import React from 'react';
 import left from '../styles/icons/cal_left.svg';
 import right from '../styles/icons/cal_right.svg';
-import { PromiseProvider } from 'mongoose';
 
 
 const Calendar = (props) => {
@@ -71,30 +70,6 @@ const Calendar = (props) => {
     
     currentDateNum++;
     return attributes;
-
-
-
-
-    /* const currentCellDate = new Date(props.year, props.month, dateCounter);
-
-    // abstract className conditions to helper function
-
-    let classNames = '';
-    let id = '';
-    let clickHandler = (e) => props.selectDate(+e.target.innerHTML);
-    if (currentCell === 0) {
-      classNames += 'day ';
-    } 
-    if ((props.requestedDates[0] !== undefined && props.requestedDates[0].toDateString() === currentCellDate.toDateString()) || (props.requestedDates[1] !== undefined && props.requestedDates[1].toDateString() === currentCellDate.toDateString())) {
-      classNames += 'selected-date ';
-    } else if (props.requestedDates.length === 2 && currentCellDate > props.requestedDates[0] && currentCellDate < props.requestedDates[1]) {
-      classNames += 'range ';
-    } 
-    if (dateCounter === bookedDates[bookedDates.length - 1]) {
-      classNames += 'booked ';
-      clickHandler = null; 
-      bookedDates.pop();
-    } */
   };
   
   const renderDateCell = function (currentCell) {
