@@ -12,7 +12,7 @@ const Guests = (props) => {
     let icon = plus;
     let incrementor = btnIndex % 2 === 0 ? -1 : 1;
     let clickHandler = () => props.updateGuestCount(type, incrementor);
-    let classNames = 'large-icon';
+    let classNames = 'icon';
     
     //check if btn index is even and assign icon variable
     if (btnIndex % 2 === 0) {
@@ -33,23 +33,25 @@ const Guests = (props) => {
   return (
     <div id="guest-toggle">
       <div id="adult-guest-toggle">
-        <h3>Adults</h3>
+        <h3 className="guest-label">Adults</h3>
         {renderButton('adults', 0)}
         <h3>{props.guestCount.adults}</h3>
         {renderButton('adults', 1)}
       </div>
+
       <div id="child-guest-toggle">
-        <h3>Children</h3>
+        <h3 className="guest-label">Children (2-12)</h3>
         {renderButton('children', 2)}
         <h3>{props.guestCount.children}</h3>
         {renderButton('children', 3)}
       </div>
       <div id="infant-guest-toggle">
-        <h3>Infants</h3>
+        <h3 className="guest-label">Infants (Under 2)</h3>        
         {renderButton('infants', 4)}
         <h3>{props.guestCount.infants}</h3>
         {renderButton('infants', 5)}
       </div>
+      
       <p>{`${props.maxGuests} guests maximum. Infants don't count towards the number of guests.`}</p>
       <h4 
         style={{float: 'right', color: 'rgb(51, 218, 205)', marginRight: '10px', cursor: 'pointer'}}
