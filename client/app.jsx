@@ -54,7 +54,10 @@ class App extends React.Component {
     if (this.state.checkOutStage === newStage) {
       newStage = 0;
     }
-    this.setState({checkOutStage: newStage});
+    this.setState({
+      checkOutStage: newStage,
+      isSelectingGuests: false,
+    });
   }
 
   toggleGuestSelectView() {
@@ -114,12 +117,7 @@ class App extends React.Component {
   //handle date selection
   setSelectedDate(selectedDate) {
     let requestedDates = this.state.requestedDates;
-    let checkOutStage = this.state.checkOutStage;
-    if (checkOutStage === 1) {
-      checkOutStage = 2;
-    } else if (checkOutStage === 2) {
-      checkOutStage = 3;
-    }
+    let checkOutStage = this.state.checkOutStage + 1;
     if (requestedDates.length < 2) {
       requestedDates.push(new Date(this.state.year, this.state.month, selectedDate));
     }
@@ -168,6 +166,7 @@ class App extends React.Component {
               year={this.state.year}
               requestedDates={this.state.requestedDates}
               bookedDates={this.state.bookedDates}
+              minStay={this.state.minStay}
               changeMonth={this.changeMonth.bind(this)}
               selectDate={this.setSelectedDate.bind(this)}
               clearDates={this.clearDates.bind(this)}

@@ -1,6 +1,7 @@
 import React from 'react';
 import left from '../styles/icons/cal_left.svg';
 import right from '../styles/icons/cal_right.svg';
+import { PromiseProvider } from 'mongoose';
 
 
 const Calendar = (props) => {
@@ -21,14 +22,60 @@ const Calendar = (props) => {
 
   const bookingsMonthIndex = props.month < currentMonth ? currentMonth + props.month : props.month - currentMonth;
   let bookedDates = props.bookedDates[bookingsMonthIndex].slice().sort((a, b) => b - a);
-  //declare counter to fill table with dates
-  let dateCounter = 1;
   
-  const renderDateCell = function (currentCell) {
-    if (dateCounter > monthLastDay.getDate()) {
-      return null;
+  //declare counter to fill table with dates
+  let currentDateNum = 1;
+
+  //return a tuple defining a date cell's attributes >>> [classNames, clickhandler, cellValue]
+  const getAttributes = function (currentCellData) {
+    //check if date is invalid (cellData = '')
+    if (currentCellData === '') {
+      return ['', null, ''];
     }
-    const currentCellDate = new Date(props.year, props.month, dateCounter);
+    let isSelectingCheckout = false;
+    let minStayDate;
+
+    if (props.requestedDates.length === 1) {
+      minStayDate = new Date(props.requestedDates[0].getTime() + (props.minStay * 86400000));
+      isSelectingCheckout = true;
+    }
+    const cellDate = new Date(props.year, props.month, currentDateNum);
+
+
+    let attributes = [
+      //className
+      'day',
+      //clickHandler
+      null,
+      //cellValue
+      currentDateNum,
+    ];
+
+    //check if date is selected
+    if ((props.requestedDates.length >= 1 && props.requestedDates[0].getTime() === cellDate.getTime())
+      || (props.requestedDates.length === 2 && props.requestedDates[1].getTime() === cellDate.getTime())) {
+      attributes[0] += ' selected-date'; 
+    //check if date is within range of selected dates
+    } else if (props.requestedDates.length === 2 && cellDate > props.requestedDates[0] && cellDate < props.requestedDates[1]) {
+      attributes[0] += ' range';
+    //check if date is booked
+    } else if (isSelectingCheckout && cellDate.getTime() < minStayDate.getTime()) {
+      attributes[0] = ' booked';
+    } else if (currentDateNum === bookedDates[bookedDates.length - 1] && !isSelectingCheckout) {
+      attributes[0] += ' booked';
+      bookedDates.pop();
+    } else {
+      attributes[0] += ' avail';
+      attributes[1] = (e) => props.selectDate(+e.target.innerHTML);
+    }
+    
+    currentDateNum++;
+    return attributes;
+
+
+
+
+    /* const currentCellDate = new Date(props.year, props.month, dateCounter);
 
     // abstract className conditions to helper function
 
@@ -46,12 +93,21 @@ const Calendar = (props) => {
       classNames += 'booked ';
       clickHandler = null; 
       bookedDates.pop();
+    } */
+  };
+  
+  const renderDateCell = function (currentCell) {
+    if (currentDateNum > monthLastDay.getDate()) {
+      return null;
     }
+
+    const attributes = getAttributes(currentCell);
+
     return (
       <td 
-        className={classNames}
-        onClick={clickHandler}>
-        {currentCell === '' ? '' : dateCounter++}
+        className={attributes[0]}
+        onClick={attributes[1]}>
+        {attributes[2]}
       </td>
     );
   };
