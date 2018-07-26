@@ -110,7 +110,7 @@ p {
 .selected-date {
   background-color: rgb(0, 166, 153);
 }
-.day:hover, .range {
+.avail:hover, .range {
   background-color: rgb(51, 218, 205);
   cursor: pointer;
 }
