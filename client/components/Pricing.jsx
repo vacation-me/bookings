@@ -6,11 +6,22 @@ const Pricing = (props) => {
   const initialPrice = props.price * nightsRequested;
   const serviceFee = props.serviceFee * nightsRequested;
   const tax = Math.floor((initialPrice + serviceFee + props.cleaningFee) * 0.15);
+  
+  const numToString = function (num) {
+    num = num.toString().split('');
+    if (num.length > 3) {
+      num.splice(num.length - 3, 0, ',');
+    }
+    return num.join('');
+  };
+
+  
+
   return (
     <div id="booking-info">
       <div className="pricing-info-entry">
         <p>{`$${props.price} x ${nightsRequested} nights`}</p>
-        <p>{`$${initialPrice}`}</p>
+        <p>{`$${numToString(initialPrice)}`}</p>
       </div>
       <hr />
       <div className="pricing-info-entry">
@@ -30,7 +41,7 @@ const Pricing = (props) => {
       <hr />
       <div className="pricing-info-entry">
         <p>Total</p>
-        <p>{`$${initialPrice + serviceFee + tax + props.cleaningFee}`}</p>
+        <p>{`$${numToString(initialPrice + serviceFee + tax + props.cleaningFee)}`}</p>
       </div>
     </div>
   );
