@@ -6,7 +6,6 @@ import Pricing from './components/Pricing.jsx';
 import Guests from './components/Guests.jsx';
 import downArrow from './styles/icons/down_arrow.svg';
 import upArrow from './styles/icons/up_arrow.svg';
-import flag from './styles/icons/flag.svg';
 import './styles/style.css';
 
 class App extends React.Component {
@@ -35,7 +34,7 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    fetch('/listing_info')
+    fetch('/api/listing_info')
       .then(res => res.json())
       .then(body => {
         this.setState({

@@ -11,7 +11,7 @@ app.use(parser.urlencoded({ extended: true }));
 app.get('/', (req, res) => console.log('request received'));
 
 // return a random calendar to client
-app.get('/listing_info', (req, resp) => {
+app.get('/api/listing_info', (req, resp) => {
   //get a random calendar from db
   //get random index between 1 - 100
   let index = Math.ceil(Math.random() * 99);
