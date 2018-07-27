@@ -88,7 +88,8 @@ const Calendar = (props) => {
     currentDateNum += 1;
     return attributes;
   };
-  const renderDateCell = function (currentCell) {
+
+  const renderDateCell = function (currentCell, weekIdx) {
     if (currentDateNum > monthLastDay.getDate()) {
       return null;
     }
@@ -97,6 +98,7 @@ const Calendar = (props) => {
 
     return (
       <td 
+        key={`cell${cellKeyCount++}`}
         className={attributes[0]}
         onClick={attributes[1]}>
         {attributes[2]}
@@ -108,7 +110,8 @@ const Calendar = (props) => {
   for (let i = 0; i < monthFirstDay.getDay(); i += 1) {
     baseMatrix[0][i] = '';
   }
-
+  let cellKeyCount = 0;
+  let weekKeyCount = 0;
   return (
     <div id="cal-container">
       <div id="calendar-title">
@@ -141,9 +144,9 @@ const Calendar = (props) => {
               Sat
             </th>
           </tr>
-          {baseMatrix.map((week, idx) => (
-            <tr key={`week${idx}`}>
-              {week.map(renderDateCell)}
+          {baseMatrix.map(week => (
+            <tr key={`week${weekKeyCount++}`}>
+              {week.map(cell => renderDateCell(cell))}
             </tr>
           ))}
         </tbody>

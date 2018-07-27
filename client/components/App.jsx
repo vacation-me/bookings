@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import Calendar from './Calendar/Calendar';
 import CalendarTitle from './Calendar/CalendarTitle';
 import Pricing from './Pricing/Pricing';
@@ -8,7 +7,7 @@ import downArrow from '../styles/icons/down_arrow.svg';
 import upArrow from '../styles/icons/up_arrow.svg';
 import '../styles/style.css';
 
-class App extends React.Component {
+export default class App extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -238,5 +237,3 @@ class App extends React.Component {
     );
   }
 }
-
-ReactDOM.render(<App />, document.getElementById('app'));
