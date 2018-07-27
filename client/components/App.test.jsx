@@ -2,7 +2,6 @@ import React from 'react';
 import { shallow, mount } from 'enzyme';
 import sampleData from '../../__test__/config/sampleData';
 import App from './App';
-import 
 
 describe('App component', () => {
   it('renders correctly', () => {

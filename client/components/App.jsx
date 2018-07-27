@@ -35,7 +35,7 @@ export default class App extends React.Component {
 
   componentDidMount() {
     if (this.props.id) {
-      this.setState({ ...this.props });
+      this.setState({ ...this.props});
     } else {
       fetch('/api/listing_info')
         .then(res => res.json())
