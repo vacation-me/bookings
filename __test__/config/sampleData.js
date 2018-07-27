@@ -1,5 +1,5 @@
 module.exports = {
-  year: [
+  availableDates: [
     [22, 8, 5, 11, 3, 29, 4, 26, 14, 15, 23, 19, 12],
     [10, 27, 19, 8, 22, 6, 30, 7, 11, 1],
     [14, 11, 6, 8, 24, 30, 25, 26],
@@ -18,6 +18,6 @@ module.exports = {
   cleaningFee: 100,
   serviceFee: 63,
   minStay: 6,
-  maxGuests: 7,
+  maxGuests: 2,
   __v: 0,
 };

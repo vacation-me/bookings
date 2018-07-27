@@ -72,7 +72,7 @@ const Pricing = (props) => {
           style={{float: 'right', cursor: 'pointer'}}
           onClick={() => props.toggleInfo(0)}
         >x</p>
-        <p style={{marginTop: '25px'}}>{text[popUpId - 1]}</p>
+        <p id="pop-up-text" style={{marginTop: '25px'}}>{text[popUpId - 1]}</p>
       </div>
     );
   };

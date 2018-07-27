@@ -2,8 +2,6 @@ import React from 'react';
 import plus from '../../styles/icons/plus.svg';
 import minus from '../../styles/icons/minus.svg';
 
-
-
 const Guests = (props) => {
   const renderButton = (type, btnIndex) => {
     //render an icon depending on whether the max guest limit is reached
@@ -27,7 +25,7 @@ const Guests = (props) => {
       clickHandler = null;
     }
 
-    return (<img src={icon} className={classNames} onClick={clickHandler}/>);
+    return (<img src={icon} id={`guest-btn-${btnIndex}`} className={classNames} onClick={clickHandler}/>);
   };
 
   return (
@@ -35,20 +33,20 @@ const Guests = (props) => {
       <div id="adult-guest-toggle">
         <h3 className="guest-label">Adults</h3>
         {renderButton('adults', 0)}
-        <h3>{props.guestCount.adults}</h3>
+        <h3 className="guest-count">{props.guestCount.adults}</h3>
         {renderButton('adults', 1)}
       </div>
 
       <div id="child-guest-toggle">
         <h3 className="guest-label">Children (2-12)</h3>
         {renderButton('children', 2)}
-        <h3>{props.guestCount.children}</h3>
+        <h3 className="guest-count">{props.guestCount.children}</h3>
         {renderButton('children', 3)}
       </div>
       <div id="infant-guest-toggle">
-        <h3 className="guest-label">Infants (Under 2)</h3>        
+        <h3 className="guest-label">Infants (under 2)</h3>        
         {renderButton('infants', 4)}
-        <h3>{props.guestCount.infants}</h3>
+        <h3 className="guest-count">{props.guestCount.infants}</h3>
         {renderButton('infants', 5)}
       </div>
       

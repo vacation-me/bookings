@@ -34,20 +34,13 @@ export default class App extends React.Component {
   }
 
   componentDidMount() {
-    if (this.props.year) {
+    if (this.props.id) {
       this.setState({ ...this.props });
     } else {
       fetch('/api/listing_info')
         .then(res => res.json())
         .then(body => (
-          this.setState({
-            price: body.price,
-            cleaningFee: body.cleaning,
-            maxGuests: body.maxGuests,
-            minStay: body.minStay,
-            serviceFee: body.serviceFee,
-            availableDates: body.year,
-          })
+          this.setState({ ...body })
         ))
         .catch((err) => { throw err; });
     }
@@ -180,7 +173,7 @@ export default class App extends React.Component {
       icon = upArrow;
     }
     return (
-      <div className="sub-component" onClick={this.toggleGuestSelectView.bind(this)}>
+      <div className="sub-component" id="toggle-guest-view" onClick={this.toggleGuestSelectView.bind(this)}>
         <h3>{output}</h3> 
         <img className="icon" src={icon} />
       </div>
