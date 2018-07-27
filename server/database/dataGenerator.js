@@ -65,7 +65,7 @@ const generator = function() {
       serviceFee: serviceFee(nightlyPrice),
       minStay: 3 + random(6),
       maxGuests: random(10),
-      year: generateBookings(),
+      availableDates: generateBookings(),
     }).save();
   }
 };

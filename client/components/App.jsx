@@ -35,13 +35,13 @@ export default class App extends React.Component {
 
   componentDidMount() {
     if (this.props.id) {
-      this.setState({ ...this.props});
+      this.setState({ ...this.props });
     } else {
       fetch('/api/listing_info')
         .then(res => res.json())
-        .then(body => (
-          this.setState({ ...body })
-        ))
+        .then((body) => {
+          this.setState({ ...body });
+        })
         .catch((err) => { throw err; });
     }
   }
@@ -85,7 +85,7 @@ export default class App extends React.Component {
     } else if (requestedDates.length >= titleStage + 1) {
      
 
-      text = `${requestedDates[titleStage].getMonth()}/${requestedDates[titleStage].getDate()}/${requestedDates[titleStage].getFullYear()}`;
+      text = `${requestedDates[titleStage].getMonth() + 1}/${requestedDates[titleStage].getDate()}/${requestedDates[titleStage].getFullYear()}`;
     }
     if (checkOutStage === titleStage + 1) {
       classNames = 'current-stage';
@@ -189,17 +189,17 @@ export default class App extends React.Component {
           <CalendarTitle renderTitle={this.getCalendarTitle.bind(this)} />
           {this.state.checkOutStage === 0 || this.state.checkOutStage === 3 || 
             (
-            <Calendar 
-              checkOutStage={this.state.checkOutStage}
-              month={this.state.month}
-              year={this.state.year}
-              requestedDates={this.state.requestedDates}
-              availableDates={this.state.availableDates}
-              minStay={this.state.minStay}
-              changeMonth={this.changeMonth.bind(this)}
-              selectDate={this.setSelectedDate.bind(this)}
-              clearDates={this.clearDates.bind(this)}
-            />
+              <Calendar 
+                checkOutStage={this.state.checkOutStage}
+                month={this.state.month}
+                year={this.state.year}
+                requestedDates={this.state.requestedDates}
+                availableDates={this.state.availableDates}
+                minStay={this.state.minStay}
+                changeMonth={this.changeMonth.bind(this)}
+                selectDate={this.setSelectedDate.bind(this)}
+                clearDates={this.clearDates.bind(this)}
+              />
             )
           }
           {this.renderGuestTitle.call(this)}
@@ -227,7 +227,7 @@ export default class App extends React.Component {
             </h2>
           </div>
           <p>
-            {"You won't be charged"}
+            {'You won\'t be charged'}
           </p>
         </div>
       </div>

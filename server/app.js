@@ -16,7 +16,7 @@ app.get('/api/listing_info', (req, res) => {
   const index = Math.ceil(Math.random() * 99);
   // query db for that index
   db.findOne({ id: index }).exec((err, data) => {
-    if (err) throw err;
+    if (err) { throw err; }
     res.send(data);
   });
 });

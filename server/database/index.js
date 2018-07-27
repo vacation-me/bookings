@@ -5,11 +5,11 @@ const Schema = mongoose.Schema;
 const listingSchema = new Schema({
   id: Number,
   price: Number,
-  cleaning: Number,
+  cleaningFee: Number,
   serviceFee: Number,
   minStay: Number,
   maxGuests: Number,
-  year: [[Number]],
+  availableDates: [[Number]],
 });
 
 const Listing = mongoose.model('Listing', listingSchema);

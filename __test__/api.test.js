@@ -6,14 +6,7 @@ describe('Test the root path', () => {
     request(app).get('/api/listing_info').then((response) => {
       expect(response.statusCode).toBe(200);
       expect(Object.keys(response.body)).toEqual(
-        expect.arrayContaining([
-          'year',
-          'minStay',
-          'maxGuests',
-          'cleaning',
-          'serviceFee',
-          'id',
-        ]),
+        expect.arrayContaining([ 'year', '_id', 'id', 'price', 'serviceFee', 'minStay', 'maxGuests', '__v']),
       );
       done();
     });
