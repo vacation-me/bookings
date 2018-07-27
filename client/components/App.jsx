@@ -1,12 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Calendar from './components/Calendar.jsx';
-import CalendarTitle from './components/CalendarTitle.jsx';
-import Pricing from './components/Pricing.jsx';
-import Guests from './components/Guests.jsx';
-import downArrow from './styles/icons/down_arrow.svg';
-import upArrow from './styles/icons/up_arrow.svg';
-import './styles/style.css';
+import Calendar from './Calendar/Calendar';
+import CalendarTitle from './Calendar/CalendarTitle';
+import Pricing from './Pricing/Pricing';
+import Guests from './Guests/Guests';
+import downArrow from '../styles/icons/down_arrow.svg';
+import upArrow from '../styles/icons/up_arrow.svg';
+import '../styles/style.css';
 
 class App extends React.Component {
   constructor() {
@@ -17,9 +17,9 @@ class App extends React.Component {
       availableDates: [],
       requestedDates: [],
       guestCount: {
-        adults: 1, 
+        adults: 1,
         children: 0,
-        infants: 0
+        infants: 0,
       },
       checkOutStage: 0,
       price: 0,
@@ -31,67 +31,75 @@ class App extends React.Component {
       showPopUpInfo: 0,
     };
     this.getCalendarTitle = this.getCalendarTitle.bind(this);
+    this.updateGuestCount = this.updateGuestCount.bind(this);
   }
 
   componentDidMount() {
     fetch('/api/listing_info')
       .then(res => res.json())
-      .then(body => {
+      .then(body => (
         this.setState({
           price: body.price,
           cleaningFee: body.cleaning,
           maxGuests: body.maxGuests,
           minStay: body.minStay,
           serviceFee: body.serviceFee,
-          availableDates: body.year
-        });
-      })
-      .catch(err => { throw err; });
+          availableDates: body.year,
+        })
+      ))
+      .catch((err) => { throw err; });
   }
 
 
   setNextStage(newStage) {
-    if (this.state.checkOutStage === newStage) {
-      newStage = 0;
-    }
+    const { checkOutStage } = this.state;
     this.setState({
-      checkOutStage: newStage,
+      checkOutStage: checkOutStage === newStage ? 0 : newStage,
       isSelectingGuests: false,
       showPopUpInfo: 0,
     });
   }
 
-  toggleGuestSelectView() {
-    const newStatus = !this.state.isSelectingGuests;
-    this.setState({
-      isSelectingGuests: newStatus,
-      showPopUpInfo: 0, 
-    });
-  }
+  // handle date selection
+  setSelectedDate(selectedDate) {
+    const {
+      requestedDates,
+      checkOutStage,
+      month,
+      year,
+    } = this.state;
 
-  updateGuestCount(type, num) {
-    let guestCount = this.state.guestCount;
-    guestCount[type] += num;
-    this.setState({
-      guestCount,
-    });
-  }
-
-  // handles moving the calendar to the next or previous month
-  changeMonth(i) {
-    let newMonth = this.state.month + i;
-    let newYear = this.state.year;
-    if (newMonth === 12) {
-      newMonth = 0;
-      newYear++; 
-    } else if (newMonth === -1) {
-      newMonth = 11;
-      newYear--;
+    if (requestedDates.length < 2) {
+      requestedDates.push(new Date(year, month, selectedDate));
     }
     this.setState({
-      year: newYear,
-      month: newMonth
+      requestedDates,
+      checkOutStage: checkOutStage + 1,
     });
+  }
+
+  getCalendarTitle(titleStage) {
+    const { requestedDates, checkOutStage } = this.state;
+    const titles = ['Check-in', 'Check-out'];
+    let classNames = '';
+    let text = '';
+    // check if title respective date has been selected
+    if (requestedDates.length < titleStage + 1) {
+      text = titles[titleStage];
+    } else if (requestedDates.length >= titleStage + 1) {
+     
+
+      text = `${requestedDates[titleStage].getMonth()}/${requestedDates[titleStage].getDate()}/${requestedDates[titleStage].getFullYear()}`;
+    }
+    if (checkOutStage === titleStage + 1) {
+      classNames = 'current-stage';
+    }
+    return (
+      <h3 
+        className={classNames} 
+        id={`${titles[titleStage].toLowerCase()}`} 
+        onClick={() => this.setNextStage(titleStage + 1)}
+      >{text}</h3>);
   }
 
   clearDates() {
@@ -103,36 +111,56 @@ class App extends React.Component {
     });
   }
 
-  getCalendarTitle(checkOutStage) {
-    const titles = ['Check-in', 'Check-out'];
-    let classNames = '';
-    let text = '';
-    if (this.state.requestedDates.length < checkOutStage + 1) {
-      text = titles[checkOutStage];
-    } else if (this.state.requestedDates.length >= checkOutStage + 1) {
-      text = `${this.state.requestedDates[checkOutStage].getMonth()}/${this.state.requestedDates[checkOutStage].getDate()}/${this.state.requestedDates[checkOutStage].getFullYear()}`;
-    }
-    if (this.state.checkOutStage === checkOutStage + 1) {
-      classNames = 'current-stage';
-    }
-    return (<h3 className={classNames} id={`${titles[checkOutStage].toLowerCase()}`}onClick={() => this.setNextStage(checkOutStage + 1)}>{text}</h3>);
-  }
-
-  //handle date selection
-  setSelectedDate(selectedDate) {
-    let requestedDates = this.state.requestedDates;
-    let checkOutStage = this.state.checkOutStage + 1;
-    if (requestedDates.length < 2) {
-      requestedDates.push(new Date(this.state.year, this.state.month, selectedDate));
+  // handles moving the calendar to the next or previous month
+  changeMonth(i) {
+    const { month, year } = this.state;
+    let newMonth = month + i;
+    let newYear = year;
+    if (newMonth === 12) {
+      newMonth = 0;
+      newYear += 1;
+    } else if (newMonth === -1) {
+      newMonth = 11;
+      newYear -= 1;
     }
     this.setState({
-      requestedDates,
-      checkOutStage,
+      year: newYear,
+      month: newMonth,
     });
   }
 
+  updateGuestCount(type, num) {
+    const { guestCount } = this.state;
+    guestCount[type] += num;
+    this.setState({
+      guestCount,
+    });
+  }
+
+  toggleGuestSelectView() {
+    const { isSelectingGuests } = this.state;
+    const newStatus = !isSelectingGuests;
+    this.setState({
+      isSelectingGuests: newStatus,
+      showPopUpInfo: 0,
+    });
+  }
+
+  toggleInfoPopUp(popUpId) {
+    const { showPopUpInfo } = this.state;
+    if (showPopUpInfo === popUpId) {
+      this.setState({
+        showPopUpInfo: 0,
+      });
+    } else {
+      this.setState({
+        showPopUpInfo: popUpId,
+      });
+    }
+  }
+
   renderGuestTitle() {
-    const guestCount = this.state.guestCount;
+    const { guestCount, isSelectingGuests, } = this.state;
     const totalGuestCount = guestCount.adults + guestCount.children;
     let output = `${totalGuestCount} guest`;
     let icon = downArrow;
@@ -145,7 +173,7 @@ class App extends React.Component {
         output += 's';
       }
     }
-    if (this.state.isSelectingGuests) {
+    if (isSelectingGuests) {
       icon = upArrow;
     }
     return (
@@ -156,19 +184,6 @@ class App extends React.Component {
     );
   }
 
-  toggleInfoPopUp(popUpId) {
-    let currentDisplay = this.state.showPopUpInfo;
-    if (currentDisplay === popUpId) {
-      this.setState({
-        showPopUpInfo: 0,
-      });
-    } else {
-      this.setState({
-        showPopUpInfo: popUpId,
-      });
-    }
-  }
-
   render() {
     return (
       <div id="container">
@@ -177,6 +192,7 @@ class App extends React.Component {
           <hr />
           <CalendarTitle renderTitle={this.getCalendarTitle.bind(this)} />
           {this.state.checkOutStage === 0 || this.state.checkOutStage === 3 || 
+            (
             <Calendar 
               checkOutStage={this.state.checkOutStage}
               month={this.state.month}
@@ -188,15 +204,17 @@ class App extends React.Component {
               selectDate={this.setSelectedDate.bind(this)}
               clearDates={this.clearDates.bind(this)}
             />
+            )
           }
           {this.renderGuestTitle.call(this)}
-          {this.state.isSelectingGuests && 
-            <Guests 
+          {this.state.isSelectingGuests && (
+            <Guests
               maxGuests={this.state.maxGuests} 
               updateGuestCount={this.updateGuestCount.bind(this)}
               guestCount={this.state.guestCount}
               toggleView={this.toggleGuestSelectView.bind(this)}
-            />}
+            />
+          )}
           {this.state.checkOutStage === 3 && 
             <Pricing 
               price={this.state.price} 
@@ -208,10 +226,14 @@ class App extends React.Component {
             />
           }
           <div className="sub-component" id="book-btn">
-            <h2>Request to Book</h2>
+            <h2>
+              Request to Book
+            </h2>
           </div>
-          <p>You won't be charged</p>
-        </div> 
+          <p>
+            {"You won't be charged"}
+          </p>
+        </div>
       </div>
     );
   }

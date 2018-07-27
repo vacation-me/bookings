@@ -1,4 +1,5 @@
 const express = require('express');
+
 const app = express();
 const parser = require('body-parser');
 const db = require('./database/index');
@@ -8,7 +9,7 @@ app.use(express.static('./public'));
 app.use(parser.json());
 app.use(parser.urlencoded({ extended: true }));
 
-app.get('/', (req, res) => console.log('request received'));
+// app.get('/', (req, res) => console.log('request received'));
 
 // return a random calendar to client
 app.get('/api/listing_info', (req, resp) => {

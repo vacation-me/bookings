@@ -1,5 +1,5 @@
 import React from 'react';
-import question from '../styles/icons/question.svg';
+import question from '../../styles/icons/question.svg';
 
 const Pricing = (props) => {
   const nightsRequested = props.requestedDates[1].getDate() - props.requestedDates[0].getDate();

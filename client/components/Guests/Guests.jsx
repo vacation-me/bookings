@@ -1,6 +1,6 @@
 import React from 'react';
-import plus from '../styles/icons/plus.svg';
-import minus from '../styles/icons/minus.svg';
+import plus from '../../styles/icons/plus.svg';
+import minus from '../../styles/icons/minus.svg';
 
 
 
