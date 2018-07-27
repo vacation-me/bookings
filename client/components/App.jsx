@@ -8,8 +8,8 @@ import upArrow from '../styles/icons/up_arrow.svg';
 import '../styles/style.css';
 
 export default class App extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       year: new Date().getFullYear(),
       month: new Date().getMonth(),
@@ -34,19 +34,23 @@ export default class App extends React.Component {
   }
 
   componentDidMount() {
-    fetch('/api/listing_info')
-      .then(res => res.json())
-      .then(body => (
-        this.setState({
-          price: body.price,
-          cleaningFee: body.cleaning,
-          maxGuests: body.maxGuests,
-          minStay: body.minStay,
-          serviceFee: body.serviceFee,
-          availableDates: body.year,
-        })
-      ))
-      .catch((err) => { throw err; });
+    if (this.props.year) {
+      this.setState({ ...this.props });
+    } else {
+      fetch('/api/listing_info')
+        .then(res => res.json())
+        .then(body => (
+          this.setState({
+            price: body.price,
+            cleaningFee: body.cleaning,
+            maxGuests: body.maxGuests,
+            minStay: body.minStay,
+            serviceFee: body.serviceFee,
+            availableDates: body.year,
+          })
+        ))
+        .catch((err) => { throw err; });
+    }
   }
 
 

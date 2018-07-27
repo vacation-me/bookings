@@ -5,6 +5,16 @@ describe('Test the root path', () => {
   test('should respond with 200 to a valid path', (done) => {
     request(app).get('/api/listing_info').then((response) => {
       expect(response.statusCode).toBe(200);
+      expect(Object.keys(response.body)).toEqual(
+        expect.arrayContaining([
+          'year',
+          'minStay',
+          'maxGuests',
+          'cleaning',
+          'serviceFee',
+          'id',
+        ]),
+      );
       done();
     });
   });

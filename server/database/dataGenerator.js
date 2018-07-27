@@ -61,7 +61,7 @@ const generator = function() {
     new db({
       id: i,
       price: nightlyPrice,
-      cleaning: cleaning(),
+      cleaningFee: cleaning(),
       serviceFee: serviceFee(nightlyPrice),
       minStay: 3 + random(6),
       maxGuests: random(10),

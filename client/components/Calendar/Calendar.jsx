@@ -89,7 +89,7 @@ const Calendar = (props) => {
     return attributes;
   };
 
-  const renderDateCell = function (currentCell, weekIdx) {
+  const renderDateCell = function (currentCell) {
     if (currentDateNum > monthLastDay.getDate()) {
       return null;
     }
