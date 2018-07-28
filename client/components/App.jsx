@@ -190,8 +190,8 @@ export default class App extends React.Component {
       body: JSON.stringify(reqBody),
     })
       .then(res => res.json())
-      .then(data => this.setState({ ...data, checkOutStage: 0, requestedDates: [] }));
-  };
+      .then(data => this.setState({ ...data, checkOutStage: 4, requestedDates: [] }));
+  }
 
   renderGuestTitle() {
     const { guestCount, isSelectingGuests, } = this.state;
@@ -221,12 +221,22 @@ export default class App extends React.Component {
   render() {
     return (
       <div id='container'>
+        {this.state.checkOutStage === 4 && (
+          <div id="requested-message-container">
+            <h1>
+              {'Your request was succesfully submitted!!'}
+            </h1>
+            <h2>
+              The host will contact you shortly
+            </h2>
+          </div>
+        )}
         <div id='bookings'>
           <h3><span id='price'>{`$${this.state.price}`}</span> per night</h3>
           <hr />
           <CalendarTitle renderTitle={this.getCalendarTitle.bind(this)} />
-          {this.state.checkOutStage === 0 || this.state.checkOutStage === 3 || 
-            (
+          {(this.state.checkOutStage === 1 || this.state.checkOutStage === 2)
+            && (
               <Calendar 
                 checkOutStage={this.state.checkOutStage}
                 month={this.state.month}
@@ -251,14 +261,14 @@ export default class App extends React.Component {
           )}
           {this.state.checkOutStage === 3
           && (
-          <Pricing
-            price={this.state.price} 
-            requestedDates={this.state.requestedDates} 
-            cleaningFee={this.state.cleaningFee}
-            serviceFee={this.state.serviceFee}
-            showPopUpInfo={this.state.showPopUpInfo}
-            toggleInfo={this.toggleInfoPopUp.bind(this)}
-          />
+            <Pricing
+              price={this.state.price} 
+              requestedDates={this.state.requestedDates} 
+              cleaningFee={this.state.cleaningFee}
+              serviceFee={this.state.serviceFee}
+              showPopUpInfo={this.state.showPopUpInfo}
+              toggleInfo={this.toggleInfoPopUp.bind(this)}
+            />
           )}
           <div className='sub-component' id='book-btn' onClick={() => this.submitRequest()}>
             <h2>

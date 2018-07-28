@@ -30,7 +30,7 @@ app.post('/api/submit', (req, res) => {
     ));
     availableDates[checkIn.index] = newMonth;
     doc.save((err) => {
-      if (err) throw err;
+      if (err) { throw err; }
       res.send(doc);
     });
   });

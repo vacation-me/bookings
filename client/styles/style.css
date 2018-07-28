@@ -195,3 +195,17 @@ p {
   height: 50px;
 }
 
+/* ---Booking requested message---- */
+
+#requested-message-container {
+  position: absolute;
+  opacity: 1.0;
+  width: 38%;
+  text-align: center;
+  height: 48%;
+  background-color: #FF5A5F;
+  color: #ffffff;
+  border: 1px solid rgb(219, 219, 219);
+  padding-top: 10%;
+  border-radius: 5px;
+}
