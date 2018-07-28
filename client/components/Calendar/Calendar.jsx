@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import left from '../../styles/icons/cal_left.svg';
 import right from '../../styles/icons/cal_right.svg';
 
@@ -157,6 +158,16 @@ const Calendar = (props) => {
       </button>
     </div>
   );
+};
+
+Calendar.propTypes = {
+  year: PropTypes.number.isRequired,
+  month: PropTypes.number.isRequired,
+  availableDates: PropTypes.array,
+  minStay: PropTypes.number.isRequired,
+  selectDate: PropTypes.func.isRequired,
+  clearDates: PropTypes.func.isRequired,
+  requestedDates: PropTypes.array,
 };
 
 export default Calendar;
