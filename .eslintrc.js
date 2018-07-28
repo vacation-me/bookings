@@ -1,5 +1,5 @@
 module.exports = {
-  extends: 'hackreactor',
+  extends: 'airbnb',
   env: {
     jest: true,
   },

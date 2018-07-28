@@ -29,7 +29,7 @@ const Calendar = (props) => {
   const currentMonth = new Date().getMonth();
 
   const bookingsMonthIndex = month < currentMonth ? currentMonth + month : month - currentMonth;
-  const currentAvailableDates = availableDates[bookingsMonthIndex].slice().sort((a, b) => b - a);
+  const currentAvailableDates = [...availableDates[bookingsMonthIndex]];
   // declare counter to fill table with dates
   let currentDateNum = 1;
 

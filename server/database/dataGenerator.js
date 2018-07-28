@@ -32,10 +32,10 @@ const generateBookings = function() {
   let year = startDate.getFullYear();
 
   for (let i = 0; i < 12; i++) {
-    let last = new Date(year, currentMonth + 1, 0).getDate();
-    let month = [];
-    let dateCount = 15 - random(10);
-    let store = {};
+    const last = new Date(year, currentMonth + 1, 0).getDate();
+    const month = [];
+    const dateCount = 15 - random(10);
+    const store = {};
     for (let i = 0; i < dateCount; i++) {
       let day = random(last);
       if (!store[day]) {
@@ -43,6 +43,7 @@ const generateBookings = function() {
         store[day] = true;
       }
     }
+    month.sort((a, b) => b - a);
     bookings.push(month);
     if (currentMonth === 11) {
       currentMonth = 0;
@@ -53,6 +54,7 @@ const generateBookings = function() {
     currentDate = new Date(year, currentMonth, 1);
   }
   return bookings;
+
 };
 
 const generator = function() { 
@@ -71,8 +73,3 @@ const generator = function() {
 };
 
 generator();
-
-
-
-
-
