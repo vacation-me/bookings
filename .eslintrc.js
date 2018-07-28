@@ -10,5 +10,6 @@ module.exports = {
     "no-undef": "off",
     "func-names": "off",
     "jsx-a11y": "off",
+    "no-plusplus": "off",
   }
 };

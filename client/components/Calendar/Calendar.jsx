@@ -22,6 +22,7 @@ const Calendar = (props) => {
     minStay,
     selectDate,
     requestedDates,
+    clearDates,
   } = props;
 
   const monthFirstDay = new Date(year, month, 1);
@@ -151,7 +152,9 @@ const Calendar = (props) => {
           ))}
         </tbody>
       </table>
-      <p onClick={props.clearDates} style={{color: 'rgb(0, 166, 153)'}}>Clear Dates</p>
+      <button onClick={clearDates} style={{ fontFamily: 'Lato-Regular' }} type="button">
+        Clear Dates
+      </button>
     </div>
   );
 };

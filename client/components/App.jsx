@@ -3,6 +3,7 @@ import Calendar from './Calendar/Calendar';
 import CalendarTitle from './Calendar/CalendarTitle';
 import Pricing from './Pricing/Pricing';
 import Guests from './Guests/Guests';
+import SuccessMsg from './SuccessMsg/SuccessMsg';
 import downArrow from '../styles/icons/down_arrow.svg';
 import upArrow from '../styles/icons/up_arrow.svg';
 import '../styles/style.css';
@@ -30,9 +31,18 @@ export default class App extends React.Component {
       isSelectingGuests: false,
       showPopUpInfo: 0,
     };
+    this.setNextStage = this.setNextStage.bind(this);
+    this.setSelectedDate = this.setSelectedDate.bind(this);
     this.getCalendarTitle = this.getCalendarTitle.bind(this);
     this.updateGuestCount = this.updateGuestCount.bind(this);
     this.submitRequest = this.submitRequest.bind(this);
+    this.clearDates = this.clearDates.bind(this);
+    this.changeMonth = this.changeMonth.bind(this);
+    this.updateGuestCount = this.updateGuestCount.bind(this);
+    this.toggleGuestSelectView = this.toggleGuestSelectView.bind(this);
+    this.toggleInfoPopUp = this.toggleInfoPopUp.bind(this);
+    this.submitRequest = this.submitRequest.bind(this);
+    this.renderGuestTitle = this.renderGuestTitle.bind(this);
   }
 
   componentDidMount() {
@@ -41,9 +51,7 @@ export default class App extends React.Component {
     } else {
       fetch('/api/listing_info')
         .then(res => res.json())
-        .then((body) => {
-          this.setState({ ...body });
-        })
+        .then((body) => { this.setState({ ...body }); })
         .catch((err) => { throw err; });
     }
   }
@@ -159,9 +167,7 @@ export default class App extends React.Component {
   submitRequest() {
     const { requestedDates, id, checkOutStage } = this.state;
     if (checkOutStage !== 3) {
-      this.setState({
-        checkOutStage: checkOutStage === 0 ? 1 : 2,
-      });
+      this.setState({ checkOutStage: checkOutStage === 0 ? 1 : 2 });
       return;
     }
     const currentMonth = new Date().getMonth();
@@ -175,7 +181,7 @@ export default class App extends React.Component {
     const checkIn = getBookingData(requestedDates[0]);
     const checkOut = getBookingData(requestedDates[1]);
 
-    // get array ineces from requested dates
+    // get array indeces from requested dates
     const reqBody = {
       id,
       checkIn,
@@ -194,7 +200,7 @@ export default class App extends React.Component {
   }
 
   renderGuestTitle() {
-    const { guestCount, isSelectingGuests, } = this.state;
+    const { guestCount, isSelectingGuests } = this.state;
     const totalGuestCount = guestCount.adults + guestCount.children;
     let output = `${totalGuestCount} guest`;
     let icon = downArrow;
@@ -211,66 +217,63 @@ export default class App extends React.Component {
       icon = upArrow;
     }
     return (
-      <div className='sub-component' id='toggle-guest-view' onClick={this.toggleGuestSelectView.bind(this)}>
-        <h3>{output}</h3> 
-        <img className='icon' src={icon} />
+      <div className="sub-component" id="toggle-guest-view" onClick={this.toggleGuestSelectView}>
+        <h3>
+          {output}
+        </h3>
+        <img className="icon" src={icon} alt="" />
       </div>
     );
   }
 
   render() {
+    const {
+      checkOutStage,
+      isSelectingGuests,
+      price,
+    } = this.state;
+
     return (
-      <div id='container'>
-        {this.state.checkOutStage === 4 && (
-          <div id="requested-message-container">
-            <h1>
-              {'Your request was succesfully submitted!!'}
-            </h1>
-            <h2>
-              The host will contact you shortly
-            </h2>
-          </div>
-        )}
-        <div id='bookings'>
-          <h3><span id='price'>{`$${this.state.price}`}</span> per night</h3>
+      <div id="container">
+        {checkOutStage === 4 && <SuccessMsg setNextStage={this.setNextStage} />}
+        <div id="bookings">
+          <h3>
+            <span id="price">
+              {`$${price} `}
+            </span>
+            per night
+          </h3>
           <hr />
-          <CalendarTitle renderTitle={this.getCalendarTitle.bind(this)} />
-          {(this.state.checkOutStage === 1 || this.state.checkOutStage === 2)
+          <CalendarTitle renderTitle={this.getCalendarTitle} />
+          {(checkOutStage === 1 || checkOutStage === 2)
             && (
-              <Calendar 
-                checkOutStage={this.state.checkOutStage}
-                month={this.state.month}
-                year={this.state.year}
-                requestedDates={this.state.requestedDates}
-                availableDates={this.state.availableDates}
-                minStay={this.state.minStay}
-                changeMonth={this.changeMonth.bind(this)}
-                selectDate={this.setSelectedDate.bind(this)}
-                clearDates={this.clearDates.bind(this)}
+              <Calendar
+                {...this.state}
+                changeMonth={this.changeMonth}
+                selectDate={this.setSelectedDate}
+                clearDates={this.clearDates}
               />
             )
           }
           {this.renderGuestTitle.call(this)}
-          {this.state.isSelectingGuests && (
-            <Guests
-              maxGuests={this.state.maxGuests} 
-              updateGuestCount={this.updateGuestCount.bind(this)}
-              guestCount={this.state.guestCount}
-              toggleView={this.toggleGuestSelectView.bind(this)}
-            />
-          )}
-          {this.state.checkOutStage === 3
-          && (
-            <Pricing
-              price={this.state.price} 
-              requestedDates={this.state.requestedDates} 
-              cleaningFee={this.state.cleaningFee}
-              serviceFee={this.state.serviceFee}
-              showPopUpInfo={this.state.showPopUpInfo}
-              toggleInfo={this.toggleInfoPopUp.bind(this)}
-            />
-          )}
-          <div className='sub-component' id='book-btn' onClick={() => this.submitRequest()}>
+          {isSelectingGuests
+            && (
+              <Guests
+                {...this.state}
+                updateGuestCount={this.updateGuestCount}
+                toggleView={this.toggleGuestSelectView}
+              />
+            )
+          }
+          {checkOutStage === 3
+            && (
+              <Pricing
+                {...this.state}
+                toggleInfo={this.toggleInfoPopUp}
+              />
+            )
+          }
+          <div className="sub-component" id="book-btn" onClick={() => this.submitRequest()}>
             <h2>
               Request to Book
             </h2>

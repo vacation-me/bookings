@@ -20,14 +20,14 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">71.6% </span>
+        <span class="strong">74.73% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>58/81</span>
+        <span class='fraction'>68/91</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">69.23% </span>
+        <span class="strong">68.29% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>27/39</span>
+        <span class='fraction'>28/41</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">57.14% </span>
@@ -35,9 +35,9 @@
         <span class='fraction'>12/21</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">71.6% </span>
+        <span class="strong">74.73% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>58/81</span>
+        <span class='fraction'>68/91</span>
       </div>
     </div>
     <p class="quiet">
@@ -323,7 +323,22 @@
 <a name='L275'></a><a href='#L275'>275</a>
 <a name='L276'></a><a href='#L276'>276</a>
 <a name='L277'></a><a href='#L277'>277</a>
-<a name='L278'></a><a href='#L278'>278</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L278'></a><a href='#L278'>278</a>
+<a name='L279'></a><a href='#L279'>279</a>
+<a name='L280'></a><a href='#L280'>280</a>
+<a name='L281'></a><a href='#L281'>281</a>
+<a name='L282'></a><a href='#L282'>282</a>
+<a name='L283'></a><a href='#L283'>283</a>
+<a name='L284'></a><a href='#L284'>284</a>
+<a name='L285'></a><a href='#L285'>285</a>
+<a name='L286'></a><a href='#L286'>286</a>
+<a name='L287'></a><a href='#L287'>287</a>
+<a name='L288'></a><a href='#L288'>288</a>
+<a name='L289'></a><a href='#L289'>289</a>
+<a name='L290'></a><a href='#L290'>290</a>
+<a name='L291'></a><a href='#L291'>291</a>
+<a name='L292'></a><a href='#L292'>292</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -355,6 +370,15 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">8x</span>
 <span class="cline-any cline-yes">8x</span>
 <span class="cline-any cline-yes">8x</span>
 <span class="cline-any cline-yes">8x</span>
@@ -410,8 +434,6 @@
 <span class="cline-any cline-yes">64x</span>
 <span class="cline-any cline-yes">54x</span>
 <span class="cline-any cline-yes">10x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">10x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">64x</span>
@@ -546,8 +568,13 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">33x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">33x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -600,11 +627,13 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React from 'react';
 import Calendar from './Calendar/Calendar';
 import CalendarTitle from './Calendar/CalendarTitle';
 import Pricing from './Pricing/Pricing';
 import Guests from './Guests/Guests';
+import SuccessMsg from './SuccessMsg/SuccessMsg';
 import downArrow from '../styles/icons/down_arrow.svg';
 import upArrow from '../styles/icons/up_arrow.svg';
 import '../styles/style.css';
@@ -632,9 +661,18 @@ export default class App extends React.Component {
       isSelectingGuests: false,
       showPopUpInfo: 0,
     };
+    this.setNextStage = this.setNextStage.bind(this);
+    this.setSelectedDate = this.setSelectedDate.bind(this);
     this.getCalendarTitle = this.getCalendarTitle.bind(this);
     this.updateGuestCount = this.updateGuestCount.bind(this);
     this.submitRequest = this.submitRequest.bind(this);
+    this.clearDates = this.clearDates.bind(this);
+    this.changeMonth = this.changeMonth.bind(this);
+    this.updateGuestCount = this.updateGuestCount.bind(this);
+    this.toggleGuestSelectView = this.toggleGuestSelectView.bind(this);
+    this.toggleInfoPopUp = this.toggleInfoPopUp.bind(this);
+    this.submitRequest = this.submitRequest.bind(this);
+    this.renderGuestTitle = this.renderGuestTitle.bind(this);
   }
 &nbsp;
   componentDidMount() {
@@ -687,8 +725,6 @@ export default class App extends React.Component {
     if (requestedDates.length &lt; titleStage + 1) {
       text = titles[titleStage];
     } else <span class="missing-if-branch" title="else path not taken" >E</span>if (requestedDates.length &gt;= titleStage + 1) {
-     
-&nbsp;
       text = `${requestedDates[titleStage].getMonth() + 1}/${requestedDates[titleStage].getDate()}/${requestedDates[titleStage].getFullYear()}`;
     }
     if (checkOutStage === titleStage + 1) {
@@ -794,11 +830,11 @@ export default class App extends React.Component {
       body: JSON.stringify(reqBody),
     })
       .then(<span class="fstat-no" title="function not covered" >re</span>s =&gt; <span class="cstat-no" title="statement not covered" >res.json())</span>
-      .then(<span class="fstat-no" title="function not covered" >da</span>ta =&gt; <span class="cstat-no" title="statement not covered" >this.setState({ ...data, checkOutStage: 0, requestedDates: [] }))</span>;
-  };
+      .then(<span class="fstat-no" title="function not covered" >da</span>ta =&gt; <span class="cstat-no" title="statement not covered" >this.setState({ ...data, checkOutStage: 4, requestedDates: [] }))</span>;
+  }
 &nbsp;
   renderGuestTitle() {
-    const { guestCount, isSelectingGuests, } = this.state;
+    const { guestCount, isSelectingGuests } = this.state;
     const totalGuestCount = guestCount.adults + guestCount.children;
     let output = `${totalGuestCount} guest`;
     let icon = downArrow;
@@ -815,56 +851,62 @@ export default class App extends React.Component {
       icon = upArrow;
     }
     return (
-      &lt;div className='sub-component' id='toggle-guest-view' onClick={this.toggleGuestSelectView.bind(this)}&gt;
-        &lt;h3&gt;{output}&lt;/h3&gt; 
-        &lt;img className='icon' src={icon} /&gt;
+      &lt;div className="sub-component" id="toggle-guest-view" onClick={this.toggleGuestSelectView.bind(this)}&gt;
+        &lt;h3&gt;
+          {output}&lt;/h3&gt; 
+        &lt;img className="icon" src={icon} /&gt;
       &lt;/div&gt;
     );
   }
 &nbsp;
   render() {
+    const {
+      checkOutStage,
+      isSelectingGuests,
+      price,
+    } = this.state;
+&nbsp;
     return (
-      &lt;div id='container'&gt;
-        &lt;div id='bookings'&gt;
-          &lt;h3&gt;&lt;span id='price'&gt;{`$${this.state.price}`}&lt;/span&gt; per night&lt;/h3&gt;
+      &lt;div id="container"&gt;<span class="branch-1 cbranch-no" title="branch not covered" ></span>
+        {checkOutStage === 4 &amp;&amp; &lt;SuccessMsg setNextStage={this.setNextStage} /&gt;}
+        &lt;div id="bookings"&gt;
+          &lt;h3&gt;
+            &lt;span id="price"&gt;
+              {`$${price} `}
+            &lt;/span&gt;
+            per night
+          &lt;/h3&gt;
           &lt;hr /&gt;
-          &lt;CalendarTitle renderTitle={this.getCalendarTitle.bind(this)} /&gt;
-          {this.state.checkOutStage === 0 || this.state.checkOutStage === 3 || 
-            (
-              &lt;Calendar 
-                checkOutStage={this.state.checkOutStage}
-                month={this.state.month}
-                year={this.state.year}
-                requestedDates={this.state.requestedDates}
-                availableDates={this.state.availableDates}
-                minStay={this.state.minStay}
-                changeMonth={this.changeMonth.bind(this)}
-                selectDate={this.setSelectedDate.bind(this)}
-                clearDates={this.clearDates.bind(this)}
+          &lt;CalendarTitle renderTitle={this.getCalendarTitle} /&gt;
+          {(checkOutStage === 1 || checkOutStage === 2)
+            &amp;&amp; (
+              &lt;Calendar
+                {...this.state}
+                changeMonth={this.changeMonth}
+                selectDate={this.setSelectedDate}
+                clearDates={this.clearDates}
               /&gt;
             )
           }
           {this.renderGuestTitle.call(this)}
-          {this.state.isSelectingGuests &amp;&amp; (
-            &lt;Guests
-              maxGuests={this.state.maxGuests} 
-              updateGuestCount={this.updateGuestCount.bind(this)}
-              guestCount={this.state.guestCount}
-              toggleView={this.toggleGuestSelectView.bind(this)}
-            /&gt;
-          )}
-          {this.state.checkOutStage === 3
-          &amp;&amp; (
-          &lt;Pricing
-            price={this.state.price} 
-            requestedDates={this.state.requestedDates} 
-            cleaningFee={this.state.cleaningFee}
-            serviceFee={this.state.serviceFee}
-            showPopUpInfo={this.state.showPopUpInfo}
-            toggleInfo={this.toggleInfoPopUp.bind(this)}
-          /&gt;
-          )}
-          &lt;div className='sub-component' id='book-btn' onClick={<span class="fstat-no" title="function not covered" >()</span> =&gt; <span class="cstat-no" title="statement not covered" >this.submitRequest()}</span>&gt;
+          {isSelectingGuests
+            &amp;&amp; (
+              &lt;Guests
+                {...this.state}
+                updateGuestCount={this.updateGuestCount}
+                toggleView={this.toggleGuestSelectView}
+              /&gt;
+            )
+          }
+          {checkOutStage === 3
+            &amp;&amp; (
+              &lt;Pricing
+                {...this.state}
+                toggleInfo={this.toggleInfoPopUp}
+              /&gt;
+            )
+          }<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ></span></span>
+          &lt;div className="sub-component" id="book-btn" onClick={() =&gt; this.submitRequest()}&gt;
             &lt;h2&gt;
               Request to Book
             &lt;/h2&gt;
@@ -883,7 +925,7 @@ export default class App extends React.Component {
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Fri Jul 27 2018 18:17:36 GMT-0700 (PDT)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Sat Jul 28 2018 13:02:28 GMT-0700 (PDT)
 </div>
 </div>
 <script src="../../prettify.js"></script>
