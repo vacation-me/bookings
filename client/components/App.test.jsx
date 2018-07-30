@@ -55,22 +55,22 @@ describe('App component', () => {
   it('renders pricing view after check in and check-out have been selected', () => {
     const wrapper = mount(<App {...sampleData} />);
     wrapper.find('#check-in').simulate('click');
-    wrapper.find('td.avail').first().simulate('click');
-    wrapper.find('td.avail').first().simulate('click');
-    const pricing = wrapper.find('#booking-info');
+    wrapper.find('.avail').first().simulate('click');
+    wrapper.find('.avail').first().simulate('click');
+    const pricing = wrapper.find('.booking-info');
     expect(pricing.text()).toContain('Service Fee');
   });
 
   it('displays pop ups when info buttons are selected', () => {
     const wrapper = mount(<App {...sampleData} />);
     wrapper.find('#check-in').simulate('click');
-    wrapper.find('td.avail').first().simulate('click');
-    wrapper.find('td.avail').first().simulate('click');
+    wrapper.find('.avail').first().simulate('click');
+    wrapper.find('.avail').first().simulate('click');
     wrapper.find('img.small-icon').first().simulate('click');
 
     const popUp = wrapper.find('#pop-up-text');
     expect(popUp.text()).toBe('One-time fee charged by host to cover the cost of cleaning their space.');
-    wrapper.find('#close-btn').simulate('click');
+    wrapper.find('.close-btn').simulate('click');
     expect(wrapper.find('#pop-up-text').length).toBe(0);
   });
 });

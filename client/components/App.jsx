@@ -9,7 +9,6 @@ import SubmitBtn from './SubmitBtn/SubmitBtn';
 import styles from './App.css';
 import downArrow from '../styles/icons/down_arrow.svg';
 import upArrow from '../styles/icons/up_arrow.svg';
-import '../styles/style.css';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -84,17 +83,25 @@ export default class App extends React.Component {
   setSelectedDate(selectedDate) {
     const {
       requestedDates,
-      checkOutStage,
       month,
       year,
     } = this.state;
 
-    if (requestedDates.length < 2) {
-      requestedDates.push(new Date(year, month, selectedDate));
+    let { checkOutStage } = this.state;
+
+    if (requestedDates[0] === undefined) {
+      requestedDates[0] = new Date(year, month, selectedDate);
+    } else if (requestedDates[1] === undefined) {
+      requestedDates[1] = new Date(year, month, selectedDate);
+    }
+    if (requestedDates[0] && requestedDates[1]) {
+      checkOutStage = 3;
+    } else {
+      checkOutStage = 2;
     }
     this.setState({
       requestedDates,
-      checkOutStage: checkOutStage + 1,
+      checkOutStage,
     });
   }
 
@@ -104,13 +111,13 @@ export default class App extends React.Component {
     let classNames = '';
     let text = '';
     // check if title respective date has been selected
-    if (requestedDates.length < titleStage + 1) {
+    if (requestedDates[titleStage] === undefined) {
       text = titles[titleStage];
-    } else if (requestedDates.length >= titleStage + 1) {
+    } else {
       text = `${requestedDates[titleStage].getMonth() + 1}/${requestedDates[titleStage].getDate()}/${requestedDates[titleStage].getFullYear()}`;
     }
     if (checkOutStage === titleStage + 1) {
-      classNames = 'current-stage';
+      classNames = styles.currentStage;
     }
     return (
       <h3 
@@ -306,14 +313,12 @@ export default class App extends React.Component {
                   />
                 )
               }
-              {(checkOutStage === 3 || requestedDates.length === 2)
-                && (
-                  <Pricing
-                    {...this.state}
-                    toggleInfo={this.toggleInfoPopUp}
-                  />
-                )
-              }
+              {checkOutStage === 3 && (
+                <Pricing
+                  {...this.state}
+                  toggleInfo={this.toggleInfoPopUp}
+                />
+              )}
               <SubmitBtn submitRequest={this.submitRequest} className={styles.bookBtn} />
               <p className={styles.text}>
                 {'You won\'t be charged'}

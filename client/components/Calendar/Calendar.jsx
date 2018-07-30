@@ -45,7 +45,7 @@ const Calendar = (props) => {
     let isSelectingCheckout = false;
     let minStayDate;
 
-    if (requestedDates.length === 1) {
+    if (requestedDates[0] !== undefined) {
       minStayDate = new Date(requestedDates[0].getTime() + (minStay * 86400000));
       isSelectingCheckout = true;
     }
@@ -66,23 +66,23 @@ const Calendar = (props) => {
         && requestedDates[0].getTime() === cellDate.getTime())
       || (requestedDates.length === 2
         && requestedDates[1].getTime() === cellDate.getTime())) {
-      attributes[0] += ` ${styles.selectedDate}`;
+      attributes[0] += ` ${styles.selectedDate} selected-date`;
     // check if date is within range of selected dates
     } else if (requestedDates.length === 2
       && cellDate > requestedDates[0]
       && cellDate < requestedDates[1]) {
-      attributes[0] += ` ${styles.range}`;
+      attributes[0] += ` ${styles.range} range`;
     // check if date is booked
     } else if (isSelectingCheckout) {
       if (cellDate.getTime() < minStayDate.getTime()) {
         attributes[0] += ` ${styles.booked}`;
       } else {
-        attributes[0] += ` ${styles.avail}`;
+        attributes[0] += ` avail ${styles.avail}`;
         attributes[1] = validDateClickHandler;
       }
     } else if (currentDateNum === currentAvailableDates[currentAvailableDates.length - 1]
       && !isSelectingCheckout) {
-      attributes[0] += ` ${styles.avail}`;
+      attributes[0] += ` avail ${styles.avail}`;
       attributes[1] = validDateClickHandler;
       currentAvailableDates.pop();
     } else {

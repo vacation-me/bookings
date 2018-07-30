@@ -48,7 +48,7 @@ const Guests = (props) => {
           Adults
         </h3>
         {renderButton('adults', 0)}
-        <h3 className={styles.guestCount}>
+        <h3 className={`${styles.guestCount} guest-count`}>
           {guestCount.adults}
         </h3>
         {renderButton('adults', 1)}
@@ -59,7 +59,7 @@ const Guests = (props) => {
           Children (2-12)
         </h3>
         {renderButton('children', 2)}
-        <h3 className={styles.guestCount}>
+        <h3 className={`${styles.guestCount} guest-count`}>
           {guestCount.children}
         </h3>
         {renderButton('children', 3)}
@@ -69,7 +69,7 @@ const Guests = (props) => {
           Infants (under 2)
         </h3>
         {renderButton('infants', 4)}
-        <h3 className={styles.guestCount}>
+        <h3 className={`${styles.guestCount} guest-count`}>
           {guestCount.infants}
         </h3>
         {renderButton('infants', 5)}

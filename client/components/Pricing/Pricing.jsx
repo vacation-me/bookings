@@ -12,7 +12,7 @@ const Pricing = (props) => {
     toggleInfo,
     showPopUpInfo,
   } = props;
-  const nightsRequested = requestedDates[1].getDate() - requestedDates[0].getDate();
+  const nightsRequested = (requestedDates[1].getTime() - requestedDates[0].getTime()) / 86400000;
   const initialPrice = price * nightsRequested;
   const totalServiceFee = serviceFee * nightsRequested;
   const tax = Math.floor((initialPrice + totalServiceFee + cleaningFee) * 0.15);
@@ -39,12 +39,12 @@ const Pricing = (props) => {
 
     return (
       <div className={classes[popUpId - 1]}>
-        <p 
-          className={styles.closeBtn} 
+        <p
+          className={`${styles.closeBtn} close-btn`} 
           style={{float: 'right', cursor: 'pointer'}}
           onClick={() => toggleInfo(0)}
         >x</p>
-        <p className={styles.popUpText} style={{ marginTop: '25px' }}>
+        <p className={styles.popUpText} id="pop-up-text" style={{ marginTop: '25px' }}>
           {text[popUpId - 1]}
         </p>
       </div>
@@ -52,7 +52,7 @@ const Pricing = (props) => {
   };
 
   return (
-    <div className={styles.bookingInfo}>
+    <div className={`${styles.bookingInfo} booking-info`}>
       <div className={styles.pricingInfoEntry}>
         <p>
           {`$${price} x ${nightsRequested} nights`}
@@ -66,7 +66,7 @@ const Pricing = (props) => {
         <p>
           Cleaning Fee
           <img 
-            className={styles.smallIcon} 
+            className={`${styles.smallIcon} small-icon`} 
             src={question}
             onClick={() => toggleInfo(1)}
             alt="close"
@@ -81,7 +81,7 @@ const Pricing = (props) => {
         <p>
           Service Fee
           <img
-          className={styles.smallIcon} 
+          className={`${styles.smallIcon} small-icon`} 
           src={question}
           onClick={() => toggleInfo(2)}/></p>
         <p>
@@ -93,7 +93,7 @@ const Pricing = (props) => {
         <p>
           Occupancy Taxes and Fees
           <img
-            className={styles.smallIcon} 
+            className={`${styles.smallIcon} small-icon`} 
             src={question}
             onClick={() => toggleInfo(3)}
           />

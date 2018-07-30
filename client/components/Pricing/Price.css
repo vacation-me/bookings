@@ -1,3 +1,15 @@
+@font-face {
+  font-family: 'Lato-Light';
+  src: url('../../styles/fonts/Lato-Light.ttf') format('truetype');
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: 'Lato-Regular';
+  src: url('../../styles/fonts/Lato-Regular.ttf') format('truetype');
+  font-weight: 600;
+}
+
 .pricingInfoEntry {
   display: flex;
   justify-content: space-between;
