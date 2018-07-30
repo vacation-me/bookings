@@ -50,7 +50,7 @@ const Guests = (props) => {
         {renderButton('infants', 5)}
       </div>
       
-      <p>{`${props.maxGuests} guests maximum. Infants don't count towards the number of guests.`}</p>
+      <p className="text">{`${props.maxGuests} guests maximum. Infants don't count towards the number of guests.`}</p>
       <h4 
         style={{float: 'right', color: 'rgb(51, 218, 205)', marginRight: '10px', cursor: 'pointer'}}
         onClick={props.toggleView}

@@ -1,9 +1,11 @@
 import React from 'react';
+import _ from 'lodash';
 import Calendar from './Calendar/Calendar';
 import CalendarTitle from './Calendar/CalendarTitle';
 import Pricing from './Pricing/Pricing';
 import Guests from './Guests/Guests';
 import SuccessMsg from './SuccessMsg/SuccessMsg';
+import SubmitBtn from './SubmitBtn/SubmitBtn';
 import downArrow from '../styles/icons/down_arrow.svg';
 import upArrow from '../styles/icons/up_arrow.svg';
 import '../styles/style.css';
@@ -22,6 +24,9 @@ export default class App extends React.Component {
         children: 0,
         infants: 0,
       },
+      displayWidth: 1124,
+      displayModalView: false,
+      displayBreakpoint: 1123,
       checkOutStage: 0,
       price: 0,
       cleaningFee: 0,
@@ -53,7 +58,15 @@ export default class App extends React.Component {
         .then(res => res.json())
         .then((body) => { this.setState({ ...body }); })
         .catch((err) => { throw err; });
+      this.setState({ displayWidth: window.innerWidth });
+      window.addEventListener('resize', _.throttle(() => {
+        this.setState({ displayWidth: window.innerWidth });
+      }), 500);
     }
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize');
   }
 
 
@@ -165,7 +178,19 @@ export default class App extends React.Component {
   }
 
   submitRequest() {
-    const { requestedDates, id, checkOutStage } = this.state;
+    const {
+      requestedDates,
+      id,
+      checkOutStage,
+      displayBreakpoint,
+      displayWidth,
+    } = this.state;
+    let { displayModalView } = this.state;
+    if (displayWidth < displayBreakpoint && !displayModalView) {
+      displayModalView = true;
+      this.setState({ displayModalView });
+      return;
+    }
     if (checkOutStage !== 3) {
       this.setState({ checkOutStage: checkOutStage === 0 ? 1 : 2 });
       return;
@@ -231,57 +256,80 @@ export default class App extends React.Component {
       checkOutStage,
       isSelectingGuests,
       price,
+      displayBreakpoint,
+      displayModalView,
+      displayWidth,
+      requestedDates,
     } = this.state;
 
     return (
       <div id="container">
         {checkOutStage === 4 && <SuccessMsg setNextStage={this.setNextStage} />}
-        <div id="bookings">
-          <h3>
-            <span id="price">
-              {`$${price} `}
-            </span>
-            per night
-          </h3>
-          <hr />
-          <CalendarTitle renderTitle={this.getCalendarTitle} />
-          {(checkOutStage === 1 || checkOutStage === 2)
-            && (
-              <Calendar
-                {...this.state}
-                changeMonth={this.changeMonth}
-                selectDate={this.setSelectedDate}
-                clearDates={this.clearDates}
-              />
-            )
-          }
-          {this.renderGuestTitle.call(this)}
-          {isSelectingGuests
-            && (
-              <Guests
-                {...this.state}
-                updateGuestCount={this.updateGuestCount}
-                toggleView={this.toggleGuestSelectView}
-              />
-            )
-          }
-          {checkOutStage === 3
-            && (
-              <Pricing
-                {...this.state}
-                toggleInfo={this.toggleInfoPopUp}
-              />
-            )
-          }
-          <div className="sub-component" id="book-btn" onClick={() => this.submitRequest()}>
-            <h2>
-              Request to Book
-            </h2>
+        {((displayWidth > displayBreakpoint && !displayModalView) || displayModalView) ? (
+          <div id="bookings-container">
+            <div id="bookings">
+              {displayModalView && (
+                <button
+                  id="close-modal-btn"
+                  type="button"
+                  onClick={() => this.setState({ displayModalView: false })}
+                >
+                  X
+                </button>
+              )}
+              <h3>
+                <span id="price">
+                  {`$${price} `}
+                </span>
+                per night
+              </h3>
+              <hr />
+              <CalendarTitle renderTitle={this.getCalendarTitle} />
+              {(checkOutStage === 1 || checkOutStage === 2)
+                && (
+                  <Calendar
+                    {...this.state}
+                    changeMonth={this.changeMonth}
+                    selectDate={this.setSelectedDate}
+                    clearDates={this.clearDates}
+                  />
+                )
+              }
+              {this.renderGuestTitle.call(this)}
+              {isSelectingGuests
+                && (
+                  <Guests
+                    {...this.state}
+                    updateGuestCount={this.updateGuestCount}
+                    toggleView={this.toggleGuestSelectView}
+                  />
+                )
+              }
+              {(checkOutStage === 3 || requestedDates.length === 2)
+                && (
+                  <Pricing
+                    {...this.state}
+                    toggleInfo={this.toggleInfoPopUp}
+                  />
+                )
+              }
+              <SubmitBtn submitRequest={this.submitRequest} id="book-btn" />
+              <p className="text">
+                {'You won\'t be charged'}
+              </p>
+            </div>
           </div>
-          <p>
-            {'You won\'t be charged'}
-          </p>
-        </div>
+        ) : (
+          <div id="footer-view">
+            <h3>
+              <span id="price">
+                {`$${price} `}
+              </span>
+              per night
+            </h3>
+            <SubmitBtn submitRequest={this.submitRequest} id="footer-submit-btn" />
+          </div>
+        )}
       </div>
     );
   }

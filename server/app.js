@@ -22,6 +22,7 @@ app.get('/api/listing_info', (req, res) => {
 });
 
 app.post('/api/submit', (req, res) => {
+  console.log('post received');
   const { checkIn, checkOut, id } = req.body;
   db.findOne({ id }).exec((error, doc) => {
     const { availableDates } = doc;

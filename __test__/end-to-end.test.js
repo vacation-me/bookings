@@ -1,5 +1,6 @@
 import puppeteer from 'puppeteer';
-const APP = 'http://localhost:3000';
+
+const APP = 'http://localhost:3004';
 let page;
 let browser;
 const width = 1920;
@@ -21,7 +22,6 @@ describe('Check in/Check out selection', async () => {
     await page.goto(APP, {waitUntil: 'networkidle2'});
     await page.click('#check-in');
   });
-  
   test('intital buttons render correctly', async () => {
     const button = await page.$eval('#check-in', e => e.textContent);
     expect(button).toBe('Check-in');

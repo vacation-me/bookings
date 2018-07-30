@@ -153,7 +153,16 @@ const Calendar = (props) => {
           ))}
         </tbody>
       </table>
-      <button onClick={clearDates} style={{ fontFamily: 'Lato-Regular' }} type="button">
+      <button
+        onClick={clearDates}
+        style={{
+          fontFamily: 'Lato-Regular',
+          width: '78px',
+          height: '20px',
+          border: 'none',
+        }}
+        type="button"
+      >
         Clear Dates
       </button>
     </div>
@@ -163,11 +172,11 @@ const Calendar = (props) => {
 Calendar.propTypes = {
   year: PropTypes.number.isRequired,
   month: PropTypes.number.isRequired,
-  availableDates: PropTypes.array,
+  availableDates: PropTypes.array.isRequired,
   minStay: PropTypes.number.isRequired,
   selectDate: PropTypes.func.isRequired,
   clearDates: PropTypes.func.isRequired,
-  requestedDates: PropTypes.array,
+  requestedDates: PropTypes.array.isRequired,
 };
 
 export default Calendar;

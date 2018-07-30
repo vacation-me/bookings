@@ -19,54 +19,17 @@ const Pricing = (props) => {
     const text = [
       'One-time fee charged by host to cover the cost of cleaning their space.',
       'This helps us run our platform and offer services like 24/7 support on your trip.',
-      'Accommodations Tax (San Francisco)'
+      'Accommodations Tax (San Francisco)',
     ];
 
-    const styles = [
-      {
-        width: '244px',
-        height: '100px',
-        top: '178px',
-        backgroundColor: '#ffffff',
-        boxShadow: '0px 0px 2px lightgray',
-        opacity: '1.0',
-        border: '1px solid lightgray',
-        position: 'absolute',
-        right: '33%',
-        textAlign: 'left',
-        padding: '5px',
-      },
-      {
-        width: '244px',
-        height: '100px',
-        top: '224px',
-        backgroundColor: '#ffffff',
-        boxShadow: '0px 0px 2px lightgray',
-        opacity: '1.0',
-        border: '1px solid lightgray',
-        position: 'absolute',
-        right: '33%',
-        textAlign: 'left',
-        padding: '5px',
-      },
-      {
-        width: '278px',
-        height: '64px',
-        top: '306px',
-        backgroundColor: '#ffffff',
-        boxShadow: '0px 0px 2px lightgray',
-        opacity: '1.0',
-        border: '1px solid lightgray',
-        position: 'absolute',
-        right: '24%',
-        textAlign: 'left',
-        padding: '5px',
-      },
-      
+    const ids = [
+      'cleaning-fee-pop-up',
+      'service-fee-pop-up',
+      'taxes-pop-up',
     ];
 
     return (
-      <div style={styles[popUpId - 1]}>
+      <div id={ids[popUpId - 1]}>
         <p 
           id="close-btn" 
           style={{float: 'right', cursor: 'pointer'}}
