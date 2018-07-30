@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import styles from './Calendar.css';
 import left from '../../styles/icons/cal_left.svg';
 import right from '../../styles/icons/cal_right.svg';
 
@@ -53,7 +54,7 @@ const Calendar = (props) => {
 
     const attributes = [
       // className
-      'day',
+      styles.day,
       // clickHandler
       null,
       // cellValue
@@ -65,27 +66,27 @@ const Calendar = (props) => {
         && requestedDates[0].getTime() === cellDate.getTime())
       || (requestedDates.length === 2
         && requestedDates[1].getTime() === cellDate.getTime())) {
-      attributes[0] += ' selected-date';
+      attributes[0] += ` ${styles.selectedDate}`;
     // check if date is within range of selected dates
     } else if (requestedDates.length === 2
       && cellDate > requestedDates[0]
       && cellDate < requestedDates[1]) {
-      attributes[0] += ' range';
+      attributes[0] += ` ${styles.range}`;
     // check if date is booked
     } else if (isSelectingCheckout) {
       if (cellDate.getTime() < minStayDate.getTime()) {
-        attributes[0] += ' booked';
+        attributes[0] += ` ${styles.booked}`;
       } else {
-        attributes[0] += ' avail';
+        attributes[0] += ` ${styles.avail}`;
         attributes[1] = validDateClickHandler;
       }
     } else if (currentDateNum === currentAvailableDates[currentAvailableDates.length - 1]
       && !isSelectingCheckout) {
-      attributes[0] += ' avail';
+      attributes[0] += ` ${styles.avail}`;
       attributes[1] = validDateClickHandler;
       currentAvailableDates.pop();
     } else {
-      attributes[0] += ' booked';
+      attributes[0] += ` ${styles.booked}`;
     }
     currentDateNum += 1;
     return attributes;
@@ -115,13 +116,13 @@ const Calendar = (props) => {
   let cellKeyCount = 0;
   let weekKeyCount = 0;
   return (
-    <div id="cal-container">
-      <div id="calendar-title">
-        <img src={left} className='cal-title icon' id="prev-month" onClick={() => props.changeMonth(-1)}/>
-        <h3 className="cal-title">{`${months[monthFirstDay.getMonth()]} ${props.year}`}</h3>
-        <img src={right} className='cal-title icon' id="next-month" onClick={() => props.changeMonth(1)}/>
+    <div className={styles.calContainer} id="cal-container">
+      <div className={styles.calendarTitle} id="calendar-title">
+        <img src={left} className={styles.calTitle + ' ' + styles.icon} id="prev-month" onClick={() => props.changeMonth(-1)}/>
+        <h3 className={styles.calTitle}>{`${months[monthFirstDay.getMonth()]} ${props.year}`}</h3>
+        <img src={right} className={styles.calTitle + ' ' + styles.icon} id="next-month" onClick={() => props.changeMonth(1)}/>
       </div>
-      <table id="calendar">
+      <table className={styles.calendar} id="calendar">
         <tbody>
           <tr>
             <th>
@@ -153,13 +154,19 @@ const Calendar = (props) => {
           ))}
         </tbody>
       </table>
+      <p className={styles.text}>
+        {`${minStay} nights minimum stay.`}
+      </p>
       <button
         onClick={clearDates}
         style={{
           fontFamily: 'Lato-Regular',
-          width: '78px',
+          width: '150px',
+          cursor: 'pointer',
+          color: 'rgb(0, 166, 153)',
           height: '20px',
           border: 'none',
+          fontSize: 'medium',
         }}
         type="button"
       >

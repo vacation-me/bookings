@@ -1,10 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import styles from '../App.css';
 
 const SubmitBtn = (props) => {
-  const { submitRequest, id } = props;
+  const { submitRequest, className } = props;
   return (
-    <button className="sub-component" id={id} onClick={() => submitRequest()} type="button">
+    <button className={`${styles.subComponent} ${className}`} onClick={() => submitRequest()} type="button">
         Request to Book
     </button>
   );
@@ -12,7 +13,7 @@ const SubmitBtn = (props) => {
 
 SubmitBtn.propTypes = {
   submitRequest: PropTypes.func.isRequired,
-  id: PropTypes.string.isRequired,
+  className: PropTypes.string.isRequired,
 };
 
 export default SubmitBtn;

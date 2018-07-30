@@ -1,0 +1,43 @@
+.guestToggle {
+  width: 326px;
+  height: auto;
+  top: 214px;
+  text-align: left;
+  position: absolute;
+  background-color: #ffffff;
+  opacity: 1.0;
+  border: 1px solid rgb(219, 219, 219);
+  border-radius: 5px;
+}
+
+.adultGuestToggle, .childGuestToggle, .infantGuestToggle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 40px;
+  padding: 0 20px;
+  margin: 20px 0;
+}
+
+.guestLabel {
+  min-width: 140px;
+}
+
+.disabled {
+  opacity: 0.1;
+}
+
+.icon {
+  composes: icon from '../App.css';
+}
+
+.text {
+  composes: text from '../App.css';
+}
+
+@media (max-width: 1123px) {
+  .guestToggle {
+    top: inherit;
+    margin-top: -30px;
+  }
+}

@@ -1,84 +1,126 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import styles from './Price.css';
 import question from '../../styles/icons/question.svg';
 
 const Pricing = (props) => {
-  const nightsRequested = props.requestedDates[1].getDate() - props.requestedDates[0].getDate();
-  const initialPrice = props.price * nightsRequested;
-  const serviceFee = props.serviceFee * nightsRequested;
-  const tax = Math.floor((initialPrice + serviceFee + props.cleaningFee) * 0.15);
-  
+  const {
+    requestedDates,
+    price,
+    serviceFee,
+    cleaningFee,
+    toggleInfo,
+    showPopUpInfo,
+  } = props;
+  const nightsRequested = requestedDates[1].getDate() - requestedDates[0].getDate();
+  const initialPrice = price * nightsRequested;
+  const totalServiceFee = serviceFee * nightsRequested;
+  const tax = Math.floor((initialPrice + totalServiceFee + cleaningFee) * 0.15);
   const numToString = function (num) {
-    num = num.toString().split('');
-    if (num.length > 3) {
-      num.splice(num.length - 3, 0, ',');
+    const str = num.toString().split('');
+    if (str.length > 3) {
+      str.splice(str.length - 3, 0, ',');
     }
-    return num.join('');
+    return str.join('');
   };
 
-  const renderPopUp = function(popUpId) {
+  const renderPopUp = function (popUpId) {
     const text = [
       'One-time fee charged by host to cover the cost of cleaning their space.',
       'This helps us run our platform and offer services like 24/7 support on your trip.',
       'Accommodations Tax (San Francisco)',
     ];
 
-    const ids = [
-      'cleaning-fee-pop-up',
-      'service-fee-pop-up',
-      'taxes-pop-up',
+    const classes = [
+      styles.cleaningFeePopUp,
+      styles.serviceFeePopUp,
+      styles.taxesPopUp,
     ];
 
     return (
-      <div id={ids[popUpId - 1]}>
+      <div className={classes[popUpId - 1]}>
         <p 
-          id="close-btn" 
+          className={styles.closeBtn} 
           style={{float: 'right', cursor: 'pointer'}}
-          onClick={() => props.toggleInfo(0)}
+          onClick={() => toggleInfo(0)}
         >x</p>
-        <p id="pop-up-text" style={{marginTop: '25px'}}>{text[popUpId - 1]}</p>
+        <p className={styles.popUpText} style={{ marginTop: '25px' }}>
+          {text[popUpId - 1]}
+        </p>
       </div>
     );
   };
 
   return (
-    <div id="booking-info">
-      <div className="pricing-info-entry">
-        <p>{`$${props.price} x ${nightsRequested} nights`}</p>
-        <p>{`$${numToString(initialPrice)}`}</p>
+    <div className={styles.bookingInfo}>
+      <div className={styles.pricingInfoEntry}>
+        <p>
+          {`$${price} x ${nightsRequested} nights`}
+        </p>
+        <p>
+          {`$${numToString(initialPrice)}`}
+        </p>
       </div>
       <hr />
-      <div className="pricing-info-entry">
-        <p>Cleaning Fee<img 
-          className="small-icon" 
+      <div className={styles.pricingInfoEntry}>
+        <p>
+          Cleaning Fee
+          <img 
+            className={styles.smallIcon} 
+            src={question}
+            onClick={() => toggleInfo(1)}
+            alt="close"
+          />
+        </p>
+        <p>
+          {`$${cleaningFee}`}
+        </p>
+      </div>
+      <hr />
+      <div className={styles.pricingInfoEntry}>
+        <p>
+          Service Fee
+          <img
+          className={styles.smallIcon} 
           src={question}
-          onClick={() => props.toggleInfo(1)}/></p>
-        <p>{`$${props.cleaningFee}`}</p>
+          onClick={() => toggleInfo(2)}/></p>
+        <p>
+          {`$${totalServiceFee}`}
+        </p>
       </div>
       <hr />
-      <div className="pricing-info-entry">
-        <p>Service Fee<img 
-          className="small-icon" 
-          src={question}
-          onClick={() => props.toggleInfo(2)}/></p>
-        <p>{`$${serviceFee}`}</p>
+      <div className={styles.pricingInfoEntry}>
+        <p>
+          Occupancy Taxes and Fees
+          <img
+            className={styles.smallIcon} 
+            src={question}
+            onClick={() => toggleInfo(3)}
+          />
+        </p>
+        <p>
+          {`$${tax}`}
+        </p>
       </div>
       <hr />
-      <div className="pricing-info-entry">
-        <p>Occupancy Taxes and Fees<img 
-          className="small-icon" 
-          src={question}
-          onClick={() => props.toggleInfo(3)}
-        /></p>
-        <p>{`$${tax}`}</p>
+      <div className={styles.pricingInfoEntry}>
+        <p className={styles.price}>
+          Total
+        </p>
+        <p className={styles.price}>
+          {`$${numToString(initialPrice + totalServiceFee + tax + cleaningFee)}`}
+        </p>
       </div>
-      <hr />
-      <div className="pricing-info-entry">
-        <p>Total</p>
-        <p>{`$${numToString(initialPrice + serviceFee + tax + props.cleaningFee)}`}</p>
-      </div>
-      {props.showPopUpInfo === 0 || renderPopUp(props.showPopUpInfo)}
+      {showPopUpInfo === 0 || renderPopUp(showPopUpInfo)}
     </div>
   );
+};
+
+Pricing.propTypes = {
+  price: PropTypes.number.isRequired,
+  serviceFee: PropTypes.number.isRequired,
+  cleaningFee: PropTypes.number.isRequired,
+  toggleInfo: PropTypes.func.isRequired,
 };
 
 export default Pricing;

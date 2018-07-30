@@ -1,0 +1,55 @@
+.pricingInfoEntry {
+  display: flex;
+  justify-content: space-between;
+}
+
+.price {
+  font-family: 'Lato-Regular';
+}
+
+.report {
+  border: none;
+  justify-content: center;
+}
+
+.bookBtn, .footerSubmitBtn {
+  justify-content: center;
+  background-color: #FF5A5F;
+  color: #ffffff;
+  height: 50px;
+}
+
+.cleaningFeePopUp, .serviceFeePopUp, .taxesPopUp {
+  background-color: rgb(255, 255, 255);
+  box-shadow: lightgrey 0px 0px 2px;
+  border: 1px solid lightgray;
+  position: absolute;
+  text-align: left;
+  padding: 5px;
+  opacity: 1.0;
+}
+
+.cleaningFeePopUp {
+  width: 244px;
+  height: 100px;
+  top: 178px;
+  right: 33%;
+}
+
+.serviceFeePopUp {
+  width: 244px;
+  height: 100px;
+  top: 224px;
+  right: 33%;
+}
+
+.taxesPopUp {
+  width: 278px;
+  height: 64px;
+  top: 306px;
+  right: 24%;
+}
+
+.smallIcon {
+  composes: smallIcon from '../App.css';
+}

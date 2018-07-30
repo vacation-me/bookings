@@ -6,6 +6,7 @@ import Pricing from './Pricing/Pricing';
 import Guests from './Guests/Guests';
 import SuccessMsg from './SuccessMsg/SuccessMsg';
 import SubmitBtn from './SubmitBtn/SubmitBtn';
+import styles from './App.css';
 import downArrow from '../styles/icons/down_arrow.svg';
 import upArrow from '../styles/icons/up_arrow.svg';
 import '../styles/style.css';
@@ -242,11 +243,11 @@ export default class App extends React.Component {
       icon = upArrow;
     }
     return (
-      <div className="sub-component" id="toggle-guest-view" onClick={this.toggleGuestSelectView}>
+      <div className={styles.subComponent} id="toggle-guest-view" onClick={this.toggleGuestSelectView}>
         <h3>
           {output}
         </h3>
-        <img className="icon" src={icon} alt="" />
+        <img className={styles.icon} src={icon} alt="" />
       </div>
     );
   }
@@ -263,14 +264,14 @@ export default class App extends React.Component {
     } = this.state;
 
     return (
-      <div id="container">
+      <div className={styles.container} id="container">
         {checkOutStage === 4 && <SuccessMsg setNextStage={this.setNextStage} />}
         {((displayWidth > displayBreakpoint && !displayModalView) || displayModalView) ? (
-          <div id="bookings-container">
-            <div id="bookings">
+          <div className={styles.bookingsContainer} id="bookings-container">
+            <div className={styles.bookings} id="bookings">
               {displayModalView && (
                 <button
-                  id="close-modal-btn"
+                  className={styles.closeModalBtn}
                   type="button"
                   onClick={() => this.setState({ displayModalView: false })}
                 >
@@ -278,7 +279,7 @@ export default class App extends React.Component {
                 </button>
               )}
               <h3>
-                <span id="price">
+                <span className={styles.price}>
                   {`$${price} `}
                 </span>
                 per night
@@ -313,21 +314,21 @@ export default class App extends React.Component {
                   />
                 )
               }
-              <SubmitBtn submitRequest={this.submitRequest} id="book-btn" />
-              <p className="text">
+              <SubmitBtn submitRequest={this.submitRequest} className={styles.bookBtn} />
+              <p className={styles.text}>
                 {'You won\'t be charged'}
               </p>
             </div>
           </div>
         ) : (
-          <div id="footer-view">
+          <div className={styles.footerView} id="footer-view">
             <h3>
-              <span id="price">
+              <span className={styles.price}>
                 {`$${price} `}
               </span>
               per night
             </h3>
-            <SubmitBtn submitRequest={this.submitRequest} id="footer-submit-btn" />
+            <SubmitBtn submitRequest={this.submitRequest} className={styles.footerSubmitBtn} />
           </div>
         )}
       </div>

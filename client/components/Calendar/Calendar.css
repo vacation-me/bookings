@@ -1,0 +1,75 @@
+.calContainer {
+  background-color: #ffffff;
+  opacity: 1.0;
+  border: 1px solid rgb(219, 219, 219);
+  border-radius: 5px;
+  width: 333px;
+  position: absolute;
+  top: 155px;
+  padding: 4px;
+  cursor: pointer;
+  font-family: 'Lato';
+  text-align: center;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.calendar {
+  min-height: 298px;
+  width: 318px;
+}
+
+.calendarTitle {
+  width: 300px;
+  display: flex;
+  justify-content: space-around;
+}
+
+.calTitle {
+  display: inline-flex;
+  margin: 5px;
+}
+
+.selectedDate {
+  background-color: rgb(0, 166, 153);
+}
+.avail:hover, .range {
+  background-color: rgb(51, 218, 205);
+  cursor: pointer;
+}
+
+.currentStage {
+  background-color: rgb(51, 218, 205);
+  padding: 5px;
+  border-radius: 3px;
+}
+
+.booked, .booked:hover {
+  color: rgba(167, 167, 167, 0.295);
+  background-color: white;
+  border: 1px solid lightgray;
+  
+}
+
+.day {
+  margin: 0;
+  border: 1px solid lightgray;
+  min-width: 38px;
+  font-family: 'Lato-Regular';
+}
+
+.icon {
+  composes: icon from '../App.css';
+}
+
+.subComponent {
+  composes: subComponent from '../App.css';
+}
+
+@media (max-width: 1123px) {
+  .calContainer {
+    top: inherit;
+    margin-top: -30px;
+  }
+}
