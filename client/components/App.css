@@ -68,8 +68,8 @@
   background-color: #FF5A5F;
   color: #ffffff;
   height: 50px;
-  margin-left: 10%;
-  width: 75%;
+  margin-left: 55px;
+  font-family: 'Lato-Light';
   font-size: x-large;
 }
 
@@ -88,6 +88,7 @@
     right: 10%;
     height: 45px;
     width: 186px;
+    font-family: 'Lato-Light';
     font-size: large;
     background-color: #FF5A5F;
     color: #ffffff;
