@@ -1,7 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styles from './Guests.css';
-import plus from '../../styles/icons/plus.svg';
-import minus from '../../styles/icons/minus.svg';
 
 const Guests = (props) => {
   const {
@@ -12,7 +11,7 @@ const Guests = (props) => {
     icons: {
       plus,
       minus,
-    }
+    },
   } = props;
   const renderButton = (type, btnIndex) => {
     // render an icon depending on whether the max guest limit is reached
@@ -48,34 +47,34 @@ const Guests = (props) => {
   return (
     <div className={styles.guestToggle} id="guest-toggle">
       <div className={styles.adultGuestToggle} id="adult-guest-toggle">
-        <h3 className={styles.guestLabel}>
+        <p className={styles.guestLabel}>
           Adults
-        </h3>
+        </p>
         {renderButton('adults', 0)}
-        <h3 className={`${styles.guestCount} guest-count`}>
+        <p className={`${styles.guestCount} guest-count`}>
           {guestCount.adults}
-        </h3>
+        </p>
         {renderButton('adults', 1)}
       </div>
 
       <div className={styles.childGuestToggle} id="child-guest-toggle">
-        <h3 className={styles.guestLabel}>
+        <p className={styles.guestLabel}>
           Children (2-12)
-        </h3>
+        </p>
         {renderButton('children', 2)}
-        <h3 className={`${styles.guestCount} guest-count`}>
+        <p className={`${styles.guestCount} guest-count`}>
           {guestCount.children}
-        </h3>
+        </p>
         {renderButton('children', 3)}
       </div>
       <div className={styles.infantGuestToggle} id="infant-guest-toggle">
-        <h3 className={styles.guestLabel}>
+        <p className={styles.guestLabel}>
           Infants (under 2)
-        </h3>
+        </p>
         {renderButton('infants', 4)}
-        <h3 className={`${styles.guestCount} guest-count`}>
+        <p className={`${styles.guestCount} guest-count`}>
           {guestCount.infants}
-        </h3>
+        </p>
         {renderButton('infants', 5)}
       </div>
       <p className={styles.text}>
@@ -97,5 +96,12 @@ const Guests = (props) => {
     </div>
   );
 };
+
+Guests.propTypes = {
+  maxGuests: PropTypes.number.isRequired,
+  toggleView: PropTypes.func.isRequired,
+  updateGuestCount: PropTypes.func.isRequired,
+};
+
 
 export default Guests;

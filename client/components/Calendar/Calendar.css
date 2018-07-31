@@ -47,6 +47,10 @@
   
 }
 
+.calHeaders {
+  font-weight: 200;
+}
+
 .day {
   margin: 0;
   border: 1px solid lightgray;

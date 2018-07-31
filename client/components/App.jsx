@@ -63,9 +63,8 @@ export default class App extends React.Component {
     if (this.props.id) {
       this.setState({ ...this.props });
     } else {
-      const pathStrings = window.location.pathname.split('/').filter(str => str !== '/' || str !== '');
+      const pathStrings = window.location.pathname.split('/').filter(str => str !== '');
       const id = Number(pathStrings[pathStrings.length - 1]);
-      console.log(id);
       fetch(`http://localhost:3004/api/listings/${id}`)
         .then(res => res.json())
         .then((body) => { this.setState({ ...body }); })
@@ -132,12 +131,12 @@ export default class App extends React.Component {
       classNames = styles.currentStage;
     }
     return (
-      <h3 
+      <p 
         className={classNames} 
         id={`${titles[titleStage].toLowerCase()}`} 
         onClick={() => this.setNextStage(titleStage + 1)}>
         {text}
-      </h3>);
+      </p>);
   }
 
   clearDates() {
@@ -338,12 +337,12 @@ export default class App extends React.Component {
           </div>
         ) : (
           <div className={styles.footerView} id="footer-view">
-            <h3>
+            <p>
               <span className={styles.price}>
                 {`$${price} `}
               </span>
               per night
-            </h3>
+            </p>
             <SubmitBtn submitRequest={this.submitRequest} className={styles.footerSubmitBtn} />
           </div>
         )}

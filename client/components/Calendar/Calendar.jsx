@@ -23,6 +23,7 @@ const Calendar = (props) => {
     selectDate,
     requestedDates,
     clearDates,
+    changeMonth,
     icons: {
       leftArrow,
       rightArrow,
@@ -120,32 +121,34 @@ const Calendar = (props) => {
   return (
     <div className={styles.calContainer} id="cal-container">
       <div className={styles.calendarTitle} id="calendar-title">
-        <img src={leftArrow} className={styles.calTitle + ' ' + styles.icon} id="prev-month" onClick={() => props.changeMonth(-1)}/>
-        <h3 className={styles.calTitle}>{`${months[monthFirstDay.getMonth()]} ${props.year}`}</h3>
-        <img src={rightArrow} className={styles.calTitle + ' ' + styles.icon} id="next-month" onClick={() => props.changeMonth(1)}/>
+        <img src={leftArrow} className={styles.calTitle + ' ' + styles.icon} id="prev-month" onClick={() => changeMonth(-1)}/>
+        <p className={styles.calTitle}>
+          {`${months[monthFirstDay.getMonth()]} ${year}`}
+        </p>
+        <img src={rightArrow} className={styles.calTitle + ' ' + styles.icon} id="next-month" onClick={() => changeMonth(1)}/>
       </div>
       <table className={styles.calendar} id="calendar">
         <tbody>
           <tr>
-            <th>
+            <th className={styles.calHeaders}>
               Sun
             </th>
-            <th>
+            <th className={styles.calHeaders}>
               Mon
             </th>
-            <th>
+            <th className={styles.calHeaders}>
               Tues
             </th>
-            <th>
+            <th className={styles.calHeaders}>
               Wed
             </th>
-            <th>
+            <th className={styles.calHeaders}>
               Thur
             </th>
-            <th>
+            <th className={styles.calHeaders}>
               Fri
             </th>
-            <th>
+            <th className={styles.calHeaders}>
               Sat
             </th>
           </tr>
@@ -162,7 +165,6 @@ const Calendar = (props) => {
       <button
         onClick={clearDates}
         style={{
-          fontFamily: 'Lato-Regular',
           width: '150px',
           cursor: 'pointer',
           color: 'rgb(0, 166, 153)',
