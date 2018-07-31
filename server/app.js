@@ -6,10 +6,18 @@ const db = require('./database/index');
 
 app.use(express.static('./public'));
 
+
 app.use(parser.json());
-// app.use(parser.urlencoded({ extended: true }));
+app.use(parser.urlencoded({ extended: true }));
 
 // app.get('/', (req, res) => console.log('request received'));
+
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', '*');
+  res.header('Access-Control-Allow-Methods', 'PUT, POST, GET');
+  next();
+});
 
 // return a random calendar to client
 app.get('/api/listing_info', (req, res) => {

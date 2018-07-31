@@ -54,7 +54,8 @@ export default class App extends React.Component {
     if (this.props.id) {
       this.setState({ ...this.props });
     } else {
-      fetch('/api/listing_info')
+
+      fetch('http://localhost:3004/api/listing_info')
         .then(res => res.json())
         .then((body) => { this.setState({ ...body }); })
         .catch((err) => { throw err; });
