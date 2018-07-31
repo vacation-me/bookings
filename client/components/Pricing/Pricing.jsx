@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './Price.css';
-import question from '../../styles/icons/question.svg';
 
 const Pricing = (props) => {
   const {
@@ -11,8 +10,11 @@ const Pricing = (props) => {
     cleaningFee,
     toggleInfo,
     showPopUpInfo,
+    icons: { question }
   } = props;
-  const nightsRequested = (requestedDates[1].getTime() - requestedDates[0].getTime()) / 86400000;
+  const nightsRequested = Math.floor(
+    (requestedDates[1].getTime() - requestedDates[0].getTime()) / 86400000,
+  );
   const initialPrice = price * nightsRequested;
   const totalServiceFee = serviceFee * nightsRequested;
   const tax = Math.floor((initialPrice + totalServiceFee + cleaningFee) * 0.15);

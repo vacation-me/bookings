@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './Calendar.css';
-import left from '../../styles/icons/cal_left.svg';
-import right from '../../styles/icons/cal_right.svg';
 
 
 const Calendar = (props) => {
@@ -25,6 +23,10 @@ const Calendar = (props) => {
     selectDate,
     requestedDates,
     clearDates,
+    icons: {
+      leftArrow,
+      rightArrow,
+    },
   } = props;
 
   const monthFirstDay = new Date(year, month, 1);
@@ -118,9 +120,9 @@ const Calendar = (props) => {
   return (
     <div className={styles.calContainer} id="cal-container">
       <div className={styles.calendarTitle} id="calendar-title">
-        <img src={left} className={styles.calTitle + ' ' + styles.icon} id="prev-month" onClick={() => props.changeMonth(-1)}/>
+        <img src={leftArrow} className={styles.calTitle + ' ' + styles.icon} id="prev-month" onClick={() => props.changeMonth(-1)}/>
         <h3 className={styles.calTitle}>{`${months[monthFirstDay.getMonth()]} ${props.year}`}</h3>
-        <img src={right} className={styles.calTitle + ' ' + styles.icon} id="next-month" onClick={() => props.changeMonth(1)}/>
+        <img src={rightArrow} className={styles.calTitle + ' ' + styles.icon} id="next-month" onClick={() => props.changeMonth(1)}/>
       </div>
       <table className={styles.calendar} id="calendar">
         <tbody>
@@ -183,6 +185,8 @@ Calendar.propTypes = {
   minStay: PropTypes.number.isRequired,
   selectDate: PropTypes.func.isRequired,
   clearDates: PropTypes.func.isRequired,
+  rightArrow: PropTypes.string.isRequired,
+  leftArrow: PropTypes.string.isRequired,
   requestedDates: PropTypes.array.isRequired,
 };
 

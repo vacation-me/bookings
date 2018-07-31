@@ -9,6 +9,10 @@ const Guests = (props) => {
     maxGuests,
     toggleView,
     updateGuestCount,
+    icons: {
+      plus,
+      minus,
+    }
   } = props;
   const renderButton = (type, btnIndex) => {
     // render an icon depending on whether the max guest limit is reached

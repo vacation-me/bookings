@@ -7,8 +7,6 @@ import Guests from './Guests/Guests';
 import SuccessMsg from './SuccessMsg/SuccessMsg';
 import SubmitBtn from './SubmitBtn/SubmitBtn';
 import styles from './App.css';
-import downArrow from '../styles/icons/down_arrow.svg';
-import upArrow from '../styles/icons/up_arrow.svg';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -35,6 +33,17 @@ export default class App extends React.Component {
       serviceFee: 0,
       isSelectingGuests: false,
       showPopUpInfo: 0,
+      icons: {
+        rightArrow: 'https://s3-us-west-1.amazonaws.com/airbnh/1ee4c3ee10a89d4ebe3782b2ff0d9eea.svg',
+        leftArrow: 'https://s3-us-west-1.amazonaws.com/airbnh/290174b6259ea557de7fde682836d3c6.svg',
+        checkInArrow: 'https://s3-us-west-1.amazonaws.com/airbnh/29b551dcd3f19344833ca08acff525b5.svg',
+        upArrow: 'https://s3-us-west-1.amazonaws.com/airbnh/bff49638bbcb0d2fab698049dcc4cfc3.svg',
+        downArrow: 'https://s3-us-west-1.amazonaws.com/airbnh/d51c4cbdf58ed633c094cc393e644e66.svg',
+        plus: 'https://s3-us-west-1.amazonaws.com/airbnh/d4732b3d3b9892e0280e087890cef098.svg',
+        minus: 'https://s3-us-west-1.amazonaws.com/airbnh/2beb6d5e654eaef08df5e487f1dab267.svg',
+        question: 'https://s3-us-west-1.amazonaws.com/airbnh/ff5b6345f1c57baf6ceb0d89641a3c19.svg',
+
+      },
     };
     this.setNextStage = this.setNextStage.bind(this);
     this.setSelectedDate = this.setSelectedDate.bind(this);
@@ -54,8 +63,9 @@ export default class App extends React.Component {
     if (this.props.id) {
       this.setState({ ...this.props });
     } else {
-      const idString = window.location.pathname.split('/');
-      const id = +idString[idString.length - 2];
+      const pathStrings = window.location.pathname.split('/').filter(str => str !== '/' || str !== '');
+      const id = Number(pathStrings[pathStrings.length - 1]);
+      console.log(id);
       fetch(`http://localhost:3004/api/listings/${id}`)
         .then(res => res.json())
         .then((body) => { this.setState({ ...body }); })
@@ -235,7 +245,7 @@ export default class App extends React.Component {
   }
 
   renderGuestTitle() {
-    const { guestCount, isSelectingGuests } = this.state;
+    const { guestCount, isSelectingGuests, icons: { downArrow, upArrow } } = this.state;
     const totalGuestCount = guestCount.adults + guestCount.children;
     let output = `${totalGuestCount} guest`;
     let icon = downArrow;
@@ -253,9 +263,9 @@ export default class App extends React.Component {
     }
     return (
       <div className={styles.subComponent} id="toggle-guest-view" onClick={this.toggleGuestSelectView}>
-        <h3>
+        <p>
           {output}
-        </h3>
+        </p>
         <img className={styles.icon} src={icon} alt="" />
       </div>
     );
@@ -269,11 +279,10 @@ export default class App extends React.Component {
       displayBreakpoint,
       displayModalView,
       displayWidth,
-      requestedDates,
     } = this.state;
 
     return (
-      <div className={styles.container} id="container">
+      <div className={styles.container} id="book">
         {checkOutStage === 4 && <SuccessMsg setNextStage={this.setNextStage} />}
         {((displayWidth > displayBreakpoint && !displayModalView) || displayModalView) ? (
           <div className={styles.bookingsContainer} id="bookings-container">
@@ -287,14 +296,14 @@ export default class App extends React.Component {
                   X
                 </button>
               )}
-              <h3>
+              <p>
                 <span className={styles.price}>
                   {`$${price} `}
                 </span>
                 per night
-              </h3>
+              </p>
               <hr />
-              <CalendarTitle renderTitle={this.getCalendarTitle} />
+              <CalendarTitle renderTitle={this.getCalendarTitle} {...this.state} />
               {(checkOutStage === 1 || checkOutStage === 2)
                 && (
                   <Calendar
