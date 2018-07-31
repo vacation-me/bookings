@@ -1,15 +1,3 @@
-@font-face {
-  font-family: 'Lato-Light';
-  src: url('../../styles/fonts/Lato-Light.ttf') format('truetype');
-  font-weight: 400;
-}
-
-@font-face {
-  font-family: 'Lato-Regular';
-  src: url('../../styles/fonts/Lato-Regular.ttf') format('truetype');
-  font-weight: 600;
-}
-
 .pricingInfoEntry {
   display: flex;
   justify-content: space-between;
@@ -44,22 +32,22 @@
 .cleaningFeePopUp {
   width: 244px;
   height: 100px;
-  top: 178px;
-  right: 33%;
+  top: 200px;
+  right: 340px;
 }
 
 .serviceFeePopUp {
   width: 244px;
   height: 100px;
-  top: 224px;
-  right: 33%;
+  top: 270px;
+  right: 340px;
 }
 
 .taxesPopUp {
   width: 278px;
   height: 64px;
-  top: 306px;
-  right: 24%;
+  top: 380px;
+  right: 260px;
 }
 
 .smallIcon {

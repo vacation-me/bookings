@@ -20,17 +20,16 @@ app.use((req, res, next) => {
 });
 
 // return a random calendar to client
-app.get('/api/listing_info', (req, res) => {
-  const index = Math.ceil(Math.random() * 99);
+app.get('/api/listings/:listingId', (req, res) => {
+  const { listingId } = req.params;
   // query db for that index
-  db.findOne({ id: index }).exec((err, data) => {
+  db.findOne({ id: listingId }).exec((err, data) => {
     if (err) { throw err; }
     res.send(data);
   });
 });
 
 app.post('/api/submit', (req, res) => {
-  console.log('post received');
   const { checkIn, checkOut, id } = req.body;
   db.findOne({ id }).exec((error, doc) => {
     const { availableDates } = doc;

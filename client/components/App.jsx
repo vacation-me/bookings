@@ -54,8 +54,9 @@ export default class App extends React.Component {
     if (this.props.id) {
       this.setState({ ...this.props });
     } else {
-
-      fetch('http://localhost:3004/api/listing_info')
+      const idString = window.location.pathname.split('/');
+      const id = +idString[idString.length - 2];
+      fetch(`http://localhost:3004/api/listings/${id}`)
         .then(res => res.json())
         .then((body) => { this.setState({ ...body }); })
         .catch((err) => { throw err; });
