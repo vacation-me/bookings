@@ -159,6 +159,7 @@ const Calendar = (props) => {
           ))}
         </tbody>
       </table>
+
       <p className={styles.text}>
         {`${minStay} nights minimum stay.`}
       </p>

@@ -63,9 +63,9 @@ export default class App extends React.Component {
     if (this.props.id) {
       this.setState({ ...this.props });
     } else {
-      const pathStrings = window.location.pathname.split('/').filter(str => str !== '');
-      const id = Number(pathStrings[pathStrings.length - 1]);
-      fetch(`http://localhost:3004/api/listings/${id}`)
+      const path = window.location.pathname.split('/');
+      const id = +path[path.length - 2] || 1;
+      fetch(`/api/listings/${id}`)
         .then(res => res.json())
         .then((body) => { this.setState({ ...body }); })
         .catch((err) => { throw err; });

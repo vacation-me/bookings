@@ -72,6 +72,10 @@
   border-radius: 3px;
 }
 
+.closeModalBtn {
+  display: none;
+}
+
 @media (max-width: 1123px) {
   .footerSubmitBtn {
     display: inline-flex;

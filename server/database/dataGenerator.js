@@ -1,33 +1,33 @@
-const db = require('./index');
+const Model = require('./index');
 
-db.remove({}, (err) => {
+Model.remove({}, (err) => {
   if (err) {
     throw err;
   }
 });
 
-const random = function(num) {
+const random = function (num) {
   return Math.ceil(Math.random() * num);
 };
 
-const price = function() { 
+const price = function () {
   return 500 - random(400);
 };
 
-const cleaning = function() {
-  let options = [50, 75, 100, 125, 150];
+const cleaning = function () {
+  const options = [50, 75, 100, 125, 150];
   return options[random(4)];
 };
 
-const serviceFee = function(price) {
-  let percent = random(20) / 100;
-  return Math.ceil(price * percent);
+const serviceFee = function (initialPrice) {
+  const percent = random(20) / 100;
+  return Math.ceil(initialPrice * percent);
 };
 
-//generate a year of availability info based on the current date
-const generateBookings = function() {
-  let bookings = [];
-  let startDate = new Date();
+// generate a year of availability info based on the current date
+const generateBookings = function () {
+  const bookings = [];
+  const startDate = new Date();
   let currentMonth = startDate.getMonth();
   let year = startDate.getFullYear();
 
@@ -36,8 +36,8 @@ const generateBookings = function() {
     const month = [];
     const dateCount = 15 - random(10);
     const store = {};
-    for (let i = 0; i < dateCount; i++) {
-      let day = random(last);
+    for (let j = 0; j < dateCount; j++) {
+      const day = random(last);
       if (!store[day]) {
         month.push(day);
         store[day] = true;
@@ -54,13 +54,13 @@ const generateBookings = function() {
     currentDate = new Date(year, currentMonth, 1);
   }
   return bookings;
-
 };
 
-const generator = function() { 
+const generator = function () {
+  const data = [];
   for (let i = 0; i < 100; i++) {
-    let nightlyPrice = price();
-    new db({
+    const nightlyPrice = price();
+    data.push({
       id: i,
       price: nightlyPrice,
       cleaningFee: cleaning(),
@@ -68,8 +68,12 @@ const generator = function() {
       minStay: 3 + random(6),
       maxGuests: random(10),
       availableDates: generateBookings(),
-    }).save();
+    });
   }
+  Model.insertMany(data, (err) => {
+    if (err) throw err;
+    process.exit();
+  });
 };
 
 generator();

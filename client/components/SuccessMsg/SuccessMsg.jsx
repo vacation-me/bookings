@@ -1,9 +1,10 @@
 import React from 'react';
+import styles from './SuccessMsg.css';
 
 const SuccessMsg = (props) => {
   const { setNextStage } = props;
   return (
-    <div id="requested-message-container">
+    <div className={styles.requestedMessageContainer} id="requested-message-container">
       <h1>
         {'Your request was succesfully submitted!!'}
       </h1>
