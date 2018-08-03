@@ -6,13 +6,13 @@ import App from './App';
 describe('App component', () => {
   it('renders correctly', () => {
     const wrapper = shallow(<App />, { disableLifecycleMethods: true });
-    const title = wrapper.find('h3').first();
+    const title = wrapper.find('p').first();
     expect(title.text()).toBe('$0 per night');
   });
 
   it('renders live data correctly', () => {
     const wrapper = mount(<App {...sampleData} />);
-    const title = wrapper.find('h3').first();
+    const title = wrapper.find('p').first();
     expect(title.text()).toBe('$314 per night');
   });
 

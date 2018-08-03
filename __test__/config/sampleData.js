@@ -19,5 +19,10 @@ module.exports = {
   serviceFee: 63,
   minStay: 6,
   maxGuests: 2,
+  icons: {
+    rightArrow: '',
+    leftArrow: '',
+    checkInArrow: '',
+  },
   __v: 0,
 };

@@ -15,7 +15,9 @@ logs
 lib-cov
 
 # Coverage directory used by tools like istanbul
-coverage
+__test__/coverage
+credentials.json
+
 
 # Grunt intermediate storage (http://gruntjs.com/creating-plugins#storing-task-files)
 .grunt

@@ -76,6 +76,13 @@
   display: none;
 }
 
+.footerView,
+.footerPrice,
+.footerSubmitBtn {
+  display: none;
+}
+
+
 @media (max-width: 1123px) {
   .footerSubmitBtn {
     display: inline-flex;
@@ -91,8 +98,13 @@
     color: #ffffff;
   }
 
+  .footerPrice, .footerSubmitBtn {
+    display: block;
+  }
+
   .footerView {
     position: fixed;
+    display: block;
     bottom: 0;
     margin: 0;
     padding: 20px 2%;
@@ -104,7 +116,7 @@
   }
   
   .bookingsContainer {
-    display: flex;
+    display: none;
     justify-content: center;
     align-items: center;
     position: fixed;
@@ -131,6 +143,8 @@
 
   .closeModalBtn {
     float: right;
+    text-align: center;
+    display: block;
     border-radius: 50%;
     width: 27px;
     height: 27px;

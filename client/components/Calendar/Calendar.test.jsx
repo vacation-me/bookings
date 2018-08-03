@@ -21,12 +21,17 @@ const mockProps = {
   ],
   requestedDates: [],
   minStay: 5,
+  icons: {
+    rightArrow: '',
+    leftArrow: '',
+    checkInArrow: '',
+  },
 };
 
 describe('Calendar Component', () => {
   it('renders correctly', () => {
     const wrapper = shallow(<Calendar {...mockProps} />);
-    const title = wrapper.find('h3');
+    const title = wrapper.find('#calendar-title > p');
     expect(title.text()).toBe('December 2018');
   });
 

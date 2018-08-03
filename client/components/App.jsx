@@ -1,10 +1,8 @@
 import React from 'react';
-import _ from 'lodash';
 import Calendar from './Calendar/Calendar';
 import CalendarTitle from './Calendar/CalendarTitle';
 import Pricing from './Pricing/Pricing';
 import Guests from './Guests/Guests';
-import SuccessMsg from './SuccessMsg/SuccessMsg';
 import SubmitBtn from './SubmitBtn/SubmitBtn';
 import styles from './App.css';
 
@@ -22,7 +20,6 @@ export default class App extends React.Component {
         children: 0,
         infants: 0,
       },
-      displayWidth: 1124,
       displayModalView: false,
       displayBreakpoint: 1123,
       checkOutStage: 0,
@@ -69,17 +66,8 @@ export default class App extends React.Component {
         .then(res => res.json())
         .then((body) => { this.setState({ ...body }); })
         .catch((err) => { throw err; });
-      this.setState({ displayWidth: window.innerWidth });
-      window.addEventListener('resize', _.throttle(() => {
-        this.setState({ displayWidth: window.innerWidth });
-      }), 500);
     }
   }
-
-  componentWillUnmount() {
-    window.removeEventListener('resize');
-  }
-
 
   setNextStage(newStage) {
     const { checkOutStage } = this.state;
@@ -202,10 +190,9 @@ export default class App extends React.Component {
       id,
       checkOutStage,
       displayBreakpoint,
-      displayWidth,
     } = this.state;
     let { displayModalView } = this.state;
-    if (displayWidth < displayBreakpoint && !displayModalView) {
+    if (window.innerWidth < displayBreakpoint && !displayModalView) {
       displayModalView = true;
       this.setState({ displayModalView });
       return;
@@ -277,75 +264,82 @@ export default class App extends React.Component {
       price,
       displayBreakpoint,
       displayModalView,
-      displayWidth,
     } = this.state;
 
     return (
       <div className={styles.container} id="book">
-        {checkOutStage === 4 && <SuccessMsg setNextStage={this.setNextStage} />}
-        {((displayWidth > displayBreakpoint && !displayModalView) || displayModalView) ? (
-          <div className={styles.bookingsContainer} id="bookings-container">
-            <div className={styles.bookings} id="bookings">
-              {displayModalView && (
-                <button
-                  className={styles.closeModalBtn}
-                  type="button"
-                  onClick={() => this.setState({ displayModalView: false })}
-                >
-                  X
-                </button>
-              )}
-              <p>
-                <span className={styles.price}>
-                  {`$${price} `}
-                </span>
-                per night
-              </p>
-              <hr />
-              <CalendarTitle renderTitle={this.getCalendarTitle} {...this.state} />
-              {(checkOutStage === 1 || checkOutStage === 2)
-                && (
-                  <Calendar
-                    {...this.state}
-                    changeMonth={this.changeMonth}
-                    selectDate={this.setSelectedDate}
-                    clearDates={this.clearDates}
-                  />
-                )
-              }
-              {this.renderGuestTitle.call(this)}
-              {isSelectingGuests
-                && (
-                  <Guests
-                    {...this.state}
-                    updateGuestCount={this.updateGuestCount}
-                    toggleView={this.toggleGuestSelectView}
-                  />
-                )
-              }
-              {checkOutStage === 3 && (
-                <Pricing
-                  {...this.state}
-                  toggleInfo={this.toggleInfoPopUp}
-                />
-              )}
-              <SubmitBtn submitRequest={this.submitRequest} className={styles.bookBtn} />
-              <p className={styles.text}>
-                {'You won\'t be charged'}
-              </p>
-            </div>
-          </div>
-        ) : (
-          <div className={styles.footerView} id="footer-view">
+        <div
+          className={styles.bookingsContainer}
+          style={displayModalView && displayBreakpoint > window.innerWidth ? { display: 'flex' } : null}
+          id="bookings-container"
+        >
+          <div className={styles.bookings} id="bookings">
+            <button
+              className={styles.closeModalBtn}
+              type="button"
+              onClick={() => this.setState({ displayModalView: false })}
+            >
+              X
+            </button>
             <p>
               <span className={styles.price}>
                 {`$${price} `}
               </span>
               per night
             </p>
-            <SubmitBtn submitRequest={this.submitRequest} className={styles.footerSubmitBtn} />
+            <hr />
+            <CalendarTitle renderTitle={this.getCalendarTitle} {...this.state} />
+            {(checkOutStage === 1 || checkOutStage === 2)
+              && (
+                <Calendar
+                  {...this.state}
+                  changeMonth={this.changeMonth}
+                  selectDate={this.setSelectedDate}
+                  clearDates={this.clearDates}
+                />
+              )
+            }
+            {this.renderGuestTitle.call(this)}
+            {isSelectingGuests
+              && (
+                <Guests
+                  {...this.state}
+                  updateGuestCount={this.updateGuestCount}
+                  toggleView={this.toggleGuestSelectView}
+                />
+              )
+            }
+            {checkOutStage === 3 && (
+              <Pricing
+                {...this.state}
+                toggleInfo={this.toggleInfoPopUp}
+              />
+            )}
+            <SubmitBtn submitRequest={this.submitRequest} className={styles.bookBtn} />
+            <p className={styles.text}>
+              {checkOutStage !== 4 ? (
+                'You won\'t be charged'
+              ) : (
+                <span className={styles.successMsg}>
+                  Your request was successfully submitted. The host will contact you shortly.
+                </span>
+              )}
+            </p>
           </div>
-        )}
+        </div>
+        <div
+          className={styles.footerView}
+          style={displayModalView && displayBreakpoint > window.innerWidth ? { display: 'none' } : null}
+          id="footer-view"
+        >
+          <p className={styles.footerPrice}>
+            <span className={styles.price}>
+              {`$${price} `}
+            </span>
+            per night
+          </p>
+          <SubmitBtn submitRequest={this.submitRequest} className={styles.footerSubmitBtn} />
+        </div>
       </div>
     );
   }

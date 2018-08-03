@@ -1,6 +1,6 @@
 import puppeteer from 'puppeteer';
 
-const APP = 'http://localhost:3004';
+const APP = 'http://ec2-13-59-22-40.us-east-2.compute.amazonaws.com/listing/5';
 let page;
 let browser;
 const width = 1920;

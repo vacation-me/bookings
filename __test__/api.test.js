@@ -1,5 +1,6 @@
 const request = require('supertest');
-const app = require('../server/app');
+
+const app = 'http://ec2-13-59-22-40.us-east-2.compute.amazonaws.com';
 
 const POST_BODY = {
   id: 27,
@@ -15,7 +16,7 @@ const POST_BODY = {
 
 describe('Test the GET path', () => {
   test('should respond with 200 to a valid path', (done) => {
-    request(app).get('/api/listing_info').then((response) => {
+    request(app).get('/api/listings/5').then((response) => {
       expect(response.statusCode).toBe(200);
       expect(Object.keys(response.body)).toEqual(
         expect.arrayContaining(['availableDates', '_id', 'id', 'price', 'cleaningFee', 'serviceFee', 'minStay', 'maxGuests', '__v']),

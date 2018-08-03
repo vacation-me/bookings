@@ -184,13 +184,9 @@ const Calendar = (props) => {
 Calendar.propTypes = {
   year: PropTypes.number.isRequired,
   month: PropTypes.number.isRequired,
-  availableDates: PropTypes.array.isRequired,
   minStay: PropTypes.number.isRequired,
   selectDate: PropTypes.func.isRequired,
   clearDates: PropTypes.func.isRequired,
-  rightArrow: PropTypes.string.isRequired,
-  leftArrow: PropTypes.string.isRequired,
-  requestedDates: PropTypes.array.isRequired,
 };
 
 export default Calendar;
