@@ -16,4 +16,3 @@ module.exports = function (grunt) {
     },
   });
 };
-https://github.com/HalalGuys/bookings.git
