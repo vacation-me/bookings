@@ -16,41 +16,38 @@
 
 ## Usage
 
-> Some usage instructions
+> Select a check-in date by clicking 'Check-In' 
+
+> Select a check-out date
+
+> Review final pricing
+
+> Add any additional guests
+
+> Submit your request by clicking the 'Request to book' button
+
 
 ## Requirements
 
 An `nvmrc` file is included if using [nvm](https://github.com/creationix/nvm).
 
 - Node 6.13.0
-- etc
+- Docker
 
 ## Development
 
-### Installing Dependencies
+### Installation instructions
 
-From within the root directory:
-
-```sh
-npm install -g webpack
-npm install
-```
+If not already done, install docker.
 
 ### Startup Instructions
 
-If not already done, start mongo:
+From the root directory:
 
 ```sh
-mongod
-```
-
-In a separate terminal: 
-
-
-```sh
-npm run seed-db
-npm run start
+npm run start-dev
 ``` 
 
-Service is now running from port 3000
+Service is now running at localhost:3004.
+Visit a particular listing via the "listing/\<listing number\>" path
 
