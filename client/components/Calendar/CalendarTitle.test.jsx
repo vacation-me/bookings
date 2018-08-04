@@ -10,7 +10,7 @@ describe('CalendarTitle', () => {
     return <p id="out">check-out</p>;
   } 
   it('renders correctly', () => {
-    const wrapper = shallow(<CalendarTitle renderTitle={renderTitleMock} />);
+    const wrapper = shallow(<CalendarTitle renderTitle={renderTitleMock} icons={{ checkInArrow: '' }} />);
     const checkIn = wrapper.find('#in');
     const checkOut = wrapper.find('#out');
     expect(checkIn.text()).toBe('check-in');
