@@ -33,6 +33,7 @@
     "start": "node server/database/dataGenerator.js && node server/index.js",
     "react-dev": "webpack -d --watch",
     "server-dev": "nodemon --inspect server/index.js",
+    "start-dev": "docker-compose up -d && webpack -d --watch",
     "seed-db": "node ./server/database/dataGenerator.js",
     "serve": "grunt s3",
     "test": "jest",

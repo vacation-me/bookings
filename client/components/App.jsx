@@ -279,7 +279,7 @@ export default class App extends React.Component {
               type="button"
               onClick={() => this.setState({ displayModalView: false })}
             >
-              X
+              &times;
             </button>
             <p>
               <span className={styles.price}>

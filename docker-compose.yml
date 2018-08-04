@@ -1,7 +1,7 @@
 version: '3'
 
 services:
-  book: 
+  book-dev: 
     build: .
     volumes:
       - ./:/src/app

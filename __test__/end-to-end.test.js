@@ -1,13 +1,20 @@
 import puppeteer from 'puppeteer';
 
-const APP = 'http://ec2-13-59-22-40.us-east-2.compute.amazonaws.com/listing/5';
+const APP = 'http://localhost:3004/listing/5';
 let page;
 let browser;
 const width = 1920;
 const height = 1080;
 
 beforeAll(async () => {
-  browser = await puppeteer.launch();
+  browser = await puppeteer.launch({
+    args: [
+      '--no-sandbox',
+      '--headless',
+      '--disable-gpu',
+      '--window-size=1920x1080',
+    ],
+  });
   page = await browser.newPage();
   await page.setViewport({ width, height });
 });

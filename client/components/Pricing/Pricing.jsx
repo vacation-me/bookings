@@ -41,11 +41,14 @@ const Pricing = (props) => {
 
     return (
       <div className={classes[popUpId - 1]}>
-        <p
+        <button
           className={`${styles.closeBtn} close-btn`} 
           style={{float: 'right', cursor: 'pointer'}}
           onClick={() => toggleInfo(0)}
-        >x</p>
+          type="button"
+        >
+        x
+        </button>
         <p className={styles.popUpText} id="pop-up-text" style={{ marginTop: '25px' }}>
           {text[popUpId - 1]}
         </p>
