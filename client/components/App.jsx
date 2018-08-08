@@ -119,10 +119,12 @@ export default class App extends React.Component {
       classNames = styles.currentStage;
     }
     return (
-      <p 
-        className={classNames} 
-        id={`${titles[titleStage].toLowerCase()}`} 
-        onClick={() => this.setNextStage(titleStage + 1)}>
+      <p
+        className={classNames}
+        id={`${titles[titleStage].toLowerCase()}`}
+        onClick={() => this.setNextStage(titleStage + 1)}
+        role="presentation"
+      >
         {text}
       </p>);
   }
@@ -248,7 +250,7 @@ export default class App extends React.Component {
       icon = upArrow;
     }
     return (
-      <div className={styles.subComponent} id="toggle-guest-view" onClick={this.toggleGuestSelectView}>
+      <div className={styles.subComponent} id="toggle-guest-view" onClick={this.toggleGuestSelectView} role="presentation">
         <p>
           {output}
         </p>

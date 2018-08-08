@@ -2,7 +2,7 @@ const express = require('express');
 
 const app = express();
 const parser = require('body-parser');
-const Model = require('./database/index');
+const db = require('./database/index');
 
 app.use(express.static('./public'));
 
@@ -21,27 +21,19 @@ app.use((req, res, next) => {
 
 // return a random calendar to client
 app.get('/api/listings/:listingId', (req, res) => {
-  const { listingId } = req.params;
-  // query Model for that index
-  Model.findOne({ id: listingId }).exec((err, data) => {
-    if (err) { throw err; }
-    res.send(data);
-  });
+  db.getListing(req.param.listingId, data => res.status(200).send(data));
 });
 
-app.post('/api/submit', (req, res) => {
-  const { checkIn, checkOut, id } = req.body;
-  Model.findOne({ id }).exec((error, doc) => {
-    const { availableDates } = doc;
-    const newMonth = availableDates[checkIn.index].filter(date => (
-      (date < checkIn.date || date > checkOut.date)
-    ));
-    availableDates[checkIn.index] = newMonth;
-    doc.save((err) => {
-      if (err) { throw err; }
-      res.send(doc);
-    });
-  });
+app.post('/api/addListing', (req, res) => {
+  db.addListing(req.body, () => res.status(201).send());
+});
+
+app.put('/api/listings/:listingId/addBooking', (req, res) => {
+  db.addBooking(req.body, data => res.status(204).send(data));
+});
+
+app.delete('/api/listings/:listingId/remove', (req, res) => {
+  db.removeListing(req.param.listingId, () => res.status(204).send());
 });
 
 module.exports = app;

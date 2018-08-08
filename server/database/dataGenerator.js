@@ -58,17 +58,18 @@ const generateBookings = function () {
 
 const generator = function () {
   const data = [];
-  for (let i = 0; i < 100; i++) {
+  for (let i = 1; i < 100; i++) {
     const nightlyPrice = price();
-    data.push({
-      id: i,
-      price: nightlyPrice,
-      cleaningFee: cleaning(),
-      serviceFee: serviceFee(nightlyPrice),
-      minStay: 3 + random(6),
-      maxGuests: random(10),
-      availableDates: generateBookings(),
-    });
+    // data.push({
+    //   id: i,
+    //   price: nightlyPrice,
+    //   cleaningFee: cleaning(),
+    //   serviceFee: serviceFee(nightlyPrice),
+    //   minStay: 3 + random(6),
+    //   maxGuests: random(10),
+    //   availableDates: generateBookings(),
+    // });
+    console.log(i, nightlyPrice, cleaning(), serviceFee(nightlyPrice), 3+random(6), random(10));
   }
   Model.insertMany(data, (err) => {
     if (err) throw err;
