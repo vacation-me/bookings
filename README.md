@@ -10,9 +10,24 @@
 
 ## Table of Contents
 
+1. [CRUD API](#CRUD-API)
 1. [Usage](#Usage)
 1. [Requirements](#requirements)
 1. [Development](#development)
+
+## CRUD API
+
+>**C**reate
+```**POST** /api/listings```
+
+>**R**ead
+```**GET** /api/listing/**\<listingId\>**```
+
+>**U**pdate
+```**PUT** /api/listing/**\<listingId\>**```
+
+>**D**elete
+```**DELETE** /api/listing/**\<listingId\>**```
 
 ## Usage
 
@@ -50,4 +65,3 @@ npm run start-dev
 
 Service is now running at localhost:3004.
 Visit a particular listing via the "listing/\<listing number\>" path
-

@@ -24,15 +24,15 @@ app.get('/api/listings/:listingId', (req, res) => {
   db.getListing(req.param.listingId, data => res.status(200).send(data));
 });
 
-app.post('/api/addListing', (req, res) => {
+app.post('/api/listings/', (req, res) => {
   db.addListing(req.body, () => res.status(201).send());
 });
 
-app.put('/api/listings/:listingId/addBooking', (req, res) => {
+app.put('/api/listings/:listingId', (req, res) => {
   db.addBooking(req.body, data => res.status(204).send(data));
 });
 
-app.delete('/api/listings/:listingId/remove', (req, res) => {
+app.delete('/api/listings/:listingId', (req, res) => {
   db.removeListing(req.param.listingId, () => res.status(204).send());
 });
 
