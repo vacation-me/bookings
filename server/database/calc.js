@@ -6,6 +6,16 @@ const cleaningFee = () => random(10, 40) * 5;
 
 const serviceFeePercent = () => random(20, 40) / 200;
 
-console.log('id, price, cleaningFee, serviceFeePercent, minStay, maxGuests');
+const minStay = () => random(2, 9);
 
-for (let i = 1; i <= 10000000; i++) console.log(`${i},${price()},${cleaningFee()},${serviceFeePercent()},${random(2, 9)},${random(2, 10)}`);
+const maxGuests = () => random(2, 10);
+
+
+module.exports = {
+  random,
+  price,
+  cleaningFee,
+  serviceFeePercent,
+  minStay,
+  maxGuests,
+};

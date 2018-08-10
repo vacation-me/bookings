@@ -1,0 +1,25 @@
+DROP DATABASE IF EXISTS bookings;
+CREATE DATABASE bookings;
+\c bookings;
+
+CREATE TABLE listings(
+  ID INT PRIMARY KEY NOT NULL,
+  PRICE INT NOT NULL,
+  CLEANING_FEE INT NOT NULL,
+  SERVICE_FEE_PERECENT DOUBLE PRECISION,
+  MIN_STAY INT NOT NULL,
+  MAX_GUESTS INT NOT NULL
+);
+
+CREATE TABLE bookings(
+  ID INT PRIMARY KEY NOT NULL,
+  LISTING_ID INT NOT NULL,
+  STARTING_DATE VARCHAR NOT NULL,
+  DAYS_BOOKED INT NOT NULL
+);
+
+\COPY listings FROM 'server/database/listings.csv' WITH (FORMAT csv)
+
+\COPY bookings FROM 'server/database/bookings.csv' WITH (FORMAT csv)
+
+-- psql db < ./server/database/postgresql.sql
