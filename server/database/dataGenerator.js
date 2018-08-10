@@ -1,10 +1,10 @@
-const Model = require('./index');
+// const Model = require('./index');
 
-Model.remove({}, (err) => {
-  if (err) {
-    throw err;
-  }
-});
+// Model.remove({}, (err) => {
+//   if (err) {
+//     throw err;
+//   }
+// });
 
 const random = function (num) {
   return Math.ceil(Math.random() * num);
@@ -58,7 +58,7 @@ const generateBookings = function () {
 
 const generator = function () {
   const data = [];
-  for (let i = 1; i < 100; i++) {
+  for (let i = 1; i < 2; i++) {
     const nightlyPrice = price();
     // data.push({
     //   id: i,
@@ -69,12 +69,13 @@ const generator = function () {
     //   maxGuests: random(10),
     //   availableDates: generateBookings(),
     // });
-    console.log(i, nightlyPrice, cleaning(), serviceFee(nightlyPrice), 3+random(6), random(10));
+    // console.log(generateBookings());
+    console.log(`${i},${nightlyPrice},${cleaning()},${serviceFee(nightlyPrice)},${3+random(6)},${random(10)}`);
   }
-  Model.insertMany(data, (err) => {
-    if (err) throw err;
-    process.exit();
-  });
+  // Model.insertMany(data, (err) => {
+  //   if (err) throw err;
+  //   process.exit();
+  // });
 };
 
 generator();

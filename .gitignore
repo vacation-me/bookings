@@ -27,3 +27,6 @@ build/
 dist/
 public/
 
+# CSV Files
+*.csv
+*.csv.gz

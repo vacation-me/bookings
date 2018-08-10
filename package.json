@@ -37,6 +37,8 @@
     "seed-db": "node ./server/database/dataGenerator.js",
     "serve": "grunt s3",
     "test": "jest",
+    "generate-bookings": "rm server/database/bookings.csv; time for i in {0..9}; do node --max-old-space-size=8192 server/database/generateBookings.js ${i} | cat >> server/database/bookings.csv; done",
+    "generate-listings": "time node --max-old-space-size=8192 server/database/generateListings.js | cat > server/database/listings.csv",
     "lint": "eslint client/**.jsx client/components/**.jsx"
   },
   "dependencies": {
