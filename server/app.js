@@ -1,8 +1,10 @@
+require('newrelic');
 const express = require('express');
 
 const app = express();
 const parser = require('body-parser');
-const db = require('./database/index');
+// const db = require('./database/mongoDB.js');
+const db = require('./database/postgreSQLDB.js');
 
 app.use(express.static('./public'));
 
@@ -21,7 +23,7 @@ app.use((req, res, next) => {
 
 // return a random calendar to client
 app.get('/api/listings/:listingId', (req, res) => {
-  db.getListing(req.param.listingId, data => res.status(200).send(data));
+  db.getListing(req.params.listingId, data => res.status(200).send(data));
 });
 
 app.post('/api/listings/', (req, res) => {
@@ -29,11 +31,11 @@ app.post('/api/listings/', (req, res) => {
 });
 
 app.put('/api/listings/:listingId', (req, res) => {
-  db.addBooking(req.body, data => res.status(204).send(data));
+  db.addBooking(id, req.body, data => res.status(204).send(data));
 });
 
 app.delete('/api/listings/:listingId', (req, res) => {
-  db.removeListing(req.param.listingId, () => res.status(204).send());
+  db.removeListing(req.params.listingId, () => res.status(204).send());
 });
 
 module.exports = app;
