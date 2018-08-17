@@ -19,4 +19,4 @@ for (let i = 1; i <= max; i++) {
 }
 
 // Shell Script
-//  rm bookings.csv | time for i in {0..9}; do node --max-old-space-size=8192 generateBookings ${i} | cat >> bookings.csv; done
+// rm ./server/database/bookings.csv; time for i in {0..9}; do node --max-old-space-size=8192 ./server/database/generateBookings.js ${i} | cat >> ./server/database/bookings.csv; done
