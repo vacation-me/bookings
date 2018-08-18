@@ -30,3 +30,6 @@ public/
 # CSV Files
 *.csv
 *.csv.gz
+
+#Files with private keys
+newrelic.js
