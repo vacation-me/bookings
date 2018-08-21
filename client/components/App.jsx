@@ -12,7 +12,7 @@ export default class App extends React.Component {
     this.state = {
       year: new Date().getFullYear(),
       month: new Date().getMonth(),
-      availableDates: [],
+      bookedDates: [],
       requestedDates: [],
       id: 0,
       guestCount: {
@@ -54,6 +54,7 @@ export default class App extends React.Component {
     this.toggleInfoPopUp = this.toggleInfoPopUp.bind(this);
     this.submitRequest = this.submitRequest.bind(this);
     this.renderGuestTitle = this.renderGuestTitle.bind(this);
+    this.calcBookedDates = this.calcBookedDates.bind(this);
   }
 
   componentDidMount() {
@@ -64,8 +65,11 @@ export default class App extends React.Component {
       const id = +path[path.length - 2] || 1;
       fetch(`/api/listings/${id}`)
         .then(res => res.json())
-        .then((body) => { this.setState({ ...body }); })
-        .catch((err) => { throw err; });
+        .then((body) => {
+          this.setState({ ...body, bookedDates: [] });
+          this.calcBookedDates(body.bookings);
+        })
+        .catch((err) => { throw err; }); 
     }
   }
 
@@ -129,6 +133,34 @@ export default class App extends React.Component {
       </p>);
   }
 
+  calcBookedDates(bookings) {
+    const bookedDates = {};
+    bookings.forEach((booking) => {
+      const startDate = new Date(Date.parse(booking.startingDate));
+      const curDate = new Date(startDate);
+      for (let i = 0; i <= booking.daysBooked; i++) {
+        curDate.setDate(curDate.getDate() + 1);
+        const curMonth = curDate.getMonth();
+        const curYear = curDate.getFullYear();
+        if (bookedDates[curYear] === undefined) {
+          bookedDates[curYear] = new Array(12);
+        }
+        if (bookedDates[curYear][curMonth] === undefined) {
+          bookedDates[curYear][curMonth] = new Set();
+        }
+        bookedDates[curYear][curMonth].add(curDate.getDate());
+        // console.log(i, bookedDates[curMonth - 1]);
+      }
+    });
+    Object.keys(bookedDates).forEach((yearIdx) => {
+      bookedDates[yearIdx].forEach((month, monthIdx) => {
+        bookedDates[yearIdx][monthIdx] = Array.from(bookedDates[yearIdx][monthIdx]);
+      });
+    });
+    console.log(bookedDates);
+    this.setState({ bookedDates });
+  }
+
   clearDates() {
     this.setState({
       checkOutStage: 1,
@@ -187,49 +219,7 @@ export default class App extends React.Component {
   }
 
   submitRequest() {
-    const {
-      requestedDates,
-      id,
-      checkOutStage,
-      displayBreakpoint,
-    } = this.state;
-    let { displayModalView } = this.state;
-    if (window.innerWidth < displayBreakpoint && !displayModalView) {
-      displayModalView = true;
-      this.setState({ displayModalView });
-      return;
-    }
-    if (checkOutStage !== 3) {
-      this.setState({ checkOutStage: checkOutStage === 0 ? 1 : 2 });
-      return;
-    }
-    const currentMonth = new Date().getMonth();
-    const getBookingData = (date) => {
-      const month = date.getMonth();
-      if (month < currentMonth) {
-        return { index: currentMonth + month, date: date.getDate() };
-      }
-      return { index: month - currentMonth, date: date.getDate() };
-    };
-    const checkIn = getBookingData(requestedDates[0]);
-    const checkOut = getBookingData(requestedDates[1]);
-
-    // get array indeces from requested dates
-    const reqBody = {
-      id,
-      checkIn,
-      checkOut,
-    };
-
-    fetch('/api/submit', {
-      method: 'post',
-      headers: {
-        'Content-Type': 'application/json; charset=utf-8',
-      },
-      body: JSON.stringify(reqBody),
-    })
-      .then(res => res.json())
-      .then(data => this.setState({ ...data, checkOutStage: 4, requestedDates: [] }));
+    console.log(this);
   }
 
   renderGuestTitle() {
