@@ -34,14 +34,16 @@
     "react-dev": "webpack -d --watch",
     "server-dev": "nodemon --inspect server/index.js",
     "start-dev": "docker-compose up -d && webpack -d --watch",
-    "seed-db": "node ./server/database/dataGenerator.js",
+    "seed-db": "node ./server/database/postgreSQLDB.js",
     "serve": "grunt s3",
     "test": "jest",
+    "docker-start": "npm run generate-bookings; npm run generate-listings; npm run seed-db; npm start",
     "generate-bookings": "rm server/database/bookings.csv; time for i in {0..9}; do node --max-old-space-size=8192 server/database/generateBookings.js ${i} | cat >> server/database/bookings.csv; done",
     "generate-listings": "time node --max-old-space-size=8192 server/database/generateListings.js | cat > server/database/listings.csv",
     "lint": "eslint client/**.jsx client/components/**.jsx"
   },
   "dependencies": {
+    "bluebird": "^3.5.1",
     "body-parser": "^1.18.3",
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
@@ -59,6 +61,7 @@
     "prop-types": "^15.6.2",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
+    "redis": "^2.8.0",
     "siege": "^0.2.0",
     "superagent": "^3.8.3",
     "supertest": "^3.1.0"

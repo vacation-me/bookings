@@ -18,7 +18,7 @@ const Calendar = (props) => {
   const {
     year,
     month,
-    availableDates,
+    bookedDates,
     minStay,
     selectDate,
     requestedDates,
@@ -34,8 +34,10 @@ const Calendar = (props) => {
   const monthLastDay = new Date(year, month + 1, 0);
   const currentMonth = new Date().getMonth();
 
-  const bookingsMonthIndex = month < currentMonth ? currentMonth + month : month - currentMonth;
-  const currentAvailableDates = [...availableDates[bookingsMonthIndex]];
+  const bookingsMonthIndex = currentMonth - 1;
+  const bookingsYearIndex = new Date().getFullYear();
+  const currentBookedDates = [...bookedDates[bookingsYearIndex][bookingsMonthIndex]];
+  console.log(currentBookedDates);
   // declare counter to fill table with dates
   let currentDateNum = 1;
 
@@ -83,13 +85,13 @@ const Calendar = (props) => {
         attributes[0] += ` avail ${styles.avail}`;
         attributes[1] = validDateClickHandler;
       }
-    } else if (currentDateNum === currentAvailableDates[currentAvailableDates.length - 1]
+    } else if (currentDateNum === currentBookedDates[currentBookedDates.length - 1]
       && !isSelectingCheckout) {
-      attributes[0] += ` avail ${styles.avail}`;
-      attributes[1] = validDateClickHandler;
-      currentAvailableDates.pop();
-    } else {
       attributes[0] += ` ${styles.booked}`;
+      attributes[1] = validDateClickHandler;
+      currentBookedDates.pop();
+    } else {
+      attributes[0] += ` avail ${styles.avail}`;
     }
     currentDateNum += 1;
     return attributes;
