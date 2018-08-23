@@ -33,10 +33,10 @@ const getListing = (id, cb) => {
           daysBooked: data[i].days_booked,
         });
       }
-      cb(convertedData);
+      cb(null, convertedData);
     })
     .catch((err) => {
-      console.log(err);
+      cb(err);
     });
 };
 

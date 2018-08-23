@@ -38,12 +38,13 @@ app.get('/api/listings/:listingId',
   (req, res) => {
     const { listingId } = req.params;
     client.get(listingId, (err, data) => {
-      if (err) throw err;
+      if (err) res.status(504).send();
       if (data !== null) {
         res.status(200).send(JSON.parse(data));
       } else {
-        db.getListing(listingId, (dbdata) => {
-          client.setex(listingId, 5, JSON.stringify(dbdata));
+        db.getListing(listingId, (dberr, dbdata) => {
+          if (dberr) res.status(404).send();
+          client.setex(listingId, JSON.stringify(dbdata));
           res.status(200).send(dbdata);
         });
       }
